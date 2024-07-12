@@ -6,6 +6,8 @@ import MainPage from './components/MainPage';
 import AllTrips from './components/AllTrips';
 import Navbar from './components/Navbar';
 import Build from './components/Build';
+import Login from './components/pages/Login';
+import Signup from './components/pages/Signup';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/trips" element={<AllTrips />} />
           <Route path="*" element={<Homepage />} />
           <Route path="/construction" element={<Build />} />
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/signup" element={<Signup/>}/>
         </Routes>
       </div>
       <MainPage/>
