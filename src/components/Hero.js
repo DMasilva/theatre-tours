@@ -17,7 +17,7 @@ const Hero = () => {
   };
 
   return (
-    <div className='w-[90%] min-h-52 md:h-96 lg:h-[600px] xl:h-[720px] border-2 mx-auto mt-2 relative group'>
+    <div className='w-[90%] min-h-52 md:h-96 lg:h-[600px] xl:h-[720px] mx-auto mt-2 relative group'>
       <div className='w-full h-full'>
         <img
           src={urls[currentPicture].url}

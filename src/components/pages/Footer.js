@@ -8,24 +8,25 @@ const Footer = () => {
         <div>
           <h2 className="text-2xl font-bold mb-4">About Us</h2>
           <p className="text-gray-400">
-            We are a leading tour and travels company dedicated to offering you the best travel experiences worldwide.
+          Therapy Tours & Travel is a Safari Specialist company in East Africa. We excel in customised safaris based on your needs and desired destinations in Kenya, Uganda, Tanzania and Rwanda.
           </p>
         </div>
         <div>
           <h2 className="text-2xl font-bold mb-4">Quick Links</h2>
           <ul className="text-gray-400 space-y-2">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/services">Services</a></li>
-            <li><a href="/contact">Contact Us</a></li>
-            <li><a href="/trips">Trips</a></li>
+            <li className='hover:text-white'><a href="/">Home</a></li>
+            <li className='hover:text-white'><a href="/about">About Us</a></li>
+            <li className='hover:text-white'><a href="/services">Services</a></li>
+            <li className='hover:text-white'><a href="/contact">Contact Us</a></li>
+            <li className='hover:text-white'><a href="/trips">Trips</a></li>
           </ul>
         </div>
         <div>
           <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-          <p className="text-gray-400">123 Travel Road, Wanderlust City, World</p>
-          <p className="text-gray-400">Email: info@tourandtravels.com</p>
-          <p className="text-gray-400">Phone: +123 456 7890</p>
+          <p className="text-gray-400"> Bogani East Road, Karen</p>
+          <p className="text-gray-400">Email: therapytoursandtravel@gmail.com</p>
+          <p className="text-gray-400">web: www.therapytours&travel.com</p>
+          <p className="text-gray-400">Phone: +254790604032</p>
         </div>
         <div>
           <h2 className="text-2xl font-bold mb-4">Follow Us</h2>
