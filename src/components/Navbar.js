@@ -36,7 +36,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='flex items-center text-black hover:text-blue-400 m-2 font-bold cursor-pointer'>
-              <Link to="/construction" className='flex items-center space-x-1'>
+              <Link to="/trips" className='flex items-center space-x-1'>
                 <GrServices />
                 <span>Services</span>
               </Link>
@@ -79,19 +79,19 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='flex items-center text-black hover:text-blue-400 font-bold cursor-pointer'>
-              <Link to="/construction" onClick={toggleMenu} className='flex items-center space-x-1'>
+              <Link to="/about" onClick={toggleMenu} className='flex items-center space-x-1'>
                 <FaInfoCircle />
                 <span>About</span>
               </Link>
             </li>
             <li className='flex items-center text-black hover:text-blue-400 font-bold cursor-pointer'>
-              <Link to="/construction" onClick={toggleMenu} className='flex items-center space-x-1'>
+              <Link to="/trips" onClick={toggleMenu} className='flex items-center space-x-1'>
                 <GrServices />
                 <span>Services</span>
               </Link>
             </li>
             <li className='flex items-center text-black hover:text-blue-400 font-bold cursor-pointer'>
-              <Link to="/construction" onClick={toggleMenu} className='flex items-center space-x-1'>
+              <Link to="/contact" onClick={toggleMenu} className='flex items-center space-x-1'>
                 <RiContactsBook2Fill />
                 <span>Contact</span>
               </Link>
