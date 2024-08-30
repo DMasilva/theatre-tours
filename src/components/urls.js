@@ -1,20 +1,29 @@
 import truck from '../images/truck.jpg';
 import homepages from '../images/homepage.jpg';
-import hooome from '../images/logotemplate.jpg';
+import hotair from '../images/hotair.jpg';
+import lion from '../images/lion.jpg';
+import lions from '../images/lions.jpg';
+import elephant from '../images/elephant.jpg';
+import girrafes from '../images/girrafes.jpg';
+import elephants from '../images/elephants.jpg';
+import flamingo from '../images/flamingo.jpg';
+import zebra from '../images/zebra.jpg'
+
+
 
 const urls = [
-  { url: truck, name: 'Truck' },
-  { url: homepages, name: 'Homepage' },
-  { url: truck, name: 'Truck' },
-  { url: homepages, name: 'Homepage' },
-  { url: truck, name: 'Truck' },
+  { url: girrafes, name: 'Girrafe Center' },
+  { url: flamingo, name: 'Lake Nakuru' },
+  { url: hotair, name: 'Hotair Baloons' },
+  { url: lions, name: 'National Park' },
+  { url: elephant, name: 'Serengeti' },
 
 ];
 
 const trips = [
   {
     id: 1,
-    image: truck,
+    image: girrafes,
     title: '2-Day Tsavo East Safari from Diani or Mombasa',
     description: 'Discover the wild beauty of Tsavo East National Park on a one-day safari from Diani. Covering 345 km, this adventure takes you through diverse landscapes to witness the park’s iconic wildlife. You will spot elephants, lions, and buffalos roaming amidst the vast savannah and marvel at the striking Lugard Falls and Aruba Dam. With a professional guide, this unforgettable journey offers a thrilling glimpse into Kenya’s pristine wilderness.',
     itinerary: [
@@ -52,7 +61,7 @@ const trips = [
   },
   {
     id: 2,
-    image: homepages,
+    image: zebra,
     title: '7 Days Samburu, Ol Pejeta, Naivasha and Masai Mara',
     description: 'This 7 days 6 nights safari features Samburu National Park in the north of Kenya, Ol Pejeta and Masai Mara National Reserve.',
     itinerary: [
@@ -114,7 +123,7 @@ const trips = [
   },
   {
     id: 3,
-    image: truck,
+    image: lion,
     title: '7 Days Amboseli, Lake Nakuru, Lake Naivasha and Masai Mara',
     description: 'This tour takes you to Amboseli National Park, Lake Nakuru, Lake Naivasha, and Masai Mara, featuring a diverse range of wildlife and breathtaking landscapes.',
     itinerary: [
@@ -176,7 +185,7 @@ const trips = [
   },
   {
     id: 4,
-    image: homepages,
+    image: elephants,
     title: 'Masai Mara, Lake Nakuru & Amboseli',
     description: '6 Nights 7 Days Safari to Masai Mara, Lake Nakuru & Amboseli. Enjoy this great safari package featuring the best national parks in Kenya.',
     itinerary: [
