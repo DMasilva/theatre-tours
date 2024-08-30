@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaHome, FaInfoCircle } from "react-icons/fa";
 import { GrServices } from "react-icons/gr";
 import { RiContactsBook2Fill } from "react-icons/ri";
-import logo from '../images/logo.jpg'; // Adjust the path as necessary
+import logo from '../images/logo.png'; // Adjust the path as necessary
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
