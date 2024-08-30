@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaHome, FaInfoCircle } from "react-icons/fa";
 import { GrServices } from "react-icons/gr";
 import { RiContactsBook2Fill } from "react-icons/ri";
-import { SiMaxplanckgesellschaft } from 'react-icons/si';
+import logo from '../images/logo.jpg'; // Adjust the path as necessary
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,8 +16,10 @@ const Navbar = () => {
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 w-[95%] md:w-[90%] bg-white p-4 shadow-lg rounded-lg z-50">
       <div className='flex justify-between items-center'>
         {/* Logo on the left */}
-        <div className='text-3xl font-bold text-black cursor-pointer hover:text-blue-400'>
-          <Link to="/">Therapy<span className='text-[#eab308] hover:text-blue-400'>Tours</span></Link>
+        <div className='cursor-pointer'>
+          <Link to="/">
+            <img src={logo} alt="Therapy Tours Logo" className='h-12 md:h-16' />
+          </Link>
         </div>
 
         {/* Navigation icons in the middle */}

@@ -17,12 +17,12 @@ const Hero = () => {
   };
 
   return (
-    <div className='w-[90%] min-h-52 md:h-96 lg:h-[600px] xl:h-[720px] mx-auto mt-2 relative group'>
-      <div className='w-full h-full'>
+    <div className='w-[90%] h-[300px] md:h-[500px] lg:h-[700px] xl:h-[800px] mx-auto mt-2 relative group'>
+      <div className='w-full h-full overflow-hidden'>
         <img
           src={urls[currentPicture].url}
           alt={urls[currentPicture].name}
-          className='w-full h-full object-cover rounded-2xl'
+          className='w-full h-full object-cover'
         />
       </div>
       <div className='text-3xl absolute top-[50%] left-5 transform -translate-y-1/2 cursor-pointer text-white bg-black bg-opacity-50 rounded-full p-2'>
@@ -38,7 +38,7 @@ const Hero = () => {
           </div>
         ))}
       </div>
-      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-200 text-8xl font-bold shadow-lg'>
+      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-200 text-4xl md:text-6xl lg:text-8xl font-bold shadow-lg'>
         {urls[currentPicture].name}
       </div>
     </div>
