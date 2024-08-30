@@ -11,10 +11,12 @@ import ContactForm from './components/pages/ContactForm';
 import DetailedTrip from './components/pages/DetailedTrip';
 import About from './components/About';
 import BookTrip from './components/pages/BookTrip';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
+       <ScrollToTop />
       <Navbar />
       <div className="flex-grow pt-20"> {/* Add pt-20 to create space below the fixed navbar */}
         <Routes>
