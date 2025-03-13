@@ -17,9 +17,9 @@ import {
   useMediaQuery,
   Avatar,
   Divider,
-  Slide,
   Fade,
-  Stack
+  Stack,
+  SwipeableDrawer
 } from '@mui/material';
 import { 
   Home as HomeIcon, 
@@ -39,6 +39,7 @@ const Navbar = () => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Handle scroll effect
   useEffect(() => {
@@ -59,6 +60,10 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
   };
 
   const isActive = (path) => location.pathname === path;
@@ -85,7 +90,7 @@ const Navbar = () => {
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center',
-        p: 3,
+        p: { xs: 2, sm: 3 },
         borderBottom: `1px solid ${theme.palette.divider}`
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -94,23 +99,30 @@ const Navbar = () => {
             alt="Therapy Tours Logo" 
             variant="square"
             sx={{ 
-              height: 40, 
+              height: { xs: 32, sm: 40 }, 
               width: 'auto',
               mr: 2
             }}
           />
-          <Typography variant="h6" sx={{ fontFamily: '"Playfair Display", serif', fontWeight: 600 }}>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              fontFamily: '"Playfair Display", serif', 
+              fontWeight: 600,
+              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+            }}
+          >
             Therapy Tours
           </Typography>
         </Box>
-        <IconButton onClick={toggleMenu} aria-label="close menu">
+        <IconButton onClick={toggleMenu} aria-label="close menu" size={isSmallMobile ? "small" : "medium"}>
           <CloseIcon />
         </IconButton>
       </Box>
       
       <Divider />
       
-      <Box sx={{ flexGrow: 1, p: 2 }}>
+      <Box sx={{ flexGrow: 1, p: { xs: 1.5, sm: 2 } }}>
         <List>
           {navItems.map((item, index) => (
             <Fade in={true} style={{ transitionDelay: `${index * 100}ms` }} key={item.path}>
@@ -118,11 +130,11 @@ const Navbar = () => {
                 button 
                 component={Link} 
                 to={item.path}
-                onClick={toggleMenu}
+                onClick={closeMenu}
                 selected={isActive(item.path)}
                 sx={{
-                  py: 2,
-                  mb: 1,
+                  py: { xs: 1.5, sm: 2 },
+                  mb: { xs: 0.5, sm: 1 },
                   color: isActive(item.path) ? theme.palette.primary.main : theme.palette.text.primary,
                   borderLeft: isActive(item.path) ? `3px solid ${theme.palette.primary.main}` : '3px solid transparent',
                   '&.Mui-selected': {
@@ -136,7 +148,7 @@ const Navbar = () => {
               >
                 <ListItemIcon sx={{ 
                   color: isActive(item.path) ? theme.palette.primary.main : 'inherit',
-                  minWidth: 40
+                  minWidth: { xs: 36, sm: 40 }
                 }}>
                   {item.icon}
                 </ListItemIcon>
@@ -144,7 +156,8 @@ const Navbar = () => {
                   primary={item.label} 
                   primaryTypographyProps={{ 
                     fontFamily: '"Poppins", sans-serif',
-                    fontWeight: isActive(item.path) ? 600 : 500
+                    fontWeight: isActive(item.path) ? 600 : 500,
+                    fontSize: { xs: '0.95rem', sm: '1rem' }
                   }}
                 />
               </ListItem>
@@ -153,7 +166,7 @@ const Navbar = () => {
         </List>
       </Box>
       
-      <Box sx={{ p: 3, borderTop: `1px solid ${theme.palette.divider}` }}>
+      <Box sx={{ p: { xs: 2, sm: 3 }, borderTop: `1px solid ${theme.palette.divider}` }}>
         <Stack direction="row" spacing={2}>
           <Button 
             component={Link} 
@@ -162,8 +175,12 @@ const Navbar = () => {
             color="primary"
             fullWidth
             startIcon={<LoginIcon />}
-            onClick={toggleMenu}
-            sx={{ fontWeight: 600 }}
+            onClick={closeMenu}
+            sx={{ 
+              fontWeight: 600,
+              py: { xs: 0.8, sm: 1 }
+            }}
+            size={isSmallMobile ? "small" : "medium"}
           >
             Login
           </Button>
@@ -174,8 +191,12 @@ const Navbar = () => {
             color="primary"
             fullWidth
             startIcon={<SignupIcon />}
-            onClick={toggleMenu}
-            sx={{ fontWeight: 600 }}
+            onClick={closeMenu}
+            sx={{ 
+              fontWeight: 600,
+              py: { xs: 0.8, sm: 1 }
+            }}
+            size={isSmallMobile ? "small" : "medium"}
           >
             Signup
           </Button>
@@ -185,171 +206,175 @@ const Navbar = () => {
   );
 
   return (
-    <Slide appear={false} direction="down" in={!scrolled}>
-      <AppBar 
-        position="fixed" 
-        color="default" 
-        elevation={0}
-        sx={{ 
-          backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(8px)',
-          borderBottom: `1px solid ${theme.palette.divider}`,
-          transition: 'all 0.3s ease',
-          boxShadow: scrolled ? '0 2px 10px rgba(0,0,0,0.05)' : 'none'
-        }}
-      >
-        <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{ height: scrolled ? 70 : 90, transition: 'height 0.3s ease' }}>
-            {/* Logo */}
-            <Box sx={{ flexGrow: 0, mr: 2, display: 'flex', alignItems: 'center' }}>
-              <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-                <Avatar 
-                  src={logo} 
-                  alt="Therapy Tours Logo" 
-                  variant="square"
-                  sx={{ 
-                    height: { xs: 40, md: 50 }, 
-                    width: 'auto',
-                    mr: 2
-                  }}
-                />
-                {!isMobile && (
-                  <Typography 
-                    variant="h5" 
-                    sx={{ 
-                      fontFamily: '"Playfair Display", serif', 
-                      fontWeight: 600,
-                      color: theme.palette.primary.main,
-                      letterSpacing: '0.5px'
-                    }}
-                  >
-                    Therapy Tours
-                  </Typography>
-                )}
-              </Link>
-            </Box>
-
-            {/* Desktop Navigation */}
-            {!isMobile && (
-              <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-                {navItems.map((item) => (
-                  <Button
-                    key={item.path}
-                    component={Link}
-                    to={item.path}
-                    color={isActive(item.path) ? 'primary' : 'inherit'}
-                    sx={{ 
-                      mx: 2,
-                      px: 2,
-                      py: 1,
-                      fontWeight: 500,
-                      fontSize: '1rem',
-                      position: 'relative',
-                      letterSpacing: '0.5px',
-                      color: isActive(item.path) ? theme.palette.primary.main : theme.palette.text.primary,
-                      '&:hover': {
-                        backgroundColor: 'transparent',
-                        color: theme.palette.primary.main,
-                      },
-                      '&::after': {
-                        content: '""',
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        width: isActive(item.path) ? '100%' : '0%',
-                        height: '2px',
-                        backgroundColor: theme.palette.primary.main,
-                        transition: 'width 0.3s ease',
-                      },
-                      '&:hover::after': {
-                        width: '100%',
-                      }
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
-              </Box>
-            )}
-
-            {/* Desktop Login/Signup */}
-            {!isMobile && (
-              <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
-                <Button 
-                  component={Link} 
-                  to="/login" 
-                  variant="text"
-                  color="inherit"
-                  sx={{ 
-                    fontWeight: 500,
-                    mr: 2,
-                    px: 2,
-                    '&:hover': {
-                      backgroundColor: 'transparent',
-                      color: theme.palette.primary.main,
-                    }
-                  }}
-                >
-                  Login
-                </Button>
-                <Button 
-                  component={Link} 
-                  to="/signup" 
-                  variant="contained" 
-                  color="primary"
-                  sx={{ 
-                    fontWeight: 600,
-                    px: 3,
-                    py: 1,
-                    boxShadow: 'none',
-                    '&:hover': {
-                      boxShadow: '0 4px 12px rgba(11, 79, 108, 0.2)',
-                    }
-                  }}
-                >
-                  Signup
-                </Button>
-              </Box>
-            )}
-
-            {/* Mobile Menu Button */}
-            {isMobile && (
-              <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                <IconButton
-                  edge="end"
-                  color="inherit"
-                  aria-label="menu"
-                  onClick={toggleMenu}
-                  sx={{ 
-                    color: theme.palette.text.primary,
-                    '&:hover': {
-                      backgroundColor: 'rgba(11, 79, 108, 0.08)',
-                    }
-                  }}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </Box>
-            )}
-          </Toolbar>
-        </Container>
-
-        {/* Mobile Drawer */}
-        <Drawer
-          anchor="right"
-          open={isOpen}
-          onClose={toggleMenu}
-          PaperProps={{
-            sx: {
-              width: { xs: '100%', sm: 350 },
-              boxShadow: '-4px 0 20px rgba(0,0,0,0.08)'
-            }
+    <AppBar 
+      position="fixed" 
+      color="default" 
+      elevation={0}
+      sx={{ 
+        backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.8)',
+        backdropFilter: 'blur(8px)',
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        transition: 'all 0.3s ease',
+        boxShadow: scrolled ? '0 2px 10px rgba(0,0,0,0.05)' : 'none',
+        transform: scrolled ? 'translateY(0)' : 'translateY(0)',
+        top: 0
+      }}
+    >
+      <Container maxWidth="xl">
+        <Toolbar 
+          disableGutters 
+          sx={{ 
+            height: { 
+              xs: scrolled ? 60 : 70, 
+              sm: scrolled ? 65 : 80, 
+              md: scrolled ? 70 : 90 
+            }, 
+            transition: 'height 0.3s ease' 
           }}
         >
-          {drawer}
-        </Drawer>
-      </AppBar>
-    </Slide>
+          {/* Logo */}
+          <Box sx={{ flexGrow: 0, mr: 2, display: 'flex', alignItems: 'center' }}>
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <Avatar 
+                src={logo} 
+                alt="Therapy Tours Logo" 
+                variant="square"
+                sx={{ 
+                  height: { xs: 32, sm: 36, md: 50 }, 
+                  width: 'auto',
+                  mr: { xs: 1, sm: 1.5, md: 2 }
+                }}
+              />
+              {!isMobile && (
+                <Typography 
+                  variant="h5" 
+                  sx={{ 
+                    fontFamily: '"Playfair Display", serif', 
+                    fontWeight: 600,
+                    color: theme.palette.primary.main,
+                    letterSpacing: '0.5px',
+                    fontSize: { sm: '1.3rem', md: '1.5rem', lg: '1.75rem' }
+                  }}
+                >
+                  Therapy Tours
+                </Typography>
+              )}
+            </Link>
+          </Box>
+
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+              {navItems.map((item) => (
+                <Button
+                  key={item.path}
+                  component={Link}
+                  to={item.path}
+                  color={isActive(item.path) ? 'primary' : 'inherit'}
+                  sx={{ 
+                    mx: { sm: 1, md: 2 },
+                    px: { sm: 1.5, md: 2 },
+                    py: 1,
+                    fontWeight: 500,
+                    fontSize: { sm: '0.9rem', md: '1rem' },
+                    position: 'relative',
+                    letterSpacing: '0.5px',
+                    color: isActive(item.path) ? theme.palette.primary.main : theme.palette.text.primary,
+                    '&:hover': {
+                      backgroundColor: 'transparent',
+                    },
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      width: isActive(item.path) ? '100%' : '0%',
+                      height: '3px',
+                      backgroundColor: theme.palette.primary.main,
+                      transition: 'width 0.3s ease',
+                    },
+                    '&:hover::after': {
+                      width: '100%',
+                    },
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </Box>
+          )}
+
+          {/* Login/Signup Buttons (Desktop) */}
+          {!isMobile && (
+            <Box sx={{ flexGrow: 0, display: 'flex', gap: 2 }}>
+              <Button 
+                component={Link} 
+                to="/login" 
+                variant="outlined" 
+                color="primary"
+                size="small"
+                sx={{ 
+                  fontWeight: 600,
+                  px: { sm: 1.5, md: 2 },
+                  py: { sm: 0.5, md: 0.75 },
+                  fontSize: { sm: '0.8rem', md: '0.9rem' }
+                }}
+              >
+                Login
+              </Button>
+              <Button 
+                component={Link} 
+                to="/signup" 
+                variant="contained" 
+                color="primary"
+                size="small"
+                sx={{ 
+                  fontWeight: 600,
+                  px: { sm: 1.5, md: 2 },
+                  py: { sm: 0.5, md: 0.75 },
+                  fontSize: { sm: '0.8rem', md: '0.9rem' }
+                }}
+              >
+                Signup
+              </Button>
+            </Box>
+          )}
+
+          {/* Mobile Menu Button */}
+          {isMobile && (
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
+              <IconButton 
+                edge="end" 
+                color="inherit" 
+                aria-label="menu" 
+                onClick={toggleMenu}
+                size={isSmallMobile ? "small" : "medium"}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+          )}
+        </Toolbar>
+      </Container>
+      
+      {/* Mobile Menu Drawer */}
+      <SwipeableDrawer
+        anchor="right"
+        open={isOpen}
+        onClose={closeMenu}
+        onOpen={toggleMenu}
+        disableBackdropTransition={!isSmallMobile}
+        disableDiscovery={isSmallMobile}
+        sx={{
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: { xs: '100%', sm: 350 },
+          },
+        }}
+      >
+        {drawer}
+      </SwipeableDrawer>
+    </AppBar>
   );
 };
 

@@ -37,6 +37,7 @@ import logo from '../../images/logo.png';
 const Footer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const socialLinks = [
     { icon: <FacebookIcon />, url: 'https://www.facebook.com', color: '#1877F2', label: 'Facebook' },
@@ -67,7 +68,7 @@ const Footer = () => {
       <Box 
         sx={{ 
           position: 'relative',
-          py: { xs: 6, md: 8 },
+          py: { xs: 4, sm: 5, md: 6, lg: 8 },
           bgcolor: theme.palette.primary.dark,
           color: 'white',
           overflow: 'hidden',
@@ -87,7 +88,7 @@ const Footer = () => {
         }}
       >
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-          <Grid container spacing={4} alignItems="center" justifyContent="center">
+          <Grid container spacing={{ xs: 3, md: 4 }} alignItems="center" justifyContent="center">
             <Grid item xs={12} md={6}>
               <Typography 
                 variant="h3" 
@@ -95,8 +96,9 @@ const Footer = () => {
                 sx={{ 
                   fontFamily: '"Playfair Display", serif',
                   fontWeight: 600,
-                  mb: 2,
-                  textAlign: { xs: 'center', md: 'left' }
+                  mb: { xs: 1, sm: 2 },
+                  textAlign: { xs: 'center', md: 'left' },
+                  fontSize: { xs: '1.75rem', sm: '2.25rem', md: '2.5rem', lg: '3rem' }
                 }}
               >
                 Subscribe to Our Newsletter
@@ -104,26 +106,26 @@ const Footer = () => {
               <Typography 
                 variant="body1" 
                 sx={{ 
-                  mb: 4, 
-                  opacity: 0.9,
-                  textAlign: { xs: 'center', md: 'left' }
+                  mb: { xs: 3, md: 4 },
+                  textAlign: { xs: 'center', md: 'left' },
+                  fontSize: { xs: '0.9rem', sm: '1rem' }
                 }}
               >
-                Stay updated with our latest offers, safari packages, and travel tips for your next African adventure.
+                Stay updated with our latest offers, safari packages, and travel tips.
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
               <Paper 
                 component="form" 
+                elevation={0}
                 sx={{ 
-                  p: '2px 4px',
+                  p: { xs: 0.5, sm: 1 },
                   display: 'flex',
                   alignItems: 'center',
-                  maxWidth: 500,
-                  mx: { xs: 'auto', md: 0 },
-                  ml: { md: 'auto' },
-                  boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
-                  borderRadius: 0
+                  borderRadius: theme.shape.borderRadius,
+                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                  maxWidth: { xs: '100%', md: 500 },
+                  mx: { xs: 'auto', md: 0 }
                 }}
               >
                 <TextField
@@ -134,26 +136,26 @@ const Footer = () => {
                     disableUnderline: true,
                     startAdornment: (
                       <InputAdornment position="start">
-                        <EmailIcon sx={{ color: theme.palette.text.secondary, ml: 1 }} />
+                        <EmailIcon sx={{ color: theme.palette.primary.main, ml: 1 }} />
                       </InputAdornment>
                     ),
-                  }}
-                  sx={{ ml: 1, flex: 1 }}
-                />
-                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                <Button 
-                  sx={{ 
-                    px: 3, 
-                    py: 1, 
-                    borderRadius: 0,
-                    bgcolor: theme.palette.secondary.main,
-                    color: 'white',
-                    '&:hover': {
-                      bgcolor: theme.palette.secondary.dark,
+                    sx: { 
+                      py: { xs: 0.5, sm: 1 },
+                      fontSize: { xs: '0.9rem', sm: '1rem' }
                     }
-                  }} 
-                  aria-label="subscribe"
+                  }}
+                  sx={{ ml: 1 }}
+                />
+                <Button 
+                  variant="contained" 
+                  color="primary"
                   endIcon={<SendIcon />}
+                  sx={{ 
+                    borderRadius: theme.shape.borderRadius,
+                    px: { xs: 2, sm: 3 },
+                    py: { xs: 1, sm: 1.5 },
+                    fontSize: { xs: '0.8rem', sm: '0.9rem' }
+                  }}
                 >
                   Subscribe
                 </Button>
@@ -166,97 +168,95 @@ const Footer = () => {
       {/* Main Footer */}
       <Box 
         sx={{ 
-          bgcolor: '#0A1929', 
+          bgcolor: theme.palette.grey[900],
           color: 'white',
-          py: { xs: 6, md: 10 },
-          position: 'relative',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: 'radial-gradient(circle at top right, rgba(11, 79, 108, 0.2), transparent 70%)',
-            zIndex: 0,
-          }
+          pt: { xs: 6, sm: 8, md: 10 },
+          pb: { xs: 4, sm: 5, md: 6 }
         }}
       >
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={4}>
-              <Box sx={{ mb: 4, display: 'flex', alignItems: 'center' }}>
-                <img 
+        <Container maxWidth="lg">
+          <Grid container spacing={{ xs: 4, md: 6 }}>
+            {/* Company Info */}
+            <Grid item xs={12} sm={6} md={4}>
+              <Box sx={{ mb: { xs: 3, md: 4 } }}>
+                <Box 
+                  component="img" 
                   src={logo} 
-                  alt="Therapy Tours Logo" 
-                  style={{ 
-                    height: 50, 
-                    marginRight: 16,
-                    filter: 'brightness(0) invert(1)'
-                  }} 
+                  alt="Therapy Tours Logo"
+                  sx={{ 
+                    height: { xs: 50, sm: 60 },
+                    width: 'auto',
+                    mb: 2
+                  }}
                 />
                 <Typography 
-                  variant="h5" 
-                  component="div" 
+                  variant="h6" 
                   sx={{ 
                     fontFamily: '"Playfair Display", serif',
-                    fontWeight: 600
+                    fontWeight: 600,
+                    mb: 2,
+                    fontSize: { xs: '1.25rem', sm: '1.5rem' }
                   }}
                 >
                   Therapy Tours
                 </Typography>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    mb: 3,
+                    maxWidth: 350,
+                    fontSize: { xs: '0.85rem', sm: '0.9rem' }
+                  }}
+                >
+                  Specializing in luxury safari experiences across Kenya and East Africa. We create unforgettable journeys that connect you with nature and wildlife.
+                </Typography>
+                <Stack direction="row" spacing={{ xs: 1, sm: 2 }}>
+                  {socialLinks.map((social, index) => (
+                    <IconButton 
+                      key={index} 
+                      component="a" 
+                      href={social.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      size={isSmallMobile ? "small" : "medium"}
+                      sx={{ 
+                        color: 'white',
+                        bgcolor: social.color,
+                        '&:hover': {
+                          bgcolor: social.color,
+                          transform: 'translateY(-3px)',
+                          boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+                        },
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      {social.icon}
+                    </IconButton>
+                  ))}
+                </Stack>
               </Box>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  mb: 3,
-                  lineHeight: 1.8
-                }}
-              >
-                Therapy Tours & Travel is a premier Safari Specialist company in East Africa. 
-                We excel in customized safaris based on your needs and desired destinations 
-                in Kenya, Uganda, Tanzania, and Rwanda, providing unforgettable experiences.
-              </Typography>
-              <Stack direction="row" spacing={1} sx={{ mb: 4 }}>
-                {socialLinks.map((social, index) => (
-                  <IconButton 
-                    key={index}
-                    aria-label={social.label} 
-                    component="a" 
-                    href={social.url} 
-                    target="_blank"
-                    sx={{ 
-                      color: 'rgba(255, 255, 255, 0.7)', 
-                      '&:hover': { 
-                        color: social.color,
-                        transform: 'translateY(-3px)'
-                      },
-                      transition: 'all 0.3s ease'
-                    }}
-                  >
-                    {social.icon}
-                  </IconButton>
-                ))}
-              </Stack>
             </Grid>
-            
-            <Grid item xs={12} sm={6} md={4}>
+
+            {/* Quick Links */}
+            <Grid item xs={12} sm={6} md={3}>
               <Typography 
                 variant="h6" 
-                component="h2" 
                 sx={{ 
-                  fontWeight: 600, 
-                  mb: 3,
+                  fontWeight: 600,
+                  mb: { xs: 2, md: 3 },
                   position: 'relative',
-                  paddingBottom: 2,
+                  display: 'inline-block',
+                  pb: 1,
+                  fontSize: { xs: '1.1rem', sm: '1.25rem' },
                   '&::after': {
                     content: '""',
                     position: 'absolute',
                     bottom: 0,
                     left: 0,
-                    width: 60,
-                    height: 2,
+                    width: '50px',
+                    height: '2px',
                     backgroundColor: theme.palette.secondary.main
                   }
                 }}
@@ -264,53 +264,62 @@ const Footer = () => {
                 Quick Links
               </Typography>
               <List disablePadding>
-                {quickLinks.map((item, index) => (
+                {quickLinks.map((link, index) => (
                   <ListItem 
                     key={index} 
                     component={Link} 
-                    to={item.path} 
+                    to={link.path}
                     disablePadding
                     sx={{ 
-                      mb: 1,
                       color: 'rgba(255, 255, 255, 0.7)',
+                      py: { xs: 0.75, sm: 1 },
+                      transition: 'all 0.3s ease',
                       textDecoration: 'none',
                       '&:hover': {
-                        color: theme.palette.secondary.light,
-                      },
-                      transition: 'color 0.2s'
+                        color: 'white',
+                        pl: 1
+                      }
                     }}
                   >
-                    <ListItemIcon sx={{ minWidth: 30, color: 'inherit' }}>
-                      <ArrowIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText 
-                      primary={item.label} 
-                      primaryTypographyProps={{ 
-                        variant: 'body2',
-                        sx: { fontWeight: 500 }
+                    <ArrowIcon 
+                      fontSize="small" 
+                      sx={{ 
+                        mr: 1, 
+                        color: theme.palette.secondary.main,
+                        fontSize: { xs: '0.8rem', sm: '1rem' }
                       }} 
                     />
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        fontSize: { xs: '0.85rem', sm: '0.9rem' }
+                      }}
+                    >
+                      {link.label}
+                    </Typography>
                   </ListItem>
                 ))}
               </List>
             </Grid>
-            
-            <Grid item xs={12} sm={6} md={4}>
+
+            {/* Contact Info */}
+            <Grid item xs={12} sm={6} md={5}>
               <Typography 
                 variant="h6" 
-                component="h2" 
                 sx={{ 
-                  fontWeight: 600, 
-                  mb: 3,
+                  fontWeight: 600,
+                  mb: { xs: 2, md: 3 },
                   position: 'relative',
-                  paddingBottom: 2,
+                  display: 'inline-block',
+                  pb: 1,
+                  fontSize: { xs: '1.1rem', sm: '1.25rem' },
                   '&::after': {
                     content: '""',
                     position: 'absolute',
                     bottom: 0,
                     left: 0,
-                    width: 60,
-                    height: 2,
+                    width: '50px',
+                    height: '2px',
                     backgroundColor: theme.palette.secondary.main
                   }
                 }}
@@ -318,69 +327,95 @@ const Footer = () => {
                 Contact Us
               </Typography>
               <List disablePadding>
-                {contactInfo.map((item, index) => (
-                  <ListItem key={index} disablePadding sx={{ mb: 2 }}>
-                    <ListItemIcon sx={{ minWidth: 36, color: theme.palette.secondary.main }}>
-                      {item.icon}
+                {contactInfo.map((info, index) => (
+                  <ListItem 
+                    key={index} 
+                    disablePadding
+                    sx={{ 
+                      py: { xs: 1, sm: 1.5 },
+                      alignItems: 'flex-start'
+                    }}
+                  >
+                    <ListItemIcon 
+                      sx={{ 
+                        color: theme.palette.secondary.main,
+                        minWidth: { xs: 36, sm: 40 }
+                      }}
+                    >
+                      {info.icon}
                     </ListItemIcon>
                     <ListItemText 
-                      primary={item.text} 
+                      primary={info.text} 
                       primaryTypographyProps={{ 
-                        variant: 'body2',
+                        variant: 'body2', 
                         sx: { 
                           color: 'rgba(255, 255, 255, 0.7)',
-                          lineHeight: 1.6
+                          fontSize: { xs: '0.85rem', sm: '0.9rem' }
                         }
-                      }} 
+                      }}
                     />
                   </ListItem>
                 ))}
               </List>
             </Grid>
           </Grid>
-        </Container>
-      </Box>
-      
-      {/* Copyright Section */}
-      <Box 
-        sx={{ 
-          bgcolor: '#071521', 
-          color: 'rgba(255, 255, 255, 0.6)',
-          py: 3
-        }}
-      >
-        <Container maxWidth="lg">
-          <Grid container alignItems="center" justifyContent="space-between">
-            <Grid item xs={12} md="auto" sx={{ textAlign: { xs: 'center', md: 'left' }, mb: { xs: 2, md: 0 } }}>
-              <Typography variant="body2">
-                &copy; {new Date().getFullYear()} Therapy Tours & Travel. All Rights Reserved.
-              </Typography>
-            </Grid>
-            {!isMobile && <Divider orientation="vertical" flexItem sx={{ mx: 2, borderColor: 'rgba(255, 255, 255, 0.1)' }} />}
-            <Grid item xs={12} md="auto" sx={{ textAlign: { xs: 'center', md: 'right' } }}>
-              <Stack 
-                direction={{ xs: 'column', sm: 'row' }} 
-                spacing={{ xs: 1, sm: 3 }}
-                justifyContent={{ xs: 'center', md: 'flex-end' }}
+
+          <Divider sx={{ my: { xs: 3, sm: 4 }, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+          
+          {/* Copyright */}
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              flexDirection: { xs: 'column', sm: 'row' },
+              justifyContent: 'space-between',
+              alignItems: { xs: 'center', sm: 'flex-start' },
+              textAlign: { xs: 'center', sm: 'left' }
+            }}
+          >
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: 'rgba(255, 255, 255, 0.6)',
+                mb: { xs: 1, sm: 0 },
+                fontSize: { xs: '0.8rem', sm: '0.85rem' }
+              }}
+            >
+              © {new Date().getFullYear()} Therapy Tours. All rights reserved.
+            </Typography>
+            <Box 
+              sx={{ 
+                display: 'flex',
+                gap: { xs: 2, sm: 3 }
+              }}
+            >
+              <Typography 
+                component={Link} 
+                to="/privacy" 
+                variant="body2" 
+                sx={{ 
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  textDecoration: 'none',
+                  '&:hover': { color: 'white' },
+                  fontSize: { xs: '0.8rem', sm: '0.85rem' }
+                }}
               >
-                <Link to="/privacy" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  <Typography variant="body2" sx={{ '&:hover': { color: theme.palette.secondary.light } }}>
-                    Privacy Policy
-                  </Typography>
-                </Link>
-                <Link to="/terms" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  <Typography variant="body2" sx={{ '&:hover': { color: theme.palette.secondary.light } }}>
-                    Terms of Service
-                  </Typography>
-                </Link>
-                <Link to="/faq" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  <Typography variant="body2" sx={{ '&:hover': { color: theme.palette.secondary.light } }}>
-                    FAQ
-                  </Typography>
-                </Link>
-              </Stack>
-            </Grid>
-          </Grid>
+                Privacy Policy
+              </Typography>
+              <Typography 
+                component={Link} 
+                to="/terms" 
+                variant="body2" 
+                sx={{ 
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  textDecoration: 'none',
+                  '&:hover': { color: 'white' },
+                  fontSize: { xs: '0.8rem', sm: '0.85rem' }
+                }}
+              >
+                Terms of Service
+              </Typography>
+            </Box>
+          </Box>
         </Container>
       </Box>
     </Box>

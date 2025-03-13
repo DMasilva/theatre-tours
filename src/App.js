@@ -17,6 +17,15 @@ import ScrollToTop from './components/ScrollToTop';
 
 // Create a custom theme for a luxury travel website
 let theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   palette: {
     primary: {
       main: '#0B4F6C', // Deep teal blue - sophisticated and trustworthy
@@ -67,70 +76,134 @@ let theme = createTheme({
       fontWeight: 700,
       letterSpacing: '-0.01562em',
       lineHeight: 1.2,
+      fontSize: {
+        xs: '2.5rem',
+        sm: '3rem',
+        md: '3.5rem',
+        lg: '4rem',
+      },
     },
     h2: {
       fontFamily: '"Playfair Display", serif',
       fontWeight: 600,
       letterSpacing: '-0.00833em',
       lineHeight: 1.3,
+      fontSize: {
+        xs: '2rem',
+        sm: '2.5rem',
+        md: '3rem',
+        lg: '3.5rem',
+      },
     },
     h3: {
       fontFamily: '"Playfair Display", serif',
       fontWeight: 600,
       letterSpacing: '0em',
       lineHeight: 1.3,
+      fontSize: {
+        xs: '1.75rem',
+        sm: '2rem',
+        md: '2.5rem',
+        lg: '2.75rem',
+      },
     },
     h4: {
       fontFamily: '"Playfair Display", serif',
       fontWeight: 600,
       letterSpacing: '0.00735em',
       lineHeight: 1.4,
+      fontSize: {
+        xs: '1.5rem',
+        sm: '1.75rem',
+        md: '2rem',
+        lg: '2.25rem',
+      },
     },
     h5: {
       fontFamily: '"Poppins", sans-serif',
       fontWeight: 500,
       letterSpacing: '0em',
       lineHeight: 1.5,
+      fontSize: {
+        xs: '1.25rem',
+        sm: '1.4rem',
+        md: '1.5rem',
+        lg: '1.75rem',
+      },
     },
     h6: {
       fontFamily: '"Poppins", sans-serif',
       fontWeight: 500,
       letterSpacing: '0.0075em',
       lineHeight: 1.6,
+      fontSize: {
+        xs: '1.1rem',
+        sm: '1.2rem',
+        md: '1.25rem',
+        lg: '1.3rem',
+      },
     },
     subtitle1: {
       fontFamily: '"Poppins", sans-serif',
       letterSpacing: '0.00938em',
       lineHeight: 1.6,
+      fontSize: {
+        xs: '0.9rem',
+        sm: '1rem',
+        md: '1.1rem',
+      },
     },
     subtitle2: {
       fontFamily: '"Poppins", sans-serif',
       fontWeight: 500,
       letterSpacing: '0.00714em',
       lineHeight: 1.6,
+      fontSize: {
+        xs: '0.8rem',
+        sm: '0.875rem',
+        md: '0.95rem',
+      },
     },
     body1: {
       fontFamily: '"Poppins", sans-serif',
       letterSpacing: '0.00938em',
       lineHeight: 1.7,
-      fontSize: '1rem',
+      fontSize: {
+        xs: '0.9rem',
+        sm: '0.95rem',
+        md: '1rem',
+      },
     },
     body2: {
       fontFamily: '"Poppins", sans-serif',
       letterSpacing: '0.01071em',
       lineHeight: 1.6,
-      fontSize: '0.9rem',
+      fontSize: {
+        xs: '0.8rem',
+        sm: '0.85rem',
+        md: '0.9rem',
+      },
     },
     button: {
       fontFamily: '"Poppins", sans-serif',
       textTransform: 'none',
       fontWeight: 600,
       letterSpacing: '0.02857em',
+      fontSize: {
+        xs: '0.85rem',
+        sm: '0.9rem',
+        md: '0.95rem',
+      },
     },
     caption: {
       fontFamily: '"Poppins", sans-serif',
       letterSpacing: '0.03333em',
       lineHeight: 1.4,
+      fontSize: {
+        xs: '0.7rem',
+        sm: '0.75rem',
+        md: '0.8rem',
+      },
     },
     overline: {
       fontFamily: '"Poppins", sans-serif',
@@ -138,6 +211,11 @@ let theme = createTheme({
       letterSpacing: '0.08333em',
       lineHeight: 1.4,
       textTransform: 'uppercase',
+      fontSize: {
+        xs: '0.65rem',
+        sm: '0.7rem',
+        md: '0.75rem',
+      },
     },
   },
   shape: {
@@ -175,6 +253,44 @@ let theme = createTheme({
       styleOverrides: {
         body: {
           scrollBehavior: 'smooth',
+          WebkitTapHighlightColor: 'transparent',
+        },
+        '@media (max-width: 600px)': {
+          html: {
+            fontSize: '14px',
+          },
+        },
+        '@media (min-width: 601px) and (max-width: 960px)': {
+          html: {
+            fontSize: '15px',
+          },
+        },
+        '@media (min-width: 961px)': {
+          html: {
+            fontSize: '16px',
+          },
+        },
+        img: {
+          maxWidth: '100%',
+          height: 'auto',
+        },
+      },
+    },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          paddingLeft: {
+            xs: 16,
+            sm: 24,
+            md: 24,
+            lg: 24,
+          },
+          paddingRight: {
+            xs: 16,
+            sm: 24,
+            md: 24,
+            lg: 24,
+          },
         },
       },
     },
@@ -182,7 +298,16 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 0,
-          padding: '10px 24px',
+          padding: {
+            xs: '8px 16px',
+            sm: '10px 20px',
+            md: '10px 24px',
+          },
+          fontSize: {
+            xs: '0.85rem',
+            sm: '0.9rem',
+            md: '0.95rem',
+          },
           transition: 'all 0.3s ease',
           position: 'relative',
           overflow: 'hidden',
@@ -198,7 +323,10 @@ let theme = createTheme({
             transition: 'transform 0.3s ease',
           },
           '&:hover': {
-            transform: 'translateY(-3px)',
+            transform: {
+              xs: 'translateY(-2px)',
+              sm: 'translateY(-3px)',
+            },
             boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
             '&::before': {
               transform: 'translateX(0)',
@@ -223,6 +351,20 @@ let theme = createTheme({
         containedSecondary: {
           background: 'linear-gradient(45deg, #E8871E, #FFA94D)',
         },
+        sizeLarge: {
+          padding: {
+            xs: '10px 22px',
+            sm: '12px 26px',
+            md: '14px 32px',
+          },
+        },
+        sizeSmall: {
+          padding: {
+            xs: '4px 10px',
+            sm: '6px 12px',
+            md: '6px 16px',
+          },
+        },
       },
     },
     MuiCard: {
@@ -233,8 +375,15 @@ let theme = createTheme({
           overflow: 'hidden',
           transition: 'transform 0.5s ease, box-shadow 0.5s ease',
           '&:hover': {
-            transform: 'translateY(-10px)',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
+            transform: {
+              xs: 'translateY(-5px)',
+              sm: 'translateY(-8px)',
+              md: 'translateY(-10px)',
+            },
+            boxShadow: {
+              xs: '0 15px 30px rgba(0,0,0,0.1)',
+              sm: '0 20px 40px rgba(0,0,0,0.12)',
+            },
           },
         },
       },
@@ -269,6 +418,11 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 0,
+          fontSize: {
+            xs: '0.9rem',
+            sm: '0.95rem',
+            md: '1rem',
+          },
         },
       },
     },
@@ -286,6 +440,13 @@ let theme = createTheme({
         notchedOutline: {
           borderColor: 'rgba(0, 0, 0, 0.15)',
           transition: 'border-color 0.3s ease',
+        },
+        input: {
+          padding: {
+            xs: '12px 14px',
+            sm: '14px 16px',
+            md: '16px 18px',
+          },
         },
       },
     },
@@ -317,6 +478,17 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 4,
+          fontSize: {
+            xs: '0.75rem',
+            sm: '0.8rem',
+            md: '0.85rem',
+          },
+        },
+        sizeSmall: {
+          height: {
+            xs: 24,
+            sm: 28,
+          },
         },
       },
     },
@@ -324,6 +496,16 @@ let theme = createTheme({
       styleOverrides: {
         paper: {
           borderRadius: 0,
+          margin: {
+            xs: 16,
+            sm: 24,
+            md: 32,
+          },
+          maxWidth: {
+            xs: 'calc(100% - 32px)',
+            sm: 'calc(100% - 48px)',
+            md: 'calc(100% - 64px)',
+          },
         },
       },
     },
@@ -331,13 +513,22 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 0,
+          fontSize: {
+            xs: '0.8rem',
+            sm: '0.85rem',
+            md: '0.9rem',
+          },
         },
       },
     },
     MuiDivider: {
       styleOverrides: {
         root: {
-          margin: '24px 0',
+          margin: {
+            xs: '16px 0',
+            sm: '20px 0',
+            md: '24px 0',
+          },
         },
       },
     },
@@ -352,6 +543,16 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+          width: {
+            xs: 36,
+            sm: 40,
+            md: 48,
+          },
+          height: {
+            xs: 36,
+            sm: 40,
+            md: 48,
+          },
         },
       },
     },
@@ -359,6 +560,64 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           transition: 'background-color 0.3s ease',
+          padding: {
+            xs: '8px 12px',
+            sm: '10px 16px',
+            md: '12px 20px',
+          },
+        },
+      },
+    },
+    MuiPagination: {
+      styleOverrides: {
+        root: {
+          '& .MuiPaginationItem-root': {
+            margin: {
+              xs: '0 2px',
+              sm: '0 3px',
+              md: '0 4px',
+            },
+          },
+        },
+        ul: {
+          gap: {
+            xs: 4,
+            sm: 6,
+            md: 8,
+          },
+        },
+      },
+    },
+    MuiGrid: {
+      styleOverrides: {
+        container: {
+          marginTop: {
+            xs: -8,
+            sm: -12,
+            md: -16,
+          },
+          marginLeft: {
+            xs: -8,
+            sm: -12,
+            md: -16,
+          },
+          width: {
+            xs: 'calc(100% + 16px)',
+            sm: 'calc(100% + 24px)',
+            md: 'calc(100% + 32px)',
+          },
+        },
+        item: {
+          paddingTop: {
+            xs: 8,
+            sm: 12,
+            md: 16,
+          },
+          paddingLeft: {
+            xs: 8,
+            sm: 12,
+            md: 16,
+          },
         },
       },
     },
@@ -375,7 +634,10 @@ function App() {
       <div className="flex flex-col min-h-screen">
         <ScrollToTop />
         <Navbar />
-        <div className="flex-grow pt-20"> {/* Add pt-20 to create space below the fixed navbar */}
+        <div className="flex-grow" style={{ 
+          paddingTop: { xs: '56px', sm: '64px', md: '72px' },
+          minHeight: 'calc(100vh - 64px)'
+        }}> 
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/trips" element={<AllTrips />} />
