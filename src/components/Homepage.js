@@ -1,27 +1,109 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { 
+  Box, 
+  Typography, 
+  Button, 
+  Container,
+  useTheme
+} from '@mui/material';
+import ExploreIcon from '@mui/icons-material/Explore';
 import truck from '../images/truck.jpg';
 import MainPage from './MainPage';
 
 const Homepage = () => {
+  const theme = useTheme();
+
   return (
-    <div className="relative w-full h-auto">
-      <div className="relative w-full h-screen">
-        <img className="w-full h-full object-cover" src={truck} alt="an elephant" />
-        <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4'>
-          <div className=''>
-            <p className='text-4xl md:text-6xl font-bold text-gray-200 text-center m-4'>The Ultimate African</p>
-            <p className='text-2xl md:text-4xl font-bold text-gray-200 text-center m-4'>Safari Experience</p>
-          </div>
-          <div className='flex justify-center items-center'>
-            <Link to="/trips" className='font-bold bg-white h-10 w-32 hover:bg-blue-200 text-center m-2 rounded text-gray flex items-center justify-center'>
-              Continue
-            </Link>
-          </div>
-        </div>
-      </div>
+    <Box sx={{ width: '100%' }}>
+      {/* Hero Section */}
+      <Box 
+        sx={{ 
+          position: 'relative',
+          width: '100%',
+          height: '100vh',
+          overflow: 'hidden'
+        }}
+      >
+        {/* Background Image */}
+        <Box
+          component="img"
+          src={truck}
+          alt="Safari truck in Africa"
+          sx={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            filter: 'brightness(0.7)'
+          }}
+        />
+        
+        {/* Hero Content */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            textAlign: 'center',
+            width: '100%',
+            p: 4
+          }}
+        >
+          <Typography 
+            variant="h2" 
+            component="h1"
+            sx={{
+              color: 'white',
+              fontWeight: 700,
+              mb: 2,
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+              fontSize: { xs: '2.5rem', md: '4rem' }
+            }}
+          >
+            The Ultimate African
+          </Typography>
+          
+          <Typography 
+            variant="h3"
+            sx={{
+              color: 'white',
+              fontWeight: 600,
+              mb: 4,
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+              fontSize: { xs: '1.5rem', md: '2.5rem' }
+            }}
+          >
+            Safari Experience
+          </Typography>
+          
+          <Button
+            component={Link}
+            to="/trips"
+            variant="contained"
+            size="large"
+            endIcon={<ExploreIcon />}
+            sx={{
+              bgcolor: 'white',
+              color: theme.palette.primary.main,
+              fontWeight: 'bold',
+              px: 4,
+              py: 1.5,
+              '&:hover': {
+                bgcolor: theme.palette.primary.light,
+                color: 'white'
+              },
+              boxShadow: theme.shadows[4]
+            }}
+          >
+            Explore Trips
+          </Button>
+        </Box>
+      </Box>
+      
+      {/* Main Content */}
       <MainPage />
-    </div>
+    </Box>
   );
 };
 

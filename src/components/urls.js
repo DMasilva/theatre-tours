@@ -14,7 +14,7 @@ import zebra from '../images/zebra.jpg'
 const urls = [
   { url: girrafes, name: 'Girrafe Center' },
   { url: flamingo, name: 'Lake Nakuru' },
-  { url: hotair, name: 'Hotair Baloons' },
+  { url: hotair, name: 'Hot Air Baloons' },
   { url: lions, name: 'National Park' },
   { url: elephant, name: 'Serengeti' },
 
