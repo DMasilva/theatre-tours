@@ -3,7 +3,7 @@ import { FaUser, FaEnvelope, FaLock, FaAddressCard } from 'react-icons/fa';
 
 const Signup = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen p-4" style={{ backgroundColor: '#F5F1E8' }}>
+    <div className="flex items-center justify-center min-h-screen p-4" style={{ backgroundColor: '#F5F1E8', paddingTop: '100px', paddingBottom: '50px' }}>
       <div className="bg-white p-8 md:p-12 rounded-lg shadow-lg w-full max-w-3xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center" style={{ color: '#FF7420' }}>Sign Up</h2>
         <form>

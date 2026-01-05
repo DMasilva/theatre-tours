@@ -2,7 +2,7 @@ import React from 'react';
 
 const ContactForm = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen p-4" style={{ backgroundColor: '#F5F1E8' }}>
+    <div className="flex items-center justify-center min-h-screen p-4" style={{ backgroundColor: '#F5F1E8', paddingTop: '100px', paddingBottom: '50px' }}>
       <div className="bg-white p-8 md:p-12 rounded-lg shadow-lg w-full max-w-2xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center" style={{ color: '#FF7420' }}>Contact Us</h2>
         <p className="text-center text-gray-600 mb-8">We'd love to hear from you! Send us a message and we'll respond as soon as possible.</p>

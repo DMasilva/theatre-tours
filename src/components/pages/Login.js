@@ -2,7 +2,7 @@ import React from 'react';
 
 const Login = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen" style={{ backgroundColor: '#F5F1E8' }}>
+    <div className="flex items-center justify-center min-h-screen" style={{ backgroundColor: '#F5F1E8', paddingTop: '100px', paddingBottom: '50px' }}>
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-3xl font-bold mb-6 text-center" style={{ color: '#FF7420' }}>Login</h2>
         <form>
@@ -50,7 +50,7 @@ const Login = () => {
           </div>
         </form>
         <p className="mt-6 text-center text-gray-600">
-          Don't have an account? <a className="font-bold transition-colors" style={{ color: '#FF7420' }} onMouseEnter={(e) => e.target.style.color = '#E65A00'} onMouseLeave={(e) => e.target.style.color = '#FF7420'} href="#">Sign Up</a>
+          Don't have an account? <a className="font-bold transition-colors" style={{ color: '#FF7420' }} onMouseEnter={(e) => e.target.style.color = '#E65A00'} onMouseLeave={(e) => e.target.style.color = '#FF7420'} href="/signup">Sign Up</a>
         </p>
       </div>
     </div>
