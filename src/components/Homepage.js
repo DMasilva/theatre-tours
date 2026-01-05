@@ -61,7 +61,7 @@ const Homepage = () => {
               fontSize: { xs: '2.5rem', md: '4rem' }
             }}
           >
-            The Ultimate African
+            Creating Memorable
           </Typography>
           
           <Typography 
@@ -74,7 +74,7 @@ const Homepage = () => {
               fontSize: { xs: '1.5rem', md: '2.5rem' }
             }}
           >
-            Safari Experience
+            Travel Experiences
           </Typography>
           
           <Button
@@ -85,7 +85,7 @@ const Homepage = () => {
             endIcon={<ExploreIcon />}
             sx={{
               bgcolor: 'white',
-              color: theme.palette.primary.main,
+              color: 'white',
               fontWeight: 'bold',
               px: 4,
               py: 1.5,

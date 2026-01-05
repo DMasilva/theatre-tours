@@ -1,6 +1,6 @@
 {
-  "name": "theatre_tours",
-  "version": "0.1.0",
+  "name": "royal-dastinos-tours",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",

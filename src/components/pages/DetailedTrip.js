@@ -119,7 +119,7 @@ const DetailedTrip = () => {
   };
 
   return (
-    <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: theme.palette.grey[50] }}>
+    <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: theme.palette.background.default }}>
       <Container maxWidth="lg">
         {/* Back Button */}
         <Button
@@ -625,7 +625,7 @@ const DetailedTrip = () => {
                       <Phone sx={{ color: theme.palette.primary.main }} />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="+254 790 604 032" 
+                      primary="+254 736 183 916" 
                       primaryTypographyProps={{ 
                         variant: 'body1',
                         fontWeight: 500,
@@ -638,7 +638,7 @@ const DetailedTrip = () => {
                       <Email sx={{ color: theme.palette.primary.main }} />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="info@therapytours.com" 
+                      primary="info@royaldastinos.org" 
                       primaryTypographyProps={{ 
                         variant: 'body1',
                         fontWeight: 500,

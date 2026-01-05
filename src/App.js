@@ -28,16 +28,16 @@ let theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#0B4F6C', // Deep teal blue - sophisticated and trustworthy
-      light: '#2D7DA8',
-      dark: '#073A4F',
+      main: '#FF7420', // Royal Dastinos orange - vibrant and energetic
+      light: '#FF9554',
+      dark: '#E65A00',
       contrastText: '#fff',
     },
     secondary: {
-      main: '#E8871E', // Warm orange - adventure and excitement
-      light: '#FFA94D',
-      dark: '#C26401',
-      contrastText: '#fff',
+      main: '#E8E0D1', // Royal Dastinos light grey - elegant and sophisticated
+      light: '#F5F1E8',
+      dark: '#C9C2B3',
+      contrastText: '#2A2A2A',
     },
     success: {
       main: '#2E7D32',
@@ -45,14 +45,14 @@ let theme = createTheme({
       dark: '#1B5E20',
     },
     warning: {
-      main: '#ED6A5A', // Coral - warm and inviting
-      light: '#FF8A80',
-      dark: '#BF360C',
+      main: '#FF7420', // Use brand orange for warnings
+      light: '#FF9554',
+      dark: '#E65A00',
     },
     info: {
-      main: '#5B85AA', // Soft blue - calming and professional
-      light: '#7FA7C9',
-      dark: '#3A678F',
+      main: '#FF7420', // Use brand orange for info
+      light: '#FF9554',
+      dark: '#E65A00',
     },
     error: {
       main: '#D32F2F',
@@ -60,12 +60,12 @@ let theme = createTheme({
       dark: '#C62828',
     },
     background: {
-      default: '#F9F9F9', // Light off-white for a clean, airy feel
+      default: '#F5F1E8', // Lighter shade of brand grey for background
       paper: '#FFFFFF',
     },
     text: {
       primary: '#2A2A2A', // Almost black for better readability
-      secondary: '#546E7A', // Blue-gray for secondary text
+      secondary: '#6B6B6B', // Neutral grey for secondary text
     },
     divider: 'rgba(0, 0, 0, 0.08)',
   },
@@ -346,10 +346,14 @@ let theme = createTheme({
           },
         },
         containedPrimary: {
-          background: 'linear-gradient(45deg, #0B4F6C, #2D7DA8)',
+          background: 'linear-gradient(45deg, #FF7420, #FF9554)',
         },
         containedSecondary: {
-          background: 'linear-gradient(45deg, #E8871E, #FFA94D)',
+          background: 'linear-gradient(45deg, #E8E0D1, #F5F1E8)',
+          color: '#2A2A2A',
+          '&:hover': {
+            background: 'linear-gradient(45deg, #C9C2B3, #E8E0D1)',
+          },
         },
         sizeLarge: {
           padding: {
@@ -431,7 +435,7 @@ let theme = createTheme({
         root: {
           borderRadius: 0,
           '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#0B4F6C',
+            borderColor: '#FF7420',
           },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderWidth: 2,
@@ -465,7 +469,7 @@ let theme = createTheme({
             height: '2px',
             bottom: 0,
             left: 0,
-            backgroundColor: '#0B4F6C',
+            backgroundColor: '#FF7420',
             transition: 'width 0.3s ease',
           },
           '&:hover::after': {

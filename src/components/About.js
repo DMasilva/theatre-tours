@@ -33,7 +33,9 @@ import {
   Payments,
   AccessTime,
   Diversity3,
-  Handshake
+  Handshake,
+  Hiking,
+  LocalActivity
 } from '@mui/icons-material';
 import { trips } from '../data';
 
@@ -65,13 +67,14 @@ const About = () => {
             transition: 'opacity 0.3s ease',
             zIndex: 0,
           },
-          '&:hover': {
-            transform: 'translateY(-5px)',
-            boxShadow: theme.shadows[4],
-            '&::before': {
-              opacity: 1,
-            }
-          },
+                  '&:hover': {
+                    transform: 'translateY(-5px)',
+                    boxShadow: theme.shadows[4],
+                    backgroundColor: 'rgba(255, 116, 32, 0.02)',
+                    '&::before': {
+                      opacity: 1,
+                    }
+                  },
           transition: 'transform 0.3s ease, box-shadow 0.3s ease',
         }}
       >
@@ -176,7 +179,7 @@ const About = () => {
           px: 2,
           textAlign: 'center',
           position: 'relative',
-          backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url("https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1772&q=80")',
+          backgroundImage: 'linear-gradient(rgba(255, 116, 32, 0.7), rgba(232, 224, 209, 0.5)), url("https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1772&q=80")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
@@ -192,7 +195,7 @@ const About = () => {
                 sx={{ 
                   letterSpacing: 3,
                   fontSize: '1rem',
-                  color: theme.palette.secondary.light,
+                  color: '#FFFFFF',
                   mb: 2,
                   display: 'block'
                 }}
@@ -210,7 +213,7 @@ const About = () => {
                   fontFamily: '"Playfair Display", serif',
                 }}
               >
-                About Therapy Tours & Travel
+                About Royal Dastinos Tours and Travel
               </Typography>
               <Typography 
                 variant="h5" 
@@ -224,7 +227,7 @@ const About = () => {
                   lineHeight: 1.6
                 }}
               >
-                Your gateway to unforgettable African safari experiences that create emotional memories lasting a lifetime
+                Creating Memorable Travel Experiences - Your trusted partner for unforgettable adventures
               </Typography>
             </Box>
           </Fade>
@@ -232,10 +235,10 @@ const About = () => {
       </Box>
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1, pb: 10 }}>
-        {/* Safari Experience Section */}
+        {/* Who We Are Section */}
         <Section 
-          title="The Ultimate African Safari Experience" 
-          content="Africa is where you make emotional memories that last forever – you will never forget how you were made to feel. These are not our words but of John Mitchel-Adams, an Australian resident of Africa. With a strong focus on remote premium destinations, Therapy Tours & Travel will fully immerse you into an African safari experience like no other."
+          title="Who We Are" 
+          content="Royal Dastinos Tours and Travel is a customer-focused tours and travel company dedicated to offering memorable, affordable, and well-organized travel experiences. We specialize in customized travel solutions for individuals, families, groups, and corporate clients across Kenya and beyond."
           icon={<Timeline />}
           delay={100}
         />
@@ -295,12 +298,13 @@ const About = () => {
           </Grid>
         </Box>
 
-        {/* Company Profile */}
+        {/* Commitment Section */}
         <Section 
-          title="Company Profile" 
-          content="Therapy Tours & Travel is a Safari Specialist company in East Africa. We excel in customised safaris based on your needs and desired destinations in Kenya, Uganda, Tanzania, and Rwanda. We are dedicated to service excellence, providing undivided attention to our clients and meticulous to detail as well as uncompromising safety standards. We offer unique experiences that are tailored to provide memorable moments for you, your family, and friends."
+          title="Our Commitment" 
+          content="We are committed to safety, reliability, customer satisfaction, and responsible eco-tourism. Every journey we plan is handled with care, integrity, and attention to detail. Your satisfaction and memorable experience are at the heart of everything we do."
           delay={300}
           borderColor={theme.palette.info.main}
+          icon={<Handshake />}
         />
 
         {/* Mission and Vision */}
@@ -358,7 +362,7 @@ const About = () => {
                       fontSize: '1.05rem'
                     }}
                   >
-                    We aim to be the most sought-after travel agent in East Africa, offering travel services with a high level of professionalism, integrity, and honesty. Our mission is to create unforgettable experiences that exceed our clients' expectations while promoting sustainable tourism practices.
+                    To deliver safe, enjoyable, and value-driven travel experiences through professional service, reliable partnerships, and customer-centered solutions. We strive to create unforgettable experiences that exceed expectations while promoting sustainable tourism practices.
                   </Typography>
                 </Box>
               </Paper>
@@ -417,7 +421,7 @@ const About = () => {
                       fontSize: '1.05rem'
                     }}
                   >
-                    To work with other service providers in the industry to ensure our clients' needs are met, however diverse. We envision becoming the leading safari specialist in East Africa, known for our exceptional service, authentic experiences, and commitment to conservation.
+                    To become a trusted and leading tours and travel company known for excellence, reliability, and unforgettable travel experiences. We aim to be the preferred choice for travelers seeking quality, affordability, and exceptional service.
                   </Typography>
                 </Box>
               </Paper>
@@ -470,33 +474,58 @@ const About = () => {
               <Grid item xs={12} md={6}>
                 <List disablePadding>
                   <CustomListItem 
-                    text={<><strong>Air Travel:</strong> Airline ticketing to domestic and regional destinations also includes assistance with charter services.</>}
+                    text={<><strong>Domestic Tours & Safaris:</strong> Explore Kenya's stunning national parks and wildlife reserves with our expertly guided safari packages.</>}
                     delay={650}
                     icon={<Flight />}
                   />
                   <CustomListItem 
-                    text={<><strong>Ground Transport Arrangements:</strong> Car rentals, shuttle services, private transfers, and hotel/airport transfer.</>}
+                    text={<><strong>International Travel Packages:</strong> Discover exotic destinations across Africa and beyond with our curated international tours.</>}
                     delay={700}
+                    icon={<Flight />}
+                  />
+                  <CustomListItem 
+                    text={<><strong>Hotel & Accommodation Booking:</strong> From luxury lodges to budget-friendly hotels, we handle all your accommodation needs.</>}
+                    delay={750}
+                    icon={<Hotel />}
+                  />
+                  <CustomListItem 
+                    text={<><strong>Airport Transfers & Ground Transportation:</strong> Reliable car rentals, shuttle services, and private transfers for your convenience.</>}
+                    delay={800}
                     icon={<DirectionsCar />}
                   />
                   <CustomListItem 
-                    text={<><strong>Local Accommodation Arrangements:</strong> Hotels and lodges accommodation, camping safaris, teambuilding & conferences.</>}
-                    delay={750}
-                    icon={<Hotel />}
+                    text={<><strong>Mountain Hiking:</strong> Conquer Kenya's majestic peaks including Mt. Kenya with our experienced mountain guides.</>}
+                    delay={850}
+                    icon={<Hiking />}
                   />
                 </List>
               </Grid>
               <Grid item xs={12} md={6}>
                 <List disablePadding>
                   <CustomListItem 
-                    text={<><strong>Customized Inbound and Outbound Tours:</strong> We organize conventions and meeting arrangements and group incentive travel.</>}
-                    delay={800}
+                    text={<><strong>Corporate & Group Travel:</strong> Tailored solutions for team building, conferences, and corporate events with seamless coordination.</>}
+                    delay={900}
                     icon={<Groups />}
                   />
                   <CustomListItem 
-                    text={<><strong>Meet and Assist:</strong> We organize and assist services at Jomo Kenyatta International Airport (JKIA) for our local and international clients.</>}
-                    delay={850}
+                    text={<><strong>Honeymoon & Special Occasion Packages:</strong> Create unforgettable memories with our romantic and celebratory travel packages.</>}
+                    delay={950}
+                    icon={<LocalActivity />}
+                  />
+                  <CustomListItem 
+                    text={<><strong>Customized Travel Planning:</strong> Every journey is unique. We craft personalized itineraries to match your dreams and budget.</>}
+                    delay={1000}
                     icon={<SupportAgent />}
+                  />
+                  <CustomListItem 
+                    text={<><strong>Events Organizing:</strong> From weddings to corporate events, we handle all aspects of event planning and execution.</>}
+                    delay={1050}
+                    icon={<EmojiEvents />}
+                  />
+                  <CustomListItem 
+                    text={<><strong>Roadtrips & Camping:</strong> Adventure awaits with our exciting roadtrip packages and camping experiences across Kenya.</>}
+                    delay={1100}
+                    icon={<DirectionsCar />}
                   />
                 </List>
               </Grid>
@@ -541,40 +570,45 @@ const About = () => {
                 }
               }}
             >
-              Working with Therapy Tours & Travel Guarantees You
+              Why Choose Royal Dastinos Tours and Travel
             </Typography>
             
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
                 <List disablePadding>
                   <CustomListItem 
-                    text="Personalized service tailored to your specific needs and preferences."
+                    text="Professional and friendly service that goes above and beyond your expectations."
                     delay={950}
                     icon={<Diversity3 />}
                   />
                   <CustomListItem 
-                    text="Competitive pricing without compromising on quality and comfort."
+                    text="Affordable and transparent pricing with no hidden costs - value for money guaranteed."
                     delay={1000}
                     icon={<Payments />}
                   />
                   <CustomListItem 
-                    text="Uncompromising safety standards throughout your journey."
+                    text="Customized travel packages tailored to your unique preferences and budget."
                     delay={1050}
-                    icon={<Security />}
+                    icon={<SupportAgent />}
                   />
                 </List>
               </Grid>
               <Grid item xs={12} md={6}>
                 <List disablePadding>
                   <CustomListItem 
-                    text="Timely responses to inquiries and concerns before, during, and after your trip."
+                    text="Reliable partners and professional guides ensuring safety and quality throughout your journey."
                     delay={1100}
+                    icon={<Handshake />}
+                  />
+                  <CustomListItem 
+                    text="Customer support before, during, and after travel - we're always here for you."
+                    delay={1150}
                     icon={<AccessTime />}
                   />
                   <CustomListItem 
-                    text="Partnerships with reputable service providers to ensure a seamless experience."
-                    delay={1150}
-                    icon={<Handshake />}
+                    text="Commitment to responsible eco-tourism and sustainable travel practices."
+                    delay={1200}
+                    icon={<Security />}
                   />
                 </List>
               </Grid>

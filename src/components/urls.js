@@ -960,6 +960,418 @@ const trips = [
     location: 'Northern Kenya',
     duration: '7 days',
     price: '$1500 per person'
+  },
+  {
+    id: 17,
+    image: flamingo,
+    title: '5-Day Zanzibar Beach Paradise',
+    description: 'Escape to the pristine beaches of Zanzibar with crystal-clear waters, white sandy beaches, and rich Swahili culture. This tropical paradise offers the perfect blend of relaxation, culture, and adventure.',
+    itinerary: [
+      {
+        day: 1,
+        activities: 'Arrival in Zanzibar: Airport pickup, transfer to beach resort in Nungwi or Kendwa, welcome dinner. Accommodation: Beach resort.',
+      },
+      {
+        day: 2,
+        activities: 'Stone Town Tour: Explore the historic Stone Town, visit spice plantations, and experience local culture. Accommodation: Beach resort.',
+      },
+      {
+        day: 3,
+        activities: 'Beach Day & Water Sports: Snorkeling, diving, or simply relaxing on the beach. Accommodation: Beach resort.',
+      },
+      {
+        day: 4,
+        activities: 'Prison Island & Dolphin Tour: Visit Prison Island, see giant tortoises, and swim with dolphins. Accommodation: Beach resort.',
+      },
+      {
+        day: 5,
+        activities: 'Departure: Morning at leisure, transfer to airport for departure.',
+      },
+    ],
+    packageIncludes: [
+      'Airport transfers',
+      'Accommodation with breakfast',
+      'Stone Town guided tour',
+      'Spice plantation tour',
+      'Prison Island tour',
+      'All entrance fees',
+    ],
+    packageExcludes: [
+      'International flights',
+      'Visa fees',
+      'Lunches and dinners',
+      'Water sports activities',
+      'Personal expenses',
+      'Travel insurance',
+    ],
+    highlights: [
+      'Pristine white sandy beaches',
+      'Historic Stone Town',
+      'Spice plantation tours',
+      'Swimming with dolphins',
+    ],
+    location: 'Zanzibar, Tanzania',
+    duration: '5 days',
+    price: '$850 per person',
+  },
+  {
+    id: 18,
+    image: hotair,
+    title: '7-Day Seychelles Island Hopping',
+    description: 'Discover the breathtaking beauty of Seychelles with its stunning beaches, lush tropical forests, and unique granite rock formations. Island hop through Mahé, Praslin, and La Digue for an unforgettable tropical experience.',
+    itinerary: [
+      {
+        day: 1,
+        activities: 'Arrival in Mahé: Airport pickup, hotel check-in, leisure time at Beau Vallon Beach. Accommodation: Mahé hotel.',
+      },
+      {
+        day: 2,
+        activities: 'Mahé Island Tour: Visit Victoria, botanical gardens, and scenic viewpoints. Accommodation: Mahé hotel.',
+      },
+      {
+        day: 3,
+        activities: 'Mahé to Praslin: Ferry to Praslin, visit Vallée de Mai Nature Reserve. Accommodation: Praslin resort.',
+      },
+      {
+        day: 4,
+        activities: 'Praslin Beaches: Explore Anse Lazio and Anse Georgette beaches. Accommodation: Praslin resort.',
+      },
+      {
+        day: 5,
+        activities: 'La Digue Excursion: Day trip to La Digue, bicycle tour, visit Anse Source d\'Argent. Accommodation: Praslin resort.',
+      },
+      {
+        day: 6,
+        activities: 'Return to Mahé: Ferry back to Mahé, leisure time for shopping or beach. Accommodation: Mahé hotel.',
+      },
+      {
+        day: 7,
+        activities: 'Departure: Transfer to airport for departure flight.',
+      },
+    ],
+    packageIncludes: [
+      'Airport transfers',
+      'All ferry transfers',
+      'Accommodation with breakfast',
+      'Vallée de Mai entrance',
+      'Island tours',
+    ],
+    packageExcludes: [
+      'International flights',
+      'Visa fees',
+      'Lunches and dinners',
+      'Water sports activities',
+      'Personal expenses',
+      'Travel insurance',
+    ],
+    highlights: [
+      'World-class beaches',
+      'UNESCO World Heritage Sites',
+      'Unique granite formations',
+      'Island hopping adventure',
+    ],
+    location: 'Seychelles',
+    duration: '7 days',
+    price: '$2200 per person',
+  },
+  {
+    id: 19,
+    image: girrafes,
+    title: '5-Day Dubai Luxury Experience',
+    description: 'Experience the glamour and luxury of Dubai with its iconic skyline, world-class shopping, stunning architecture, and thrilling desert adventures. From the Burj Khalifa to the traditional souks, Dubai offers it all.',
+    itinerary: [
+      {
+        day: 1,
+        activities: 'Arrival in Dubai: Airport pickup, hotel check-in, evening at Dubai Mall and Burj Khalifa. Accommodation: 4-star hotel.',
+      },
+      {
+        day: 2,
+        activities: 'Dubai City Tour: Visit Burj Al Arab, Palm Jumeirah, Dubai Marina, and traditional souks. Accommodation: 4-star hotel.',
+      },
+      {
+        day: 3,
+        activities: 'Desert Safari: Thrilling dune bashing, camel riding, BBQ dinner with entertainment. Accommodation: 4-star hotel.',
+      },
+      {
+        day: 4,
+        activities: 'Modern Dubai: Visit Dubai Frame, Museum of the Future, and shopping at Mall of Emirates. Accommodation: 4-star hotel.',
+      },
+      {
+        day: 5,
+        activities: 'Departure: Morning at leisure, transfer to airport for departure.',
+      },
+    ],
+    packageIncludes: [
+      'Airport transfers',
+      'Accommodation with breakfast',
+      'Dubai city tour',
+      'Desert safari with dinner',
+      'All entrance fees mentioned',
+    ],
+    packageExcludes: [
+      'International flights',
+      'Visa fees',
+      'Lunches and dinners (except desert safari)',
+      'Shopping expenses',
+      'Optional activities',
+      'Travel insurance',
+    ],
+    highlights: [
+      'Burj Khalifa - world\'s tallest building',
+      'Thrilling desert safari',
+      'Luxury shopping experiences',
+      'Traditional and modern Dubai',
+    ],
+    location: 'Dubai, UAE',
+    duration: '5 days',
+    price: '$1400 per person',
+  },
+  {
+    id: 20,
+    image: lion,
+    title: '8-Day South Africa Explorer',
+    description: 'Discover the diversity of South Africa from Cape Town\'s stunning landscapes to Kruger National Park\'s incredible wildlife. Experience the perfect blend of urban sophistication, natural beauty, and safari adventure.',
+    itinerary: [
+      {
+        day: 1,
+        activities: 'Arrival in Cape Town: Airport pickup, hotel check-in, evening at V&A Waterfront. Accommodation: Cape Town hotel.',
+      },
+      {
+        day: 2,
+        activities: 'Cape Town City Tour: Table Mountain, Robben Island, city center exploration. Accommodation: Cape Town hotel.',
+      },
+      {
+        day: 3,
+        activities: 'Cape Peninsula Tour: Chapman\'s Peak, Cape Point, Boulders Beach penguins. Accommodation: Cape Town hotel.',
+      },
+      {
+        day: 4,
+        activities: 'Winelands Tour: Visit Stellenbosch and Franschhoek for wine tasting. Accommodation: Cape Town hotel.',
+      },
+      {
+        day: 5,
+        activities: 'Cape Town to Kruger: Flight to Kruger National Park, afternoon game drive. Accommodation: Lodge near Kruger.',
+      },
+      {
+        day: 6,
+        activities: 'Full Day Kruger Safari: Morning and afternoon game drives in search of the Big Five. Accommodation: Lodge near Kruger.',
+      },
+      {
+        day: 7,
+        activities: 'Kruger to Johannesburg: Morning game drive, flight to Johannesburg, city tour. Accommodation: Johannesburg hotel.',
+      },
+      {
+        day: 8,
+        activities: 'Departure: Transfer to airport for departure flight.',
+      },
+    ],
+    packageIncludes: [
+      'All airport transfers',
+      'Domestic flights (Cape Town-Kruger, Kruger-Johannesburg)',
+      'Accommodation with breakfast',
+      'All tours mentioned',
+      'Kruger National Park fees',
+      'Game drives',
+    ],
+    packageExcludes: [
+      'International flights',
+      'Visa fees',
+      'Lunches and dinners',
+      'Optional activities',
+      'Travel insurance',
+      'Tips and gratuities',
+    ],
+    highlights: [
+      'Table Mountain and Cape Town',
+      'Big Five safari in Kruger',
+      'Cape Winelands',
+      'Cape Point and penguins',
+    ],
+    location: 'South Africa',
+    duration: '8 days',
+    price: '$2500 per person',
+  },
+  {
+    id: 21,
+    image: elephants,
+    title: '7-Day Egypt Ancient Wonders',
+    description: 'Journey through time and explore Egypt\'s magnificent ancient wonders. From the Pyramids of Giza to the temples of Luxor, experience the rich history and culture of one of the world\'s oldest civilizations.',
+    itinerary: [
+      {
+        day: 1,
+        activities: 'Arrival in Cairo: Airport pickup, hotel check-in, evening at Khan el-Khalili bazaar. Accommodation: Cairo hotel.',
+      },
+      {
+        day: 2,
+        activities: 'Pyramids and Sphinx: Full day tour of Giza Pyramids, Sphinx, and Egyptian Museum. Accommodation: Cairo hotel.',
+      },
+      {
+        day: 3,
+        activities: 'Cairo to Luxor: Flight to Luxor, visit Karnak and Luxor Temples. Accommodation: Luxor hotel.',
+      },
+      {
+        day: 4,
+        activities: 'Valley of the Kings: Explore ancient tombs, Temple of Hatshepsut, Colossi of Memnon. Accommodation: Luxor hotel.',
+      },
+      {
+        day: 5,
+        activities: 'Luxor to Aswan: Drive to Aswan, visit High Dam and Philae Temple. Accommodation: Aswan hotel.',
+      },
+      {
+        day: 6,
+        activities: 'Abu Simbel Excursion: Day trip to magnificent Abu Simbel temples. Accommodation: Aswan hotel.',
+      },
+      {
+        day: 7,
+        activities: 'Return to Cairo & Departure: Flight to Cairo, transfer to airport for departure.',
+      },
+    ],
+    packageIncludes: [
+      'Airport transfers',
+      'Domestic flights (Cairo-Luxor, Aswan-Cairo)',
+      'Accommodation with breakfast',
+      'All entrance fees',
+      'Professional Egyptologist guide',
+      'All tours mentioned',
+    ],
+    packageExcludes: [
+      'International flights',
+      'Visa fees',
+      'Lunches and dinners',
+      'Optional activities',
+      'Travel insurance',
+      'Tips and gratuities',
+    ],
+    highlights: [
+      'Great Pyramids of Giza',
+      'Valley of the Kings',
+      'Abu Simbel Temples',
+      'Egyptian Museum treasures',
+    ],
+    location: 'Egypt',
+    duration: '7 days',
+    price: '$1800 per person',
+  },
+  {
+    id: 22,
+    image: zebra,
+    title: '8-Day Turkey Cultural Journey',
+    description: 'Discover Turkey\'s fascinating blend of European and Asian cultures. From Istanbul\'s historic mosques to Cappadocia\'s fairy chimneys and the ancient ruins of Ephesus, experience the best of Turkey.',
+    itinerary: [
+      {
+        day: 1,
+        activities: 'Arrival in Istanbul: Airport pickup, hotel check-in, evening at Sultanahmet Square. Accommodation: Istanbul hotel.',
+      },
+      {
+        day: 2,
+        activities: 'Istanbul Historic Tour: Blue Mosque, Hagia Sophia, Topkapi Palace, Grand Bazaar. Accommodation: Istanbul hotel.',
+      },
+      {
+        day: 3,
+        activities: 'Bosphorus Cruise: Morning boat cruise, afternoon at Spice Bazaar and Galata Tower. Accommodation: Istanbul hotel.',
+      },
+      {
+        day: 4,
+        activities: 'Istanbul to Cappadocia: Flight to Cappadocia, visit Göreme Open Air Museum. Accommodation: Cave hotel.',
+      },
+      {
+        day: 5,
+        activities: 'Cappadocia Adventure: Hot air balloon ride (optional), valley hiking, underground city. Accommodation: Cave hotel.',
+      },
+      {
+        day: 6,
+        activities: 'Cappadocia to Pamukkale: Drive to Pamukkale, visit travertine terraces and ancient Hierapolis. Accommodation: Pamukkale hotel.',
+      },
+      {
+        day: 7,
+        activities: 'Pamukkale to Ephesus: Visit ancient Ephesus ruins, Library of Celsus, Temple of Artemis. Accommodation: Kusadasi hotel.',
+      },
+      {
+        day: 8,
+        activities: 'Return to Istanbul & Departure: Flight to Istanbul, transfer to airport for departure.',
+      },
+    ],
+    packageIncludes: [
+      'Airport transfers',
+      'Domestic flights',
+      'Accommodation with breakfast',
+      'All entrance fees',
+      'Professional guide',
+      'Bosphorus cruise',
+    ],
+    packageExcludes: [
+      'International flights',
+      'Visa fees',
+      'Lunches and dinners',
+      'Hot air balloon ride',
+      'Travel insurance',
+      'Tips and gratuities',
+    ],
+    highlights: [
+      'Historic Istanbul landmarks',
+      'Cappadocia\'s fairy chimneys',
+      'Pamukkale travertines',
+      'Ancient Ephesus ruins',
+    ],
+    location: 'Turkey',
+    duration: '8 days',
+    price: '$1900 per person',
+  },
+  {
+    id: 23,
+    image: hotair,
+    title: '6-Day Mauritius Tropical Retreat',
+    description: 'Relax in the tropical paradise of Mauritius with its turquoise lagoons, pristine beaches, and lush mountains. Experience luxury, adventure, and relaxation in this Indian Ocean gem.',
+    itinerary: [
+      {
+        day: 1,
+        activities: 'Arrival in Mauritius: Airport pickup, resort check-in, welcome dinner. Accommodation: Beach resort.',
+      },
+      {
+        day: 2,
+        activities: 'North Island Tour: Visit Port Louis, Pamplemousses Botanical Garden, Grand Bay. Accommodation: Beach resort.',
+      },
+      {
+        day: 3,
+        activities: 'Catamaran Cruise: Full day sailing, snorkeling, and beach BBQ. Accommodation: Beach resort.',
+      },
+      {
+        day: 4,
+        activities: 'South Island Tour: Seven Colored Earth, Chamarel Waterfall, Black River Gorges. Accommodation: Beach resort.',
+      },
+      {
+        day: 5,
+        activities: 'Leisure Day: Beach activities, water sports, spa, or island exploration. Accommodation: Beach resort.',
+      },
+      {
+        day: 6,
+        activities: 'Departure: Morning at leisure, transfer to airport for departure.',
+      },
+    ],
+    packageIncludes: [
+      'Airport transfers',
+      'Accommodation with breakfast',
+      'North and South island tours',
+      'Catamaran cruise with lunch',
+      'All entrance fees',
+    ],
+    packageExcludes: [
+      'International flights',
+      'Visa fees',
+      'Lunches and dinners (except catamaran)',
+      'Water sports activities',
+      'Travel insurance',
+      'Tips and gratuities',
+    ],
+    highlights: [
+      'Pristine beaches and lagoons',
+      'Seven Colored Earth',
+      'Catamaran sailing',
+      'Botanical gardens',
+    ],
+    location: 'Mauritius',
+    duration: '6 days',
+    price: '$1650 per person',
   }
 ]
 

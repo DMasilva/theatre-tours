@@ -56,10 +56,10 @@ const Footer = () => {
   ];
 
   const contactInfo = [
-    { icon: <LocationIcon />, text: 'Bogani East Road, Karen, Nairobi, Kenya' },
-    { icon: <EmailIcon />, text: 'info@therapytours.com' },
-    { icon: <WebIcon />, text: 'www.therapytours.com' },
-    { icon: <PhoneIcon />, text: '+254 790 604 032' }
+    { icon: <LocationIcon />, text: 'Mombasa Road, Nairobi, Kenya' },
+    { icon: <EmailIcon />, text: 'info@royaldastinos.org' },
+    { icon: <WebIcon />, text: 'www.royaldastinos.org' },
+    { icon: <PhoneIcon />, text: '+254 736 183 916' }
   ];
 
   return (
@@ -69,7 +69,7 @@ const Footer = () => {
         sx={{ 
           position: 'relative',
           py: { xs: 4, sm: 5, md: 6, lg: 8 },
-          bgcolor: theme.palette.primary.dark,
+          bgcolor: theme.palette.primary.main,
           color: 'white',
           overflow: 'hidden',
           '&::before': {
@@ -182,7 +182,7 @@ const Footer = () => {
                 <Box 
                   component="img" 
                   src={logo} 
-                  alt="Therapy Tours Logo"
+                  alt="Royal Dastinos Tours Logo"
                   sx={{ 
                     height: { xs: 50, sm: 60 },
                     width: 'auto',
@@ -198,7 +198,7 @@ const Footer = () => {
                     fontSize: { xs: '1.25rem', sm: '1.5rem' }
                   }}
                 >
-                  Therapy Tours
+                  Royal Dastinos Tours
                 </Typography>
                 <Typography 
                   variant="body2" 
@@ -209,7 +209,7 @@ const Footer = () => {
                     fontSize: { xs: '0.85rem', sm: '0.9rem' }
                   }}
                 >
-                  Specializing in luxury safari experiences across Kenya and East Africa. We create unforgettable journeys that connect you with nature and wildlife.
+                  Creating memorable, affordable, and well-organized travel experiences. Specializing in customized travel solutions for individuals, families, groups, and corporate clients.
                 </Typography>
                 <Stack direction="row" spacing={{ xs: 1, sm: 2 }}>
                   {socialLinks.map((social, index) => (
@@ -285,7 +285,7 @@ const Footer = () => {
                       fontSize="small" 
                       sx={{ 
                         mr: 1, 
-                        color: theme.palette.secondary.main,
+                        color: '#E8E0D1',
                         fontSize: { xs: '0.8rem', sm: '1rem' }
                       }} 
                     />
@@ -320,7 +320,7 @@ const Footer = () => {
                     left: 0,
                     width: '50px',
                     height: '2px',
-                    backgroundColor: theme.palette.secondary.main
+                    backgroundColor: '#E8E0D1'
                   }
                 }}
               >
@@ -338,7 +338,7 @@ const Footer = () => {
                   >
                     <ListItemIcon 
                       sx={{ 
-                        color: theme.palette.secondary.main,
+                        color: '#E8E0D1',
                         minWidth: { xs: 36, sm: 40 }
                       }}
                     >
@@ -380,7 +380,7 @@ const Footer = () => {
                 fontSize: { xs: '0.8rem', sm: '0.85rem' }
               }}
             >
-              © {new Date().getFullYear()} Therapy Tours. All rights reserved.
+              © {new Date().getFullYear()} Royal Dastinos Tours and Travel. All rights reserved.
             </Typography>
             <Box 
               sx={{ 

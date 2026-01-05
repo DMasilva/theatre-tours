@@ -96,7 +96,7 @@ const Navbar = () => {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar 
             src={logo} 
-            alt="Therapy Tours Logo" 
+            alt="Royal Dastinos Tours Logo" 
             variant="square"
             sx={{ 
               height: { xs: 32, sm: 40 }, 
@@ -112,7 +112,7 @@ const Navbar = () => {
               fontSize: { xs: '1.1rem', sm: '1.25rem' }
             }}
           >
-            Therapy Tours
+            Royal Dastinos
           </Typography>
         </Box>
         <IconButton onClick={toggleMenu} aria-label="close menu" size={isSmallMobile ? "small" : "medium"}>
@@ -237,7 +237,7 @@ const Navbar = () => {
             <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
               <Avatar 
                 src={logo} 
-                alt="Therapy Tours Logo" 
+                alt="Royal Dastinos Tours Logo" 
                 variant="square"
                 sx={{ 
                   height: { xs: 32, sm: 36, md: 50 }, 
@@ -256,7 +256,7 @@ const Navbar = () => {
                     fontSize: { sm: '1.3rem', md: '1.5rem', lg: '1.75rem' }
                   }}
                 >
-                  Therapy Tours
+                  Royal Dastinos
                 </Typography>
               )}
             </Link>

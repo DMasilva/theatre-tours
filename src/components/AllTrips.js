@@ -49,7 +49,7 @@ const AllTrips = () => {
         minHeight: 'calc(100vh - 64px)',
         py: { xs: 4, sm: 6, md: 8 },
         px: { xs: 1, sm: 2 },
-        bgcolor: theme.palette.grey[50]
+        bgcolor: theme.palette.background.default
       }}
     >
       <Container maxWidth="lg">

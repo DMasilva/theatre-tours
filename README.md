@@ -1,4 +1,16 @@
-# Getting Started with Create React App
+# Royal Dastinos Tours and Travel
+
+**Tagline:** Creating Memorable Travel Experiences
+
+A modern, responsive tours and travel website built with React and Material-UI, offering domestic and international travel packages.
+
+## About
+
+Royal Dastinos Tours and Travel is a customer-focused tours and travel company dedicated to offering memorable, affordable, and well-organized travel experiences. We specialize in customized travel solutions for individuals, families, groups, and corporate clients.
+
+---
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -68,4 +80,29 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# theatre-tours
+
+---
+
+## Features
+
+- **23 Travel Packages**: 16 domestic (Kenya) + 7 international destinations
+- **Responsive Design**: Optimized for mobile, tablet, and desktop
+- **Modern UI**: Material-UI components with custom theming
+- **Services Offered**:
+  - Domestic Tours & Safaris
+  - International Travel Packages
+  - Hotel & Accommodation Booking
+  - Airport Transfers & Ground Transportation
+  - Corporate & Group Travel
+  - Honeymoon & Special Occasion Packages
+  - Customized Travel Planning
+  - Events Organizing
+  - Roadtrips, Mountain Hiking, and Camping
+
+## Contact Information
+
+- **Phone**: +254 736 183 916
+- **Email**: info@royaldastinos.org
+- **Website**: www.royaldastinos.org
+- **Location**: Mombasa Road, Nairobi, Kenya
+- **Social Media**: @Royaldastinos
