@@ -1,87 +1,392 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { 
+  Box, 
+  Container, 
+  Typography, 
+  TextField,
+  Button,
+  Grid,
+  Paper,
+  useTheme,
+  Fade,
+  Zoom,
+  alpha,
+  Stack,
+  Alert
+} from '@mui/material';
+import { 
+  Send,
+  Phone,
+  Email,
+  LocationOn,
+  AccessTime,
+  Facebook,
+  Twitter,
+  Instagram,
+  LinkedIn
+} from '@mui/icons-material';
 
 const ContactForm = () => {
+  const theme = useTheme();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    }, 3000);
+  };
+
+  const contactInfo = [
+    { icon: <Phone />, title: 'Phone', value: '+254 736 183 916', link: 'tel:+254736183916' },
+    { icon: <Email />, title: 'Email', value: 'info@royaldastinos.org', link: 'mailto:info@royaldastinos.org' },
+    { icon: <LocationOn />, title: 'Location', value: 'Mombasa Road, Nairobi', link: null },
+    { icon: <AccessTime />, title: 'Working Hours', value: 'Mon - Sat: 8AM - 6PM', link: null }
+  ];
+
+  const socialLinks = [
+    { icon: <Facebook />, name: 'Facebook', link: '#' },
+    { icon: <Twitter />, name: 'Twitter', link: '#' },
+    { icon: <Instagram />, name: 'Instagram', link: '#' },
+    { icon: <LinkedIn />, name: 'LinkedIn', link: '#' }
+  ];
+
   return (
-    <div className="flex items-center justify-center min-h-screen p-4" style={{ backgroundColor: '#F5F1E8', paddingTop: '100px', paddingBottom: '50px' }}>
-      <div className="bg-white p-8 md:p-12 rounded-lg shadow-lg w-full max-w-2xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center" style={{ color: '#FF7420' }}>Contact Us</h2>
-        <p className="text-center text-gray-600 mb-8">We'd love to hear from you! Send us a message and we'll respond as soon as possible.</p>
-        <form>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="name">
-              Name
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-              style={{ borderColor: '#E8E0D1' }}
-              id="name"
-              type="text"
-              placeholder="Enter your name"
-              onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-              onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="email">
-              Email
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-              style={{ borderColor: '#E8E0D1' }}
-              id="email"
-              type="email"
-              placeholder="Enter your email"
-              onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-              onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="subject">
-              Subject
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-              style={{ borderColor: '#E8E0D1' }}
-              id="subject"
-              type="text"
-              placeholder="Enter the subject"
-              onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-              onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="message">
-              Message
-            </label>
-            <textarea
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-              style={{ borderColor: '#E8E0D1' }}
-              id="message"
-              rows="5"
-              placeholder="Enter your message"
-              onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-              onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-            ></textarea>
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full transition-all"
-              style={{ backgroundColor: '#FF7420' }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#E65A00'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#FF7420'}
-              type="button"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-        <div className="mt-8 pt-6 border-t text-center" style={{ borderColor: '#E8E0D1' }}>
-          <p className="text-gray-600 mb-2">Or reach us directly at:</p>
-          <p className="font-bold" style={{ color: '#FF7420' }}>📞 +254 736 183 916</p>
-          <p className="font-bold" style={{ color: '#FF7420' }}>📧 info@royaldastinos.com</p>
-        </div>
-      </div>
-    </div>
+    <Box sx={{ bgcolor: theme.palette.background.default, minHeight: '100vh', py: { xs: 4, md: 8 } }}>
+      
+      {/* Hero Section */}
+      <Box 
+        sx={{ 
+          position: 'relative',
+          height: { xs: '40vh', md: '50vh' },
+          mb: { xs: -10, md: -15 },
+          overflow: 'hidden',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundImage: 'url("https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'brightness(0.5)',
+          }
+        }}
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: `linear-gradient(135deg, ${theme.palette.primary.main}dd 0%, ${theme.palette.primary.dark}99 100%)`,
+            zIndex: 1
+          }}
+        />
+        
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', alignItems: 'center' }}>
+          <Fade in={true} timeout={1000}>
+            <Box>
+              <Typography 
+                variant="h2" 
+                sx={{ 
+                  color: 'white',
+                  fontWeight: 800,
+                  fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
+                  mb: 2,
+                  fontFamily: '"Playfair Display", serif',
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                }}
+              >
+                Get in Touch
+              </Typography>
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  color: 'white',
+                  fontSize: { xs: '1rem', md: '1.3rem' },
+                  maxWidth: '600px',
+                  opacity: 0.95
+                }}
+              >
+                We'd love to hear from you! Send us a message and we'll respond as soon as possible.
+              </Typography>
+            </Box>
+          </Fade>
+        </Container>
+      </Box>
+
+      <Container maxWidth="lg">
+        <Grid container spacing={4}>
+          
+          {/* Contact Form */}
+          <Grid item xs={12} lg={7}>
+            <Zoom in={true} timeout={1000}>
+              <Paper
+                elevation={8}
+                sx={{
+                  p: { xs: 3, md: 5 },
+                  borderRadius: 4,
+                  border: `2px solid ${theme.palette.grey[200]}`,
+                }}
+              >
+                <Typography 
+                  variant="h4" 
+                  sx={{ 
+                    fontWeight: 700,
+                    mb: 3,
+                    color: theme.palette.primary.main,
+                    fontFamily: '"Playfair Display", serif',
+                  }}
+                >
+                  Send us a Message
+                </Typography>
+
+                {submitted && (
+                  <Alert severity="success" sx={{ mb: 3, borderRadius: 2 }}>
+                    Thank you! Your message has been sent successfully. We'll get back to you soon!
+                  </Alert>
+                )}
+
+                <form onSubmit={handleSubmit}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Your Name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+                    
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Email Address"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        required
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        multiline
+                        rows={6}
+                        required
+                        placeholder="Tell us how we can help you..."
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        fullWidth
+                        endIcon={<Send />}
+                        sx={{
+                          py: 2,
+                          fontSize: '1.1rem',
+                          fontWeight: 700,
+                          borderRadius: 3,
+                          background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+                          boxShadow: `0 8px 20px ${alpha(theme.palette.primary.main, 0.4)}`,
+                          '&:hover': {
+                            background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
+                            transform: 'translateY(-3px)',
+                            boxShadow: `0 12px 28px ${alpha(theme.palette.primary.main, 0.5)}`
+                          },
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        Send Message
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
+              </Paper>
+            </Zoom>
+          </Grid>
+
+          {/* Contact Information Sidebar */}
+          <Grid item xs={12} lg={5}>
+            <Stack spacing={3}>
+              
+              {/* Contact Info Cards */}
+              {contactInfo.map((info, index) => (
+                <Zoom key={index} in={true} style={{ transitionDelay: `${(index + 1) * 150}ms` }}>
+                  <Paper
+                    elevation={4}
+                    component={info.link ? 'a' : 'div'}
+                    href={info.link || undefined}
+                    sx={{
+                      p: 3,
+                      borderRadius: 3,
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      border: `2px solid ${theme.palette.grey[200]}`,
+                      cursor: info.link ? 'pointer' : 'default',
+                      '&:hover': info.link ? {
+                        borderColor: theme.palette.primary.main,
+                        transform: 'translateY(-5px)',
+                        boxShadow: theme.shadows[12],
+                        '& .contact-icon': {
+                          transform: 'scale(1.1) rotate(10deg)',
+                          bgcolor: theme.palette.primary.main,
+                          color: 'white'
+                        }
+                      } : {},
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    <Stack direction="row" spacing={2} alignItems="center">
+                      <Box
+                        className="contact-icon"
+                        sx={{
+                          width: 60,
+                          height: 60,
+                          borderRadius: '50%',
+                          bgcolor: alpha(theme.palette.primary.main, 0.1),
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: theme.palette.primary.main,
+                          transition: 'all 0.4s ease',
+                          '& svg': { fontSize: 28 }
+                        }}
+                      >
+                        {info.icon}
+                      </Box>
+                      <Box>
+                        <Typography variant="overline" sx={{ color: theme.palette.text.secondary, fontWeight: 600 }}>
+                          {info.title}
+                        </Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 600, color: theme.palette.text.primary }}>
+                          {info.value}
+                        </Typography>
+                      </Box>
+                    </Stack>
+                  </Paper>
+                </Zoom>
+              ))}
+
+              {/* Social Media Section */}
+              <Zoom in={true} style={{ transitionDelay: '750ms' }}>
+                <Paper
+                  elevation={4}
+                  sx={{
+                    p: 3,
+                    borderRadius: 3,
+                    border: `2px solid ${theme.palette.grey[200]}`,
+                    background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.05)} 0%, white 100%)`
+                  }}
+                >
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      fontWeight: 700,
+                      mb: 2,
+                      color: theme.palette.primary.main
+                    }}
+                  >
+                    Connect With Us
+                  </Typography>
+                  <Stack direction="row" spacing={2}>
+                    {socialLinks.map((social, index) => (
+                      <Box
+                        key={index}
+                        component="a"
+                        href={social.link}
+                        sx={{
+                          width: 50,
+                          height: 50,
+                          borderRadius: '50%',
+                          bgcolor: alpha(theme.palette.primary.main, 0.1),
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: theme.palette.primary.main,
+                          textDecoration: 'none',
+                          '&:hover': {
+                            bgcolor: theme.palette.primary.main,
+                            color: 'white',
+                            transform: 'translateY(-5px) rotate(360deg)',
+                            boxShadow: theme.shadows[8]
+                          },
+                          transition: 'all 0.4s ease',
+                          '& svg': { fontSize: 24 }
+                        }}
+                      >
+                        {social.icon}
+                      </Box>
+                    ))}
+                  </Stack>
+                </Paper>
+              </Zoom>
+            </Stack>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

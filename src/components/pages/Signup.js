@@ -1,182 +1,430 @@
-import React from 'react';
-import { FaUser, FaLock, FaAddressCard } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { 
+  Box, 
+  Container, 
+  Typography, 
+  TextField,
+  Button,
+  Paper,
+  Grid,
+  useTheme,
+  Fade,
+  Zoom,
+  alpha,
+  InputAdornment,
+  IconButton,
+  Divider,
+  Chip,
+  Stepper,
+  Step,
+  StepLabel
+} from '@mui/material';
+import { 
+  Person,
+  Email,
+  Lock,
+  Visibility,
+  VisibilityOff,
+  Phone,
+  LocationCity,
+  PersonAdd,
+  ArrowForward
+} from '@mui/icons-material';
 
 const Signup = () => {
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    city: '',
+    password: '',
+    confirmPassword: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add signup logic here
+    console.log('Signup submitted:', formData);
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen p-4" style={{ backgroundColor: '#F5F1E8', paddingTop: '100px', paddingBottom: '50px' }}>
-      <div className="bg-white p-8 md:p-12 rounded-lg shadow-lg w-full max-w-3xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center" style={{ color: '#FF7420' }}>Sign Up</h2>
-        <form>
-          {/* Personal Information Section */}
-          <div className="mb-8">
-            <h3 className="text-2xl font-bold mb-4 flex items-center" style={{ color: '#FF7420' }}>
-              <FaUser className="mr-2" /> Personal Information
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="first-name">
-                  First Name
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                  style={{ borderColor: '#E8E0D1' }}
-                  onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-                  onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-                  id="first-name"
-                  type="text"
-                  placeholder="Enter your first name"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="last-name">
-                  Last Name
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                  style={{ borderColor: '#E8E0D1' }}
-                  onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-                  onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-                  id="last-name"
-                  type="text"
-                  placeholder="Enter your last name"
-                />
-              </div>
-              <div className="mb-4 md:col-span-2">
-                <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="email">
-                  Email
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                  style={{ borderColor: '#E8E0D1' }}
-                  onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-                  onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                />
-              </div>
-            </div>
-          </div>
+    <Box 
+      sx={{ 
+        minHeight: '100vh',
+        bgcolor: theme.palette.background.default,
+        py: { xs: 4, md: 8 }
+      }}
+    >
+      <Container maxWidth="md">
+        <Fade in={true} timeout={800}>
+          <Box>
+            
+            {/* Header */}
+            <Box sx={{ textAlign: 'center', mb: 4 }}>
+              <Zoom in={true} timeout={1000}>
+                <Box
+                  sx={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: '50%',
+                    bgcolor: theme.palette.primary.main,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    mx: 'auto',
+                    mb: 2,
+                    boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.4)}`
+                  }}
+                >
+                  <PersonAdd sx={{ fontSize: 40, color: 'white' }} />
+                </Box>
+              </Zoom>
+              
+              <Typography 
+                variant="h3" 
+                sx={{ 
+                  fontWeight: 800,
+                  fontSize: { xs: '2rem', md: '2.5rem' },
+                  mb: 1,
+                  color: theme.palette.primary.main,
+                  fontFamily: '"Playfair Display", serif',
+                }}
+              >
+                Join Royal Dastinos
+              </Typography>
+              
+              <Typography 
+                variant="body1" 
+                sx={{ 
+                  color: theme.palette.text.secondary,
+                  fontSize: '1.1rem'
+                }}
+              >
+                Create your account and start exploring amazing destinations
+              </Typography>
+            </Box>
 
-          {/* Address Information Section */}
-          <div className="mb-8">
-            <h3 className="text-2xl font-bold mb-4 flex items-center" style={{ color: '#FF7420' }}>
-              <FaAddressCard className="mr-2" /> Address Information
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="address">
-                  Address
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                  style={{ borderColor: '#E8E0D1' }}
-                  onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-                  onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-                  id="address"
-                  type="text"
-                  placeholder="Enter your address"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="city">
-                  City
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                  style={{ borderColor: '#E8E0D1' }}
-                  onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-                  onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-                  id="city"
-                  type="text"
-                  placeholder="Enter your city"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="state">
-                  State
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                  style={{ borderColor: '#E8E0D1' }}
-                  onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-                  onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-                  id="state"
-                  type="text"
-                  placeholder="Enter your state"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="zip">
-                  ZIP Code
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                  style={{ borderColor: '#E8E0D1' }}
-                  onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-                  onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-                  id="zip"
-                  type="text"
-                  placeholder="Enter your ZIP code"
-                />
-              </div>
-            </div>
-          </div>
+            {/* Progress Stepper */}
+            <Zoom in={true} timeout={1000}>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: { xs: 2, md: 3 },
+                  mb: 4,
+                  borderRadius: 3,
+                  border: `2px solid ${theme.palette.grey[200]}`
+                }}
+              >
+                <Stepper activeStep={0} alternativeLabel>
+                  <Step>
+                    <StepLabel>Personal Info</StepLabel>
+                  </Step>
+                  <Step>
+                    <StepLabel>Account Setup</StepLabel>
+                  </Step>
+                  <Step>
+                    <StepLabel>Complete</StepLabel>
+                  </Step>
+                </Stepper>
+              </Paper>
+            </Zoom>
 
-          {/* Security Information Section */}
-          <div className="mb-8">
-            <h3 className="text-2xl font-bold mb-4 flex items-center" style={{ color: '#FF7420' }}>
-              <FaLock className="mr-2" /> Security Information
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="password">
-                  Password
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                  style={{ borderColor: '#E8E0D1' }}
-                  onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-                  onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm md:text-base font-bold mb-2" htmlFor="confirm-password">
-                  Confirm Password
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                  style={{ borderColor: '#E8E0D1' }}
-                  onFocus={(e) => e.target.style.borderColor = '#FF7420'}
-                  onBlur={(e) => e.target.style.borderColor = '#E8E0D1'}
-                  id="confirm-password"
-                  type="password"
-                  placeholder="Confirm your password"
-                />
-              </div>
-            </div>
-          </div>
+            {/* Signup Form */}
+            <Zoom in={true} timeout={1200}>
+              <Paper
+                elevation={8}
+                sx={{
+                  p: { xs: 3, md: 5 },
+                  borderRadius: 4,
+                  border: `2px solid ${theme.palette.grey[200]}`,
+                }}
+              >
+                <form onSubmit={handleSubmit}>
+                  <Grid container spacing={3}>
+                    
+                    {/* Personal Information */}
+                    <Grid item xs={12}>
+                      <Typography 
+                        variant="h6" 
+                        sx={{ 
+                          fontWeight: 700,
+                          color: theme.palette.primary.main,
+                          mb: 2,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1
+                        }}
+                      >
+                        <Person /> Personal Information
+                      </Typography>
+                    </Grid>
 
-          <div className="flex items-center justify-between">
-            <button
-              className="text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full transition-all"
-              style={{ backgroundColor: '#FF7420' }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#E65A00'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#FF7420'}
-              type="button"
-            >
-              Sign Up
-            </button>
-          </div>
-        </form>
-        <p className="mt-6 text-center text-gray-600">
-          Already have an account? <a className="font-bold transition-colors" style={{ color: '#FF7420' }} onMouseEnter={(e) => e.target.style.color = '#E65A00'} onMouseLeave={(e) => e.target.style.color = '#FF7420'} href="/login">Log In</a>
-        </p>
-      </div>
-    </div>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="First Name"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Last Name"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Email Address"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Email sx={{ color: theme.palette.primary.main }} />
+                            </InputAdornment>
+                          ),
+                        }}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Phone Number"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Phone sx={{ color: theme.palette.primary.main }} />
+                            </InputAdornment>
+                          ),
+                        }}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="City"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                        required
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <LocationCity sx={{ color: theme.palette.primary.main }} />
+                            </InputAdornment>
+                          ),
+                        }}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    {/* Account Security */}
+                    <Grid item xs={12}>
+                      <Divider sx={{ my: 2 }} />
+                      <Typography 
+                        variant="h6" 
+                        sx={{ 
+                          fontWeight: 700,
+                          color: theme.palette.primary.main,
+                          mb: 2,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1
+                        }}
+                      >
+                        <Lock /> Account Security
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Password"
+                        name="password"
+                        type={showPassword ? 'text' : 'password'}
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Lock sx={{ color: theme.palette.primary.main }} />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                onClick={() => setShowPassword(!showPassword)}
+                                edge="end"
+                              >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Confirm Password"
+                        name="confirmPassword"
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        required
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Lock sx={{ color: theme.palette.primary.main }} />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                edge="end"
+                              >
+                                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        fullWidth
+                        endIcon={<ArrowForward />}
+                        sx={{
+                          py: 2,
+                          fontSize: '1.1rem',
+                          fontWeight: 700,
+                          borderRadius: 3,
+                          background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+                          boxShadow: `0 8px 20px ${alpha(theme.palette.primary.main, 0.4)}`,
+                          '&:hover': {
+                            background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
+                            transform: 'translateY(-3px)',
+                            boxShadow: `0 12px 28px ${alpha(theme.palette.primary.main, 0.5)}`
+                          },
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        Create Account
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
+
+                <Divider sx={{ my: 3 }}>
+                  <Chip label="OR" size="small" />
+                </Divider>
+
+                <Box sx={{ textAlign: 'center' }}>
+                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                    Already have an account?{' '}
+                    <Button
+                      component={Link}
+                      to="/login"
+                      variant="text"
+                      sx={{
+                        color: theme.palette.primary.main,
+                        fontWeight: 700,
+                        textTransform: 'none',
+                        '&:hover': {
+                          bgcolor: alpha(theme.palette.primary.main, 0.1)
+                        }
+                      }}
+                    >
+                      Log In
+                    </Button>
+                  </Typography>
+                </Box>
+              </Paper>
+            </Zoom>
+
+            {/* Additional Info */}
+            <Box sx={{ textAlign: 'center', mt: 3 }}>
+              <Typography variant="caption" sx={{ color: theme.palette.text.secondary }}>
+                By signing up, you agree to our Terms of Service and Privacy Policy
+              </Typography>
+            </Box>
+          </Box>
+        </Fade>
+      </Container>
+    </Box>
   );
 };
 
