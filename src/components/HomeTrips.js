@@ -26,7 +26,7 @@ const HomeTrips = () => {
   const theme = useTheme();
 
   // Get featured trips (first 6)
-  const featuredTrips = trips.slice(0, 6);
+  const featuredTrips = trips.slice(0, 3);
 
   return (
     <Box 

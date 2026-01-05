@@ -6,8 +6,8 @@ const MainPage = () => {
   const theme = useTheme();
   
   return (
-    <Box sx={{ width: '100%', py: 6 }}>
-      <Container maxWidth="lg">
+    <Box sx={{ width: '100%' }}>
+      {/* <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: 4 }}>
           <Typography 
             variant="h2" 
@@ -38,7 +38,7 @@ const MainPage = () => {
             Our Trips give you the opportunity to see a lot, within a time frame
           </Typography>
         </Box>
-      </Container>
+      </Container> */}
       
       <HomeTrips />
     </Box>
