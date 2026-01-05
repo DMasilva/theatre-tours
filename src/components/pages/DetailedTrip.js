@@ -35,9 +35,7 @@ import {
   CheckCircleOutline, 
   RemoveCircleOutline,
   FlightTakeoff,
-  DirectionsCar,
   Hotel,
-  Restaurant,
   Camera,
   Hiking,
   LocalActivity,
@@ -74,8 +72,6 @@ const DetailedTrip = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   
   // State for tabs
   const [tabValue, setTabValue] = useState(0);

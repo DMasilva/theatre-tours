@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { 
   Box, 
   Typography, 
-  Button, 
-  Container,
+  Button,
   useTheme
 } from '@mui/material';
 import ExploreIcon from '@mui/icons-material/Explore';

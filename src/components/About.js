@@ -12,8 +12,6 @@ import {
   ListItemText,
   Card,
   CardMedia,
-  CardContent,
-  Divider,
   useTheme,
   useMediaQuery,
   Fade,
@@ -42,7 +40,6 @@ import { trips } from '../data';
 const About = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
 
   // Custom section component for reusability
   const Section = ({ title, content, icon, delay = 0, borderColor = theme.palette.primary.main }) => (

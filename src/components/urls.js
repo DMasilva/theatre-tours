@@ -1,5 +1,3 @@
-import truck from '../images/truck.jpg';
-import homepages from '../images/homepage.jpg';
 import hotair from '../images/hotair.jpg';
 import lion from '../images/lion.jpg';
 import lions from '../images/lions.jpg';

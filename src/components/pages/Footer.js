@@ -32,11 +32,10 @@ import {
   Send as SendIcon,
   KeyboardArrowRight as ArrowIcon
 } from '@mui/icons-material';
-import logo from '../../images/logo.png';
+import logo from '../../logos/logo-hero-transparent.png';
 
 const Footer = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const socialLinks = [
@@ -58,7 +57,7 @@ const Footer = () => {
   const contactInfo = [
     { icon: <LocationIcon />, text: 'Mombasa Road, Nairobi, Kenya' },
     { icon: <EmailIcon />, text: 'info@royaldastinos.org' },
-    { icon: <WebIcon />, text: 'www.royaldastinos.org' },
+    { icon: <WebIcon />, text: 'www.royaldastinos.com' },
     { icon: <PhoneIcon />, text: '+254 736 183 916' }
   ];
 

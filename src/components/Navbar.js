@@ -6,7 +6,6 @@ import {
   Typography, 
   Button, 
   IconButton, 
-  Drawer, 
   List, 
   ListItem, 
   ListItemIcon, 
@@ -31,7 +30,7 @@ import {
   PersonAdd as SignupIcon,
   Close as CloseIcon
 } from '@mui/icons-material';
-import logo from '../images/logo.png';
+import logo from '../logos/logo-transparent.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
