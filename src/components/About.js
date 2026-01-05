@@ -239,9 +239,8 @@ const About = () => {
           icon={<Timeline />}
           delay={100}
         />
-
         {/* Image Gallery */}
-        <Box sx={{ mb: 8 }}>
+        {/* <Box sx={{ mb: 8 }}>
           <Grid container spacing={3} justifyContent="center">
             {[0, 1, 2].map((index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
@@ -293,7 +292,7 @@ const About = () => {
               </Grid>
             ))}
           </Grid>
-        </Box>
+        </Box> */}
 
         {/* Commitment Section */}
         <Section 
