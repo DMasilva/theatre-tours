@@ -330,7 +330,7 @@ const ContactForm = () => {
               ))}
 
               {/* Social Media Section */}
-              <Zoom in={true} style={{ transitionDelay: '750ms' }}>
+              {/* <Zoom in={true} style={{ transitionDelay: '750ms' }}>
                 <Paper
                   elevation={4}
                   sx={{
@@ -381,7 +381,7 @@ const ContactForm = () => {
                     ))}
                   </Stack>
                 </Paper>
-              </Zoom>
+              </Zoom> */}
             </Stack>
           </Grid>
         </Grid>
