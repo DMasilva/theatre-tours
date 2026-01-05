@@ -8,151 +8,308 @@ import {
   Grid, 
   Card, 
   CardMedia, 
-  CardContent, 
-  CardActions,
+  CardContent,
   useTheme,
-  useMediaQuery
+  Zoom,
+  Chip,
+  alpha
 } from '@mui/material';
-import ExploreIcon from '@mui/icons-material/Explore';
+import { 
+  ArrowForward,
+  Flight,
+  LocationOn,
+  TrendingUp
+} from '@mui/icons-material';
 import { trips } from './urls';
 
 const HomeTrips = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+
+  // Get featured trips (first 6)
+  const featuredTrips = trips.slice(0, 6);
 
   return (
-    <Box sx={{ width: '100%', py: { xs: 4, sm: 6, md: 8 } }}>
-      <Container maxWidth="lg">
-        <Typography 
-          variant="h3" 
-          component="h2" 
-          sx={{ 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            mb: { xs: 3, sm: 4, md: 6 },
-            color: theme.palette.primary.main,
-            fontSize: { xs: '1.75rem', sm: '2.25rem', md: '2.75rem' }
-          }}
-        >
-          Recent Trips
-        </Typography>
+    <Box 
+      sx={{ 
+        width: '100%', 
+        py: { xs: 6, md: 10 },
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: `linear-gradient(180deg, ${theme.palette.background.default} 0%, ${alpha(theme.palette.secondary.main, 0.05)} 100%)`,
+          zIndex: 0
+        }
+      }}
+    >
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         
-        <Grid container spacing={{ xs: 2, sm: 3, md: 4 }} justifyContent="center">
-          {trips.slice(0, isMobile ? 2 : 3).map((trip, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card 
-                sx={{ 
-                  height: '100%', 
-                  display: 'flex', 
-                  flexDirection: 'column',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                  '&:hover': {
-                    transform: { xs: 'translateY(-5px)', md: 'translateY(-8px)' },
-                    boxShadow: { xs: theme.shadows[5], md: theme.shadows[10] },
-                  }
-                }}
-              >
-                <Box sx={{ position: 'relative', paddingTop: '56.25%', overflow: 'hidden' }}>
-                  <CardMedia
-                    component="img"
-                    image={trip.image}
-                    alt={trip.title}
-                    sx={{ 
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      transition: 'transform 0.5s ease',
-                      '&:hover': {
-                        transform: { xs: 'none', md: 'scale(1.05)' }
+        {/* Section Header */}
+        <Box sx={{ textAlign: 'center', mb: { xs: 4, md: 6 } }}>
+          <Chip
+            icon={<TrendingUp />}
+            label="FEATURED DESTINATIONS"
+            sx={{
+              bgcolor: alpha(theme.palette.primary.main, 0.1),
+              color: theme.palette.primary.main,
+              fontWeight: 700,
+              letterSpacing: 1,
+              mb: 2,
+              fontSize: '0.85rem',
+              '& .MuiChip-icon': {
+                color: theme.palette.primary.main
+              }
+            }}
+          />
+          
+          <Typography 
+            variant="h2" 
+            sx={{ 
+              fontWeight: 800,
+              fontSize: { xs: '2rem', sm: '2.5rem', md: '3.5rem' },
+              mb: 2,
+              background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontFamily: '"Playfair Display", serif',
+            }}
+          >
+            Popular Destinations
+          </Typography>
+
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              color: theme.palette.text.secondary,
+              maxWidth: '700px',
+              mx: 'auto',
+              fontWeight: 400,
+              fontSize: { xs: '1rem', md: '1.2rem' }
+            }}
+          >
+            Handpicked travel experiences that create unforgettable memories
+          </Typography>
+        </Box>
+        
+        {/* Trips Grid */}
+        <Grid container spacing={{ xs: 3, md: 4 }}>
+          {featuredTrips.map((trip, index) => (
+            <Grid item xs={12} sm={6} md={4} key={trip.id}>
+              <Zoom in={true} style={{ transitionDelay: `${index * 100}ms` }}>
+                <Card 
+                  component={Link}
+                  to={`/trips/${trip.id}`}
+                  sx={{ 
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    textDecoration: 'none',
+                    borderRadius: 4,
+                    overflow: 'hidden',
+                    position: 'relative',
+                    boxShadow: theme.shadows[3],
+                    bgcolor: 'white',
+                    '&:hover': {
+                      transform: 'translateY(-10px)',
+                      boxShadow: theme.shadows[12],
+                      '& .trip-image': {
+                        transform: 'scale(1.15) rotate(2deg)',
+                      },
+                      '& .trip-overlay': {
+                        opacity: 0.9,
+                      },
+                      '& .view-button': {
+                        transform: 'translateX(5px)',
                       }
-                    }}
-                  />
-                </Box>
-                <CardContent sx={{ 
-                  flexGrow: 1, 
-                  height: { xs: 'auto', sm: '180px' }, 
-                  minHeight: { xs: '150px' },
-                  overflow: 'hidden',
-                  p: { xs: 2, sm: 3 }
-                }}>
-                  <Typography 
-                    gutterBottom 
-                    variant="h5" 
-                    component="h3" 
+                    },
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                >
+                  {/* Image with Overlay */}
+                  <Box 
                     sx={{ 
-                      fontWeight: 'bold',
-                      display: '-webkit-box',
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: 'vertical',
+                      position: 'relative',
+                      paddingTop: '75%',
                       overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      height: { xs: 'auto', sm: '64px' },
-                      fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.5rem' },
-                      mb: { xs: 1, sm: 2 }
+                      bgcolor: theme.palette.grey[200]
                     }}
                   >
-                    {trip.title}
-                  </Typography>
-                  <Typography 
-                    variant="body2" 
-                    color="text.secondary"
-                    sx={{
-                      display: '-webkit-box',
-                      WebkitLineClamp: { xs: 3, sm: 4 },
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      mb: 1,
-                      fontSize: { xs: '0.8rem', sm: '0.875rem' }
-                    }}
-                  >
-                    {trip.description && trip.description.length > 120 
-                      ? `${trip.description.substring(0, 120)}...` 
-                      : trip.description}
-                  </Typography>
-                </CardContent>
-                <CardActions sx={{ p: { xs: 1.5, sm: 2 }, mt: 'auto' }}>
-                  <Button 
-                    size={isMobile ? "small" : "medium"}
-                    variant="outlined" 
-                    color="primary"
-                    component={Link}
-                    to={`/trips/${trip.id}`}
-                    fullWidth
-                    sx={{
-                      py: { xs: 0.8, sm: 1 },
-                      fontSize: { xs: '0.8rem', sm: '0.9rem' }
-                    }}
-                  >
-                    Learn More
-                  </Button>
-                </CardActions>
-              </Card>
+                    <CardMedia
+                      component="img"
+                      image={trip.image}
+                      alt={trip.title}
+                      className="trip-image"
+                      sx={{ 
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                    />
+
+                    {/* Gradient Overlay */}
+                    <Box
+                      className="trip-overlay"
+                      sx={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '70%',
+                        background: `linear-gradient(to top, ${theme.palette.primary.dark}ee 0%, transparent 100%)`,
+                        opacity: 0.7,
+                        transition: 'opacity 0.4s ease'
+                      }}
+                    />
+
+                    {/* Category Badge */}
+                    <Chip
+                      label={
+                        trip.title?.toLowerCase().includes('mara') ||
+                        trip.title?.toLowerCase().includes('amboseli') ||
+                        trip.title?.toLowerCase().includes('tsavo') ||
+                        trip.title?.toLowerCase().includes('naivasha') ||
+                        trip.title?.toLowerCase().includes('nakuru') ||
+                        trip.title?.toLowerCase().includes('diani')
+                          ? "Domestic" 
+                          : "International"
+                      }
+                      icon={
+                        trip.title?.toLowerCase().includes('mara') ||
+                        trip.title?.toLowerCase().includes('amboseli') ||
+                        trip.title?.toLowerCase().includes('tsavo') ||
+                        trip.title?.toLowerCase().includes('naivasha') ||
+                        trip.title?.toLowerCase().includes('nakuru') ||
+                        trip.title?.toLowerCase().includes('diani')
+                          ? <LocationOn /> 
+                          : <Flight />
+                      }
+                      size="small"
+                      sx={{
+                        position: 'absolute',
+                        top: 16,
+                        left: 16,
+                        bgcolor: 'white',
+                        fontWeight: 600,
+                        boxShadow: theme.shadows[4],
+                        zIndex: 2,
+                        '& .MuiChip-icon': {
+                          color: theme.palette.primary.main
+                        }
+                      }}
+                    />
+
+                    {/* Title on Image */}
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        p: 2.5,
+                        zIndex: 2
+                      }}
+                    >
+                      <Typography 
+                        variant="h5" 
+                        sx={{ 
+                          fontWeight: 700,
+                          color: 'white',
+                          fontSize: { xs: '1.2rem', md: '1.4rem' },
+                          textShadow: '2px 2px 8px rgba(0,0,0,0.6)',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          mb: 0.5
+                        }}
+                      >
+                        {trip.title}
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  {/* Card Content */}
+                  <CardContent sx={{ p: 3, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                    <Typography 
+                      variant="body2" 
+                      color="text.secondary"
+                      sx={{
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        lineHeight: 1.7,
+                        mb: 2,
+                        flexGrow: 1
+                      }}
+                    >
+                      {trip.description && trip.description.length > 100 
+                        ? `${trip.description.substring(0, 100)}...` 
+                        : trip.description || 'Experience an unforgettable journey'}
+                    </Typography>
+
+                    {/* View Details Link */}
+                    <Box 
+                      sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center',
+                        color: theme.palette.primary.main,
+                        fontWeight: 600,
+                        mt: 'auto'
+                      }}
+                    >
+                      <Typography variant="body2" sx={{ fontWeight: 600, mr: 0.5 }}>
+                        View Details
+                      </Typography>
+                      <ArrowForward 
+                        className="view-button"
+                        sx={{ 
+                          fontSize: 18,
+                          transition: 'transform 0.3s ease'
+                        }} 
+                      />
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Zoom>
             </Grid>
           ))}
         </Grid>
         
-        <Box sx={{ textAlign: 'center', mt: { xs: 3, sm: 4, md: 6 } }}>
+        {/* View All Button */}
+        <Box sx={{ textAlign: 'center', mt: { xs: 5, md: 7 } }}>
           <Button
             component={Link}
             to="/trips"
             variant="contained"
-            color="primary"
-            size={isMobile ? "medium" : "large"}
-            endIcon={<ExploreIcon />}
+            size="large"
+            endIcon={<ArrowForward />}
             sx={{ 
-              px: { xs: 3, sm: 4 },
-              py: { xs: 1, sm: 1.5 },
-              borderRadius: theme.shape.borderRadius,
-              fontWeight: 'bold',
-              fontSize: { xs: '0.9rem', sm: '1rem' }
+              px: 6,
+              py: 2,
+              borderRadius: 8,
+              fontWeight: 700,
+              fontSize: '1.1rem',
+              textTransform: 'none',
+              background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+              boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.4)}`,
+              '&:hover': {
+                background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
+                transform: 'translateY(-3px)',
+                boxShadow: `0 12px 32px ${alpha(theme.palette.primary.main, 0.5)}`,
+              },
+              transition: 'all 0.3s ease'
             }}
           >
-            View All Trips
+            Explore All Destinations
           </Button>
         </Box>
       </Container>
