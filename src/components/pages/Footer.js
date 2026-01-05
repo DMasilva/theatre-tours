@@ -178,13 +178,15 @@ const Footer = () => {
             {/* Company Info */}
             <Grid item xs={12} sm={6} md={4}>
               <Box sx={{ mb: { xs: 3, md: 4 } }}>
-                <Box 
-                  component="img" 
-                  src={logo} 
+                <Box
+                  component="img"
+                  src={logo}
                   alt="Royal Dastinos Tours Logo"
-                  sx={{ 
-                    height: { xs: 50, sm: 60 },
+                  sx={{
+                    height: { xs: 60, sm: 70 },
                     width: 'auto',
+                    maxWidth: '200px',
+                    objectFit: 'contain',
                     mb: 2
                   }}
                 />

@@ -31,6 +31,7 @@ import {
   Close as CloseIcon
 } from '@mui/icons-material';
 import logo from '../logos/logo-transparent.png';
+import logoIcon from '../logos/logo-transparent.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -93,13 +94,15 @@ const Navbar = () => {
         borderBottom: `1px solid ${theme.palette.divider}`
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar 
-            src={logo} 
-            alt="Royal Dastinos Tours Logo" 
-            variant="square"
-            sx={{ 
-              height: { xs: 32, sm: 40 }, 
+          <Box
+            component="img"
+            src={logoIcon}
+            alt="Royal Dastinos Tours Logo"
+            sx={{
+              height: { xs: 40, sm: 45 },
               width: 'auto',
+              maxWidth: '120px',
+              objectFit: 'contain',
               mr: 2
             }}
           />
@@ -108,7 +111,8 @@ const Navbar = () => {
             sx={{ 
               fontFamily: '"Playfair Display", serif', 
               fontWeight: 600,
-              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+              fontSize: { xs: '1.1rem', sm: '1.25rem' },
+              color: theme.palette.primary.main
             }}
           >
             Royal Dastinos
@@ -234,29 +238,48 @@ const Navbar = () => {
           {/* Logo */}
           <Box sx={{ flexGrow: 0, mr: 2, display: 'flex', alignItems: 'center' }}>
             <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-              <Avatar 
-                src={logo} 
-                alt="Royal Dastinos Tours Logo" 
-                variant="square"
-                sx={{ 
-                  height: { xs: 32, sm: 36, md: 50 }, 
-                  width: 'auto',
-                  mr: { xs: 1, sm: 1.5, md: 2 }
-                }}
-              />
-              {!isMobile && (
-                <Typography 
-                  variant="h5" 
-                  sx={{ 
-                    fontFamily: '"Playfair Display", serif', 
-                    fontWeight: 600,
-                    color: theme.palette.primary.main,
-                    letterSpacing: '0.5px',
-                    fontSize: { sm: '1.3rem', md: '1.5rem', lg: '1.75rem' }
+              {/* Mobile: Show icon only */}
+              {isMobile && (
+                <Box
+                  component="img"
+                  src={logoIcon}
+                  alt="Royal Dastinos Tours Logo"
+                  sx={{
+                    height: { xs: 45, sm: 50 },
+                    width: 'auto',
+                    maxWidth: { xs: '120px', sm: '140px' },
+                    objectFit: 'contain'
                   }}
-                >
-                  Royal Dastinos
-                </Typography>
+                />
+              )}
+              {/* Desktop: Show logo with text */}
+              {!isMobile && (
+                <>
+                  <Box
+                    component="img"
+                    src={logo}
+                    alt="Royal Dastinos Tours Logo"
+                    sx={{
+                      height: { md: 45, lg: 50 },
+                      width: 'auto',
+                      maxWidth: { md: '150px', lg: '180px' },
+                      objectFit: 'contain',
+                      mr: { md: 1.5 }
+                    }}
+                  />
+                  <Typography 
+                    variant="h5" 
+                    sx={{ 
+                      fontFamily: '"Playfair Display", serif', 
+                      fontWeight: 600,
+                      color: theme.palette.primary.main,
+                      letterSpacing: '0.5px',
+                      fontSize: { md: '1.5rem', lg: '1.75rem' }
+                    }}
+                  >
+                    Royal Dastinos
+                  </Typography>
+                </>
               )}
             </Link>
           </Box>
