@@ -78,7 +78,7 @@ const ContactForm = () => {
         <div className="mt-8 pt-6 border-t text-center" style={{ borderColor: '#E8E0D1' }}>
           <p className="text-gray-600 mb-2">Or reach us directly at:</p>
           <p className="font-bold" style={{ color: '#FF7420' }}>📞 +254 736 183 916</p>
-          <p className="font-bold" style={{ color: '#FF7420' }}>📧 info@royaldastinos.org</p>
+          <p className="font-bold" style={{ color: '#FF7420' }}>📧 info@royaldastinos.com</p>
         </div>
       </div>
     </div>

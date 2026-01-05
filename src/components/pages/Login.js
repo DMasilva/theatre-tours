@@ -44,9 +44,16 @@ const Login = () => {
             >
               Sign In
             </button>
-            <a className="inline-block align-baseline font-bold text-sm transition-colors" style={{ color: '#FF7420' }} onMouseEnter={(e) => e.target.style.color = '#E65A00'} onMouseLeave={(e) => e.target.style.color = '#FF7420'} href="#">
+            <button 
+              type="button"
+              className="inline-block align-baseline font-bold text-sm transition-colors bg-transparent border-0 cursor-pointer p-0" 
+              style={{ color: '#FF7420' }} 
+              onMouseEnter={(e) => e.target.style.color = '#E65A00'} 
+              onMouseLeave={(e) => e.target.style.color = '#FF7420'} 
+              onClick={() => { alert('Password reset functionality coming soon!'); }}
+            >
               Forgot Password?
-            </a>
+            </button>
           </div>
         </form>
         <p className="mt-6 text-center text-gray-600">

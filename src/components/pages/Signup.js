@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaUser, FaEnvelope, FaLock, FaAddressCard } from 'react-icons/fa';
+import { FaUser, FaLock, FaAddressCard } from 'react-icons/fa';
 
 const Signup = () => {
   return (

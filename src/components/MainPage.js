@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Typography, Container, useTheme } from '@mui/material';
-import Hero from './Hero';
 import HomeTrips from './HomeTrips';
 
 const MainPage = () => {
@@ -41,7 +40,6 @@ const MainPage = () => {
         </Box>
       </Container>
       
-      <Hero />
       <HomeTrips />
     </Box>
   );

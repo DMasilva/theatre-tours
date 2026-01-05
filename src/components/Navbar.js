@@ -14,7 +14,6 @@ import {
   Container,
   useTheme,
   useMediaQuery,
-  Avatar,
   Divider,
   Fade,
   Stack,

@@ -10,10 +10,7 @@ import {
   ListItem, 
   ListItemIcon, 
   ListItemText,
-  Card,
-  CardMedia,
   useTheme,
-  useMediaQuery,
   Fade,
   Zoom
 } from '@mui/material';
@@ -35,11 +32,9 @@ import {
   Hiking,
   LocalActivity
 } from '@mui/icons-material';
-import { trips } from '../data';
 
 const About = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // Custom section component for reusability
   const Section = ({ title, content, icon, delay = 0, borderColor = theme.palette.primary.main }) => (
