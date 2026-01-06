@@ -65,7 +65,8 @@ const Signup = () => {
       sx={{ 
         minHeight: '100vh',
         bgcolor: theme.palette.background.default,
-        py: { xs: 4, md: 8 }
+        pt: { xs: 12, md: 15 },
+        pb: { xs: 4, md: 8 }
       }}
     >
       <Container maxWidth="md">

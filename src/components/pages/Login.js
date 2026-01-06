@@ -54,7 +54,8 @@ const Login = () => {
         display: 'flex',
         alignItems: 'center',
         background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.05)} 0%, ${alpha(theme.palette.secondary.main, 0.05)} 100%)`,
-        py: { xs: 4, md: 8 }
+        pt: { xs: 12, md: 15 },
+        pb: { xs: 4, md: 8 }
       }}
     >
       <Container maxWidth="sm">

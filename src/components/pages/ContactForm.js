@@ -67,14 +67,15 @@ const ContactForm = () => {
   ];
 
   return (
-    <Box sx={{ bgcolor: theme.palette.background.default, minHeight: '100vh', py: { xs: 4, md: 8 } }}>
+    <Box sx={{ bgcolor: theme.palette.background.default, minHeight: '100vh', pb: { xs: 4, md: 8 } }}>
       
       {/* Hero Section */}
       <Box 
         sx={{ 
           position: 'relative',
           height: { xs: '40vh', md: '50vh' },
-          mb: { xs: -10, md: -15 },
+          mt: { xs: 8, md: 9 },
+          mb: { xs: 4, md: 6 },
           overflow: 'hidden',
           '&::before': {
             content: '""',
