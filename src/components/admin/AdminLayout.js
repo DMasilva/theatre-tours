@@ -183,7 +183,7 @@ const AdminLayout = () => {
                   if (isMobile) setMobileOpen(false);
                 }}
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: 3,
                   bgcolor: isActive ? theme.palette.primary.main : 'transparent',
                   color: isActive ? 'white' : theme.palette.text.primary,
                   '&:hover': {
@@ -405,11 +405,11 @@ const AdminLayout = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: { xs: 2, sm: 3 },
           width: { md: `calc(100% - ${drawerWidth}px)` },
           bgcolor: theme.palette.background.default,
           minHeight: '100vh',
-          mt: ['56px', '64px']
+          mt: { xs: '56px', sm: '64px' }
         }}
       >
         <Outlet />

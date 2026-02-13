@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { 
   Box, 
   Typography, 
-  Button,
   useTheme,
   IconButton,
   Container,
@@ -14,6 +13,7 @@ import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import MainPage from './MainPage';
 import { urls } from './urls';
+import ButtonPill from './ui/ButtonPill';
 
 const Homepage = () => {
   const theme = useTheme();
@@ -183,33 +183,26 @@ const Homepage = () => {
               </Typography>
               
               <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Button
+                <ButtonPill
                   component={Link}
                   to="/trips"
                   variant="contained"
+                  color="primary"
                   size="large"
                   endIcon={<ExploreIcon />}
                   sx={{
                     background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
                     color: 'white',
-                    fontWeight: 'bold',
-                    px: { xs: 3, md: 5 },
-                    py: { xs: 1.5, md: 2 },
-                    fontSize: { xs: '1rem', md: '1.1rem' },
-                    borderRadius: '50px',
                     '&:hover': {
                       background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
-                      transform: 'translateY(-2px)',
                       boxShadow: theme.shadows[12]
                     },
-                    transition: 'all 0.3s ease',
-                    boxShadow: theme.shadows[8]
                   }}
                 >
                   Explore Our Destinations
-                </Button>
+                </ButtonPill>
 
-                <Button
+                <ButtonPill
                   component={Link}
                   to="/about"
                   variant="outlined"
@@ -217,11 +210,6 @@ const Homepage = () => {
                   sx={{
                     borderColor: 'white',
                     color: 'white',
-                    fontWeight: 'bold',
-                    px: { xs: 3, md: 5 },
-                    py: { xs: 1.5, md: 2 },
-                    fontSize: { xs: '1rem', md: '1.1rem' },
-                    borderRadius: '50px',
                     borderWidth: 2,
                     backdropFilter: 'blur(10px)',
                     bgcolor: 'rgba(255, 255, 255, 0.1)',
@@ -229,14 +217,12 @@ const Homepage = () => {
                       borderWidth: 2,
                       borderColor: theme.palette.secondary.main,
                       bgcolor: 'rgba(255, 255, 255, 0.2)',
-                      transform: 'translateY(-2px)',
                       boxShadow: theme.shadows[8]
                     },
-                    transition: 'all 0.3s ease',
                   }}
                 >
                   Learn More
-                </Button>
+                </ButtonPill>
               </Box>
             </Box>
           </Fade>
@@ -255,6 +241,7 @@ const Homepage = () => {
             zIndex: 3,
             width: { xs: 40, sm: 50, md: 60 },
             height: { xs: 40, sm: 50, md: 60 },
+            borderRadius: 2,
             '&:hover': {
               bgcolor: theme.palette.primary.main,
               transform: 'translateY(-50%) scale(1.1)',
@@ -278,6 +265,7 @@ const Homepage = () => {
             zIndex: 3,
             width: { xs: 40, sm: 50, md: 60 },
             height: { xs: 40, sm: 50, md: 60 },
+            borderRadius: 2,
             '&:hover': {
               bgcolor: theme.palette.primary.main,
               transform: 'translateY(-50%) scale(1.1)',

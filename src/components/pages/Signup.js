@@ -34,6 +34,7 @@ import {
   ArrowForward
 } from '@mui/icons-material';
 import authService from '../../services/authService';
+import ButtonPill from '../ui/ButtonPill';
 
 const Signup = () => {
   const theme = useTheme();
@@ -421,33 +422,29 @@ const Signup = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <Button
+                      <ButtonPill
                         type="submit"
                         variant="contained"
+                        color="primary"
                         size="large"
                         fullWidth
                         disabled={submitting}
                         endIcon={submitting ? <CircularProgress size={20} /> : <ArrowForward />}
                         sx={{
                           py: 2,
-                          fontSize: '1.1rem',
-                          fontWeight: 700,
-                          borderRadius: 3,
                           background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
                           boxShadow: `0 8px 20px ${alpha(theme.palette.primary.main, 0.4)}`,
                           '&:hover': {
                             background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
-                            transform: 'translateY(-3px)',
                             boxShadow: `0 12px 28px ${alpha(theme.palette.primary.main, 0.5)}`
                           },
-                          transition: 'all 0.3s ease',
                           '&:disabled': {
                             background: theme.palette.grey[400]
                           }
                         }}
                       >
                         {submitting ? 'Creating Account...' : 'Create Account'}
-                      </Button>
+                      </ButtonPill>
                     </Grid>
                   </Grid>
                 </form>

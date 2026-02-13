@@ -50,6 +50,7 @@ import {
 import tripsService from '../../services/tripsService';
 import favoritesService from '../../services/favoritesService';
 import authService from '../../services/authService';
+import ButtonPill from '../ui/ButtonPill';
 
 const DetailedTrip = () => {
   const { id } = useParams();
@@ -165,15 +166,15 @@ const DetailedTrip = () => {
         <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
           Trip not found
         </Typography>
-        <Button 
+        <ButtonPill 
           variant="contained" 
           color="primary" 
           onClick={() => navigate('/trips')}
           startIcon={<ArrowBack />}
-          sx={{ mt: 2, px: 4, py: 1.5, borderRadius: 4 }}
+          sx={{ mt: 2 }}
         >
           Back to Trips
-        </Button>
+        </ButtonPill>
       </Box>
     );
   }
@@ -239,26 +240,23 @@ const DetailedTrip = () => {
 
         {/* Back Button */}
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 3, pt: { xs: 3, md: 4 } }}>
-          <Button
+          <ButtonPill
             variant="contained"
+            color="primary"
             startIcon={<ArrowBack />}
             onClick={() => navigate('/trips')}
             sx={{
-              bgcolor: 'white',
-              color: theme.palette.primary.main,
-              fontWeight: 600,
-              px: 3,
-              borderRadius: 3,
+              bgcolor: theme.palette.primary.main,
+              color: '#fff',
               '&:hover': {
-                bgcolor: alpha(theme.palette.primary.main, 0.1),
+                bgcolor: theme.palette.primary.dark,
                 transform: 'translateX(-5px)',
               },
-              transition: 'all 0.3s ease',
               boxShadow: theme.shadows[8]
             }}
           >
             Back to Trips
-          </Button>
+          </ButtonPill>
         </Container>
 
         {/* Hero Content */}
@@ -452,7 +450,7 @@ const DetailedTrip = () => {
                 onChange={() => setItineraryExpanded(!itineraryExpanded)}
                 sx={{
                   mb: 4,
-                  borderRadius: '16px !important',
+                  borderRadius: '4px',
                   border: `2px solid ${itineraryExpanded ? theme.palette.primary.main : theme.palette.grey[200]}`,
                   boxShadow: itineraryExpanded ? theme.shadows[8] : 'none',
                   '&:before': {
@@ -477,12 +475,12 @@ const DetailedTrip = () => {
                   }
                   sx={{
                     bgcolor: itineraryExpanded ? theme.palette.primary.main : 'white',
-                    borderRadius: itineraryExpanded ? '14px 14px 0 0' : '14px',
+                    borderRadius: itineraryExpanded ? '4px 4px 0 0' : '4px',
                     minHeight: 80,
                     px: { xs: 3, md: 5 },
                     '&.Mui-expanded': {
                       minHeight: 80,
-                      borderRadius: '14px 14px 0 0',
+                      borderRadius: '4px 4px 0 0',
                     },
                     '& .MuiAccordionSummary-content': {
                       my: 2.5,
@@ -819,29 +817,25 @@ const DetailedTrip = () => {
 
                   {/* Action Buttons */}
                   <Stack spacing={2} sx={{ mb: 3 }}>
-                    <Button
+                    <ButtonPill
                       variant="contained"
+                      color="primary"
                       size="large"
                       fullWidth
                       onClick={handleBookNow}
                       startIcon={<CalendarMonth />}
                       sx={{
                         py: 2,
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                        borderRadius: 3,
                         background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
                         boxShadow: `0 8px 20px ${alpha(theme.palette.primary.main, 0.4)}`,
                         '&:hover': {
                           background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
-                          transform: 'translateY(-3px)',
                           boxShadow: `0 12px 28px ${alpha(theme.palette.primary.main, 0.5)}`
                         },
-                        transition: 'all 0.3s ease'
                       }}
                     >
                       Book This Trip
-                    </Button>
+                    </ButtonPill>
 
                     <Stack direction="row" spacing={1}>
                       <IconButton
@@ -942,11 +936,11 @@ const DetailedTrip = () => {
             Create an account or sign in to save trips to your favorites and see them on your dashboard.
           </Typography>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ gap: 1, flexWrap: 'wrap' }}>
           <Button onClick={() => setLoginPromptOpen(false)}>Cancel</Button>
-          <Button variant="contained" onClick={() => { setLoginPromptOpen(false); navigate('/login'); }}>
+          <ButtonPill variant="contained" color="primary" onClick={() => { setLoginPromptOpen(false); navigate('/login'); }}>
             Sign In
-          </Button>
+          </ButtonPill>
         </DialogActions>
       </Dialog>
 
@@ -960,18 +954,19 @@ const DetailedTrip = () => {
         </DialogContent>
         <DialogActions sx={{ flexWrap: 'wrap', gap: 1 }}>
           <Button onClick={() => setBookPromptOpen(false)}>Cancel</Button>
-          <Button 
+          <ButtonPill 
             variant="contained" 
+            color="primary"
             onClick={() => { setBookPromptOpen(false); navigate('/book', { state: { trip } }); }}
           >
             Continue as Guest
-          </Button>
-          <Button variant="outlined" onClick={() => { setBookPromptOpen(false); navigate('/signup', { state: { returnTo: '/book', trip } }); }}>
+          </ButtonPill>
+          <ButtonPill variant="outlined" color="primary" onClick={() => { setBookPromptOpen(false); navigate('/signup', { state: { returnTo: '/book', trip } }); }}>
             Create Account
-          </Button>
-          <Button variant="outlined" onClick={() => { setBookPromptOpen(false); navigate('/login', { state: { returnTo: '/book', trip } }); }}>
+          </ButtonPill>
+          <ButtonPill variant="outlined" color="primary" onClick={() => { setBookPromptOpen(false); navigate('/login', { state: { returnTo: '/book', trip } }); }}>
             Sign In
-          </Button>
+          </ButtonPill>
         </DialogActions>
       </Dialog>
     </Box>

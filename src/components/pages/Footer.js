@@ -118,10 +118,12 @@ const Footer = () => {
                 component="form" 
                 elevation={0}
                 sx={{ 
-                  p: { xs: 0.5, sm: 1 },
+                  p: { xs: 1, sm: 1.5 },
                   display: 'flex',
-                  alignItems: 'center',
-                  borderRadius: theme.shape.borderRadius,
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  alignItems: 'stretch',
+                  gap: { xs: 1, sm: 0 },
+                  borderRadius: 2,
                   backgroundColor: 'rgba(255, 255, 255, 0.9)',
                   maxWidth: { xs: '100%', md: 500 },
                   mx: { xs: 'auto', md: 0 }
@@ -143,17 +145,18 @@ const Footer = () => {
                       fontSize: { xs: '0.9rem', sm: '1rem' }
                     }
                   }}
-                  sx={{ ml: 1 }}
+                  sx={{ ml: { sm: 1 }, flex: 1 }}
                 />
                 <Button 
                   variant="contained" 
                   color="primary"
                   endIcon={<SendIcon />}
                   sx={{ 
-                    borderRadius: theme.shape.borderRadius,
-                    px: { xs: 2, sm: 3 },
-                    py: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: '0.8rem', sm: '0.9rem' }
+                    borderRadius: '9999px',
+                    px: { xs: 3, sm: 4 },
+                    py: { xs: 1.25, sm: 1.5 },
+                    fontSize: { xs: '0.9rem', sm: '0.95rem' },
+                    fontWeight: 600
                   }}
                 >
                   Subscribe
@@ -225,6 +228,7 @@ const Footer = () => {
                       sx={{ 
                         color: 'white',
                         bgcolor: social.color,
+                        borderRadius: 2,
                         '&:hover': {
                           bgcolor: social.color,
                           transform: 'translateY(-3px)',

@@ -34,6 +34,7 @@ import {
 import logo from '../logos/logo-transparent.png';
 import logoIcon from '../logos/logo-transparent.png';
 import authService from '../services/authService';
+import ButtonPill from './ui/ButtonPill';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -190,7 +191,7 @@ const Navbar = () => {
       <Box sx={{ p: { xs: 2, sm: 3 }, borderTop: `1px solid ${theme.palette.divider}` }}>
         {isLoggedIn ? (
           <Stack direction="column" spacing={2}>
-            <Button
+            <ButtonPill
               component={Link}
               to={dashboardPath}
               variant="contained"
@@ -198,26 +199,24 @@ const Navbar = () => {
               fullWidth
               startIcon={<LuggageIcon />}
               onClick={closeMenu}
-              sx={{ fontWeight: 600, py: { xs: 0.8, sm: 1 } }}
               size={isSmallMobile ? "small" : "medium"}
             >
               My Account
-            </Button>
-            <Button
+            </ButtonPill>
+            <ButtonPill
               variant="outlined"
               color="error"
               fullWidth
               startIcon={<LogoutIcon />}
               onClick={handleLogout}
-              sx={{ fontWeight: 600, py: { xs: 0.8, sm: 1 } }}
               size={isSmallMobile ? "small" : "medium"}
             >
               Logout
-            </Button>
+            </ButtonPill>
           </Stack>
         ) : (
-          <Stack direction="row" spacing={2}>
-            <Button 
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <ButtonPill 
               component={Link} 
               to="/login" 
               variant="outlined"
@@ -225,12 +224,11 @@ const Navbar = () => {
               fullWidth
               startIcon={<LoginIcon />}
               onClick={closeMenu}
-              sx={{ fontWeight: 600, py: { xs: 0.8, sm: 1 } }}
               size={isSmallMobile ? "small" : "medium"}
             >
               Login
-            </Button>
-            <Button 
+            </ButtonPill>
+            <ButtonPill 
               component={Link} 
               to="/signup" 
               variant="contained" 
@@ -238,11 +236,10 @@ const Navbar = () => {
               fullWidth
               startIcon={<SignupIcon />}
               onClick={closeMenu}
-              sx={{ fontWeight: 600, py: { xs: 0.8, sm: 1 } }}
               size={isSmallMobile ? "small" : "medium"}
             >
               Signup
-            </Button>
+            </ButtonPill>
           </Stack>
         )}
       </Box>
@@ -369,53 +366,49 @@ const Navbar = () => {
 
           {/* Auth Buttons (Desktop) */}
           {!isMobile && (
-            <Box sx={{ flexGrow: 0, display: 'flex', gap: 1.5, alignItems: 'center' }}>
+            <Box sx={{ flexGrow: 0, display: 'flex', gap: 1.5, alignItems: 'center', flexWrap: 'wrap' }}>
               {isLoggedIn ? (
                 <>
-                  <Button
+                  <ButtonPill
                     component={Link}
                     to={dashboardPath}
                     variant="contained"
                     color="primary"
                     size="small"
                     startIcon={<LuggageIcon />}
-                    sx={{ fontWeight: 600, px: { sm: 1.5, md: 2 }, py: { sm: 0.5, md: 0.75 }, fontSize: { sm: '0.8rem', md: '0.9rem' } }}
                   >
                     My Account
-                  </Button>
-                  <Button
+                  </ButtonPill>
+                  <ButtonPill
                     variant="outlined"
                     color="error"
                     size="small"
                     startIcon={<LogoutIcon />}
                     onClick={handleLogout}
-                    sx={{ fontWeight: 600, px: { sm: 1.5, md: 2 }, py: { sm: 0.5, md: 0.75 }, fontSize: { sm: '0.8rem', md: '0.9rem' } }}
                   >
                     Logout
-                  </Button>
+                  </ButtonPill>
                 </>
               ) : (
                 <>
-                  <Button 
+                  <ButtonPill 
                     component={Link} 
                     to="/login" 
                     variant="outlined" 
                     color="primary"
                     size="small"
-                    sx={{ fontWeight: 600, px: { sm: 1.5, md: 2 }, py: { sm: 0.5, md: 0.75 }, fontSize: { sm: '0.8rem', md: '0.9rem' } }}
                   >
                     Login
-                  </Button>
-                  <Button 
+                  </ButtonPill>
+                  <ButtonPill 
                     component={Link} 
                     to="/signup" 
                     variant="contained" 
                     color="primary"
                     size="small"
-                    sx={{ fontWeight: 600, px: { sm: 1.5, md: 2 }, py: { sm: 0.5, md: 0.75 }, fontSize: { sm: '0.8rem', md: '0.9rem' } }}
                   >
                     Signup
-                  </Button>
+                  </ButtonPill>
                 </>
               )}
             </Box>

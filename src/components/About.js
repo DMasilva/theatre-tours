@@ -9,8 +9,7 @@ import {
   Fade,
   Zoom,
   Slide,
-  Grow,
-  Button
+  Grow
 } from '@mui/material';
 import { 
   Flight,
@@ -24,6 +23,7 @@ import {
   Security
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import ButtonPill from './ui/ButtonPill';
 
 const About = () => {
   const theme = useTheme();
@@ -169,30 +169,24 @@ const About = () => {
                 Creating Memorable Travel Experiences Across the Globe
               </Typography>
 
-              <Button
+              <ButtonPill
                 component={Link}
                 to="/trips"
                 variant="contained"
                 size="large"
                 sx={{
                   bgcolor: 'white',
-                  color: 'white',
-                  px: 5,
-                  py: 2,
-                  fontSize: '1.1rem',
-                  fontWeight: 700,
-                  borderRadius: '50px',
+                  color: theme.palette.primary.main,
                   '&:hover': {
                     bgcolor: theme.palette.secondary.main,
-                    transform: 'translateY(-3px)',
+                    color: theme.palette.text.primary,
                     boxShadow: theme.shadows[12]
                   },
-                  transition: 'all 0.3s ease',
                   boxShadow: theme.shadows[8]
                 }}
               >
                 Explore Destinations
-              </Button>
+              </ButtonPill>
             </Box>
           </Fade>
         </Container>
@@ -629,30 +623,24 @@ const About = () => {
                 Let us create an unforgettable travel experience tailored just for you
               </Typography>
               <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Button
+                <ButtonPill
                   component={Link}
                   to="/trips"
                   variant="contained"
                   size="large"
                   sx={{
                     bgcolor: 'white',
-                    color: 'white',
-                    px: 5,
-                    py: 2,
-                    fontSize: '1.1rem',
-                    fontWeight: 700,
-                    borderRadius: '50px',
+                    color: theme.palette.primary.main,
                     '&:hover': {
                       bgcolor: theme.palette.secondary.main,
-                      transform: 'translateY(-3px)',
+                      color: theme.palette.text.primary,
                       boxShadow: theme.shadows[16]
                     },
-                    transition: 'all 0.3s ease'
                   }}
                 >
                   Browse Trips
-                </Button>
-                <Button
+                </ButtonPill>
+                <ButtonPill
                   component={Link}
                   to="/contact"
                   variant="outlined"
@@ -660,24 +648,17 @@ const About = () => {
                   sx={{
                     borderColor: 'white',
                     color: 'white',
-                    px: 5,
-                    py: 2,
-                    fontSize: '1.1rem',
-                    fontWeight: 700,
-                    borderRadius: '50px',
                     borderWidth: 2,
                     '&:hover': {
                       borderWidth: 2,
                       bgcolor: 'white',
                       color: theme.palette.primary.main,
-                      transform: 'translateY(-3px)',
                       boxShadow: theme.shadows[16]
                     },
-                    transition: 'all 0.3s ease'
                   }}
                 >
                   Contact Us
-                </Button>
+                </ButtonPill>
               </Box>
             </Box>
           </Fade>

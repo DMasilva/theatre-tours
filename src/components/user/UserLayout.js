@@ -154,7 +154,7 @@ const UserLayout = () => {
       </Toolbar>
 
       {/* User Info Card */}
-      <Box sx={{ p: 3, textAlign: 'center', bgcolor: theme.palette.grey[50] }}>
+      <Box sx={{ p: 3, textAlign: 'center', bgcolor: theme.palette.grey[50], borderRadius: 2, m: 2 }}>
         <Avatar
           sx={{
             width: 80,
@@ -421,11 +421,11 @@ const UserLayout = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: { xs: 2, sm: 3 },
           width: { md: `calc(100% - ${drawerWidth}px)` },
           bgcolor: theme.palette.background.default,
           minHeight: '100vh',
-          mt: ['56px', '64px']
+          mt: { xs: '56px', sm: '64px' }
         }}
       >
         <Container maxWidth="xl">

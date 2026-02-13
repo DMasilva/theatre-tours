@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
 import Homepage from './components/Homepage';
 import Footer from './components/pages/Footer';
 import AllTrips from './components/AllTrips';
@@ -244,7 +245,7 @@ let theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 0, // Square edges for a more modern, sophisticated look
+    borderRadius: 4, // Very subtle rounding - smooths corners without being prominent
   },
   shadows: [
     'none',
@@ -322,7 +323,7 @@ let theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 0,
+          borderRadius: 4,
           padding: {
             xs: '8px 16px',
             sm: '10px 20px',
@@ -399,7 +400,7 @@ let theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 0,
+          borderRadius: 4,
           boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
           overflow: 'hidden',
           transition: 'transform 0.5s ease, box-shadow 0.5s ease',
@@ -420,7 +421,7 @@ let theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         rounded: {
-          borderRadius: 0,
+          borderRadius: 4,
         },
         elevation1: {
           boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
@@ -446,7 +447,7 @@ let theme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
-          borderRadius: 0,
+          borderRadius: 4,
           fontSize: {
             xs: '0.9rem',
             sm: '0.95rem',
@@ -458,7 +459,7 @@ let theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          borderRadius: 0,
+          borderRadius: 4,
           '&:hover .MuiOutlinedInput-notchedOutline': {
             borderColor: '#FF7420',
           },
@@ -524,7 +525,7 @@ let theme = createTheme({
     MuiDialog: {
       styleOverrides: {
         paper: {
-          borderRadius: 0,
+          borderRadius: 4,
           margin: {
             xs: 16,
             sm: 24,
@@ -541,7 +542,7 @@ let theme = createTheme({
     MuiAlert: {
       styleOverrides: {
         root: {
-          borderRadius: 0,
+          borderRadius: 4,
           fontSize: {
             xs: '0.8rem',
             sm: '0.85rem',
@@ -668,10 +669,14 @@ function App() {
       <div className="flex flex-col min-h-screen">
         <ScrollToTop />
         {!isDashboardRoute && <Navbar />}
-        <div className="flex-grow" style={{ 
-          paddingTop: isDashboardRoute ? '0' : { xs: '56px', sm: '64px', md: '72px' },
-          minHeight: 'calc(100vh - 64px)'
-        }}> 
+        <Box 
+          component="main"
+          className="flex-grow" 
+          sx={{ 
+            paddingTop: isDashboardRoute ? 0 : { xs: 7, sm: 8, md: 9 },
+            minHeight: 'calc(100vh - 64px)'
+          }}
+        > 
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/trips" element={<AllTrips />} />
@@ -714,7 +719,7 @@ function App() {
             
             <Route path="*" element={<Homepage />} />
           </Routes>
-        </div>
+        </Box>
         {!isDashboardRoute && <Footer />}
       </div>
     </ThemeProvider>

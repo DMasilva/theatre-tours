@@ -4,7 +4,6 @@ import {
   Container, 
   Typography, 
   TextField,
-  Button,
   Grid,
   Paper,
   useTheme,
@@ -23,6 +22,7 @@ import {
   AccessTime
 } from '@mui/icons-material';
 import contactService from '../../services/contactService';
+import ButtonPill from '../ui/ButtonPill';
 
 const ContactForm = () => {
   const theme = useTheme();
@@ -274,33 +274,29 @@ const ContactForm = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <Button
+                      <ButtonPill
                         type="submit"
                         variant="contained"
+                        color="primary"
                         size="large"
                         fullWidth
                         disabled={submitting}
                         endIcon={submitting ? <CircularProgress size={20} /> : <Send />}
                         sx={{
                           py: 2,
-                          fontSize: '1.1rem',
-                          fontWeight: 700,
-                          borderRadius: 3,
                           background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
                           boxShadow: `0 8px 20px ${alpha(theme.palette.primary.main, 0.4)}`,
                           '&:hover': {
                             background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
-                            transform: 'translateY(-3px)',
                             boxShadow: `0 12px 28px ${alpha(theme.palette.primary.main, 0.5)}`
                           },
-                          transition: 'all 0.3s ease',
                           '&:disabled': {
                             background: theme.palette.grey[400]
                           }
                         }}
                       >
                         {submitting ? 'Sending...' : 'Send Message'}
-                      </Button>
+                      </ButtonPill>
                     </Grid>
                   </Grid>
                 </form>

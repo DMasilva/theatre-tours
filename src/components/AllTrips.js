@@ -35,6 +35,7 @@ import {
 import tripsService from '../services/tripsService';
 import favoritesService from '../services/favoritesService';
 import authService from '../services/authService';
+import ButtonPill from './ui/ButtonPill';
 
 const AllTrips = () => {
   const theme = useTheme();
@@ -414,6 +415,7 @@ const AllTrips = () => {
                         top: 12,
                         right: 12,
                         bgcolor: 'white',
+                        borderRadius: 2,
                         boxShadow: theme.shadows[4],
                         '&:hover': {
                           bgcolor: theme.palette.primary.main,
@@ -480,10 +482,11 @@ const AllTrips = () => {
                         : trip.description || 'Discover an amazing travel experience'}
                     </Typography>
 
-                    <Button
+                    <ButtonPill
                       component={Link}
                       to={`/trips/${trip.id}`}
                       variant="contained"
+                      color="primary"
                       className="trip-button"
                       fullWidth
                       endIcon={<ArrowForward />}
@@ -491,19 +494,13 @@ const AllTrips = () => {
                         bgcolor: theme.palette.primary.main,
                         color: 'white',
                         py: 1.5,
-                        borderRadius: 2,
-                        fontWeight: 600,
-                        textTransform: 'none',
-                        fontSize: '1rem',
-                        boxShadow: 'none',
                         '&:hover': {
                           boxShadow: theme.shadows[8]
                         },
-                        transition: 'all 0.3s ease'
                       }}
                     >
                       View Details
-                    </Button>
+                    </ButtonPill>
                   </CardContent>
                 </Card>
               </Zoom>
@@ -579,11 +576,11 @@ const AllTrips = () => {
             Create an account or sign in to save trips to your favorites and see them on your dashboard.
           </Typography>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ gap: 1, flexWrap: 'wrap' }}>
           <Button onClick={() => setLoginPromptOpen(false)}>Cancel</Button>
-          <Button variant="contained" onClick={() => { setLoginPromptOpen(false); navigate('/login'); }}>
+          <ButtonPill variant="contained" color="primary" onClick={() => { setLoginPromptOpen(false); navigate('/login'); }}>
             Sign In
-          </Button>
+          </ButtonPill>
         </DialogActions>
       </Dialog>
     </Box>

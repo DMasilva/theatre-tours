@@ -37,6 +37,7 @@ import {
 } from '@mui/icons-material';
 import bookingsService from '../../services/bookingsService';
 import authService from '../../services/authService';
+import ButtonPill from '../ui/ButtonPill';
 
 const API_BASE = process.env.REACT_APP_API_URL?.replace('/api/v1', '') || 'http://localhost:4000';
 
@@ -170,15 +171,15 @@ const BookTrip = () => {
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
           No trip selected
         </Typography>
-        <Button 
+        <ButtonPill 
           variant="contained" 
           color="primary" 
           onClick={() => navigate('/trips')}
           startIcon={<ArrowBack />}
-          sx={{ mt: 2, px: 4, py: 1.5, borderRadius: 4 }}
+          sx={{ mt: 2 }}
         >
           Browse Trips
-        </Button>
+        </ButtonPill>
       </Box>
     );
   }
@@ -262,9 +263,9 @@ const BookTrip = () => {
               {authService.isAuthenticated() ? 'Redirecting to your bookings page...' : 'Save your booking reference to track your reservation.'}
             </Typography>
             {!authService.isAuthenticated() && (
-              <Button variant="outlined" onClick={() => navigate('/trips')} sx={{ mt: 1 }}>
+              <ButtonPill variant="outlined" color="primary" onClick={() => navigate('/trips')} sx={{ mt: 1 }}>
                 Browse More Trips
-              </Button>
+              </ButtonPill>
             )}
           </Paper>
         </Zoom>
@@ -522,33 +523,29 @@ const BookTrip = () => {
 
                     {/* Submit Button */}
                     <Grid item xs={12}>
-                      <Button
+                      <ButtonPill
                         type="submit"
                         variant="contained"
+                        color="primary"
                         size="large"
                         fullWidth
                         disabled={submitting}
                         startIcon={submitting ? <CircularProgress size={20} /> : <CheckCircle />}
                         sx={{
                           py: 2,
-                          fontSize: '1.1rem',
-                          fontWeight: 700,
-                          borderRadius: 3,
                           background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
                           boxShadow: `0 8px 20px ${alpha(theme.palette.primary.main, 0.4)}`,
                           '&:hover': {
                             background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
-                            transform: 'translateY(-3px)',
                             boxShadow: `0 12px 28px ${alpha(theme.palette.primary.main, 0.5)}`
                           },
-                          transition: 'all 0.3s ease',
                           '&:disabled': {
                             background: theme.palette.grey[400]
                           }
                         }}
                       >
                         {submitting ? 'Processing...' : 'Confirm Booking'}
-                      </Button>
+                      </ButtonPill>
                     </Grid>
                   </Grid>
         </form>

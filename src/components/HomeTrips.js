@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { 
   Box, 
   Typography, 
-  Button, 
   Container, 
   Grid, 
   Card, 
@@ -22,6 +21,7 @@ import {
   TrendingUp
 } from '@mui/icons-material';
 import tripsService from '../services/tripsService';
+import ButtonPill from './ui/ButtonPill';
 
 const HomeTrips = () => {
   const theme = useTheme();
@@ -301,31 +301,24 @@ const HomeTrips = () => {
         
         {/* View All Button */}
         <Box sx={{ textAlign: 'center', mt: { xs: 5, md: 7 } }}>
-          <Button
+          <ButtonPill
             component={Link}
             to="/trips"
             variant="contained"
+            color="primary"
             size="large"
             endIcon={<ArrowForward />}
             sx={{ 
-              px: 6,
-              py: 2,
-              borderRadius: 8,
-              fontWeight: 700,
-              fontSize: '1.1rem',
-              textTransform: 'none',
               background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
               boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.4)}`,
               '&:hover': {
                 background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
-                transform: 'translateY(-3px)',
                 boxShadow: `0 12px 32px ${alpha(theme.palette.primary.main, 0.5)}`,
               },
-              transition: 'all 0.3s ease'
             }}
           >
             Explore All Destinations
-          </Button>
+          </ButtonPill>
         </Box>
       </Container>
     </Box>
