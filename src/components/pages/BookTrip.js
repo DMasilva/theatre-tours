@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { 
   Box, 
@@ -8,7 +8,6 @@ import {
   TextField,
   Paper,
   Grid,
-  Chip,
   Stack,
   Alert,
   useTheme,
@@ -21,7 +20,8 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Select
+  Select,
+  CircularProgress
 } from '@mui/material';
 import { 
   Person,
@@ -35,6 +35,10 @@ import {
   LocationOn,
   AttachMoney
 } from '@mui/icons-material';
+import bookingsService from '../../services/bookingsService';
+import authService from '../../services/authService';
+
+const API_BASE = process.env.REACT_APP_API_URL?.replace('/api/v1', '') || 'http://localhost:4000';
 
 const BookTrip = () => {
   const location = useLocation();
@@ -53,6 +57,24 @@ const BookTrip = () => {
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [bookingReference, setBookingReference] = useState('');
+  const [submitError, setSubmitError] = useState('');
+
+  // Pre-fill form for logged-in users
+  useEffect(() => {
+    if (!trip) return;
+    const user = authService.getStoredUser();
+    if (user) {
+      const fullName = [user.first_name ?? user.firstName, user.last_name ?? user.lastName].filter(Boolean).join(' ') || user.full_name;
+      setFormData(prev => ({
+        ...prev,
+        name: fullName || prev.name,
+        email: user.email || prev.email,
+        phone: user.phone || prev.phone
+      }));
+    }
+  }, [trip]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,22 +107,52 @@ const BookTrip = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
     
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      setSubmitError('Please fix the errors below.');
       return;
     }
     
-    // Simulate booking submission
-    setSubmitted(true);
-    
-    // Reset form after 3 seconds and navigate
-    setTimeout(() => {
-      navigate('/trips');
-    }, 3000);
+    try {
+      setSubmitting(true);
+      setSubmitError('');
+      
+      // API expects: trip_id, customer_name, customer_email, customer_phone, 
+      // num_travelers, travel_date, special_requests
+      const bookingData = {
+        trip_id: trip.id,
+        customer_name: formData.name,
+        customer_email: formData.email,
+        customer_phone: formData.phone,
+        num_travelers: parseInt(formData.travelers),
+        travel_date: formData.travelDate,
+        special_requests: formData.specialRequests || null
+      };
+      
+      const response = await bookingsService.createBooking(bookingData);
+      const booking = response?.booking ?? response;
+      if (!booking) {
+        throw new Error('Invalid response from server');
+      }
+      
+      setBookingReference(booking.booking_reference ?? booking.bookingReference);
+      setSubmitted(true);
+      
+      // Navigate to user bookings only if logged in; guests stay on success screen
+      if (authService.isAuthenticated()) {
+        setTimeout(() => navigate('/user/bookings'), 3000);
+      }
+    } catch (error) {
+      console.error('Error creating booking:', error);
+      const errMsg = error?.message ?? error?.error?.message ?? error?.errors?.[0] ?? (typeof error === 'string' ? error : 'Failed to create booking. Please try again.');
+      setSubmitError(errMsg);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (!trip) {
@@ -184,15 +236,36 @@ const BookTrip = () => {
               variant="h6" 
               sx={{ 
                 color: theme.palette.text.secondary,
-                mb: 4
+                mb: 2
               }}
             >
               Thank you for booking with Royal Dastinos Tours. We'll contact you shortly to confirm the details.
             </Typography>
 
-            <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-              Redirecting to trips page...
+            {bookingReference && (
+              <Typography 
+                variant="h5" 
+                sx={{ 
+                  color: theme.palette.primary.main,
+                  fontWeight: 600,
+                  mb: 3,
+                  p: 2,
+                  bgcolor: alpha(theme.palette.primary.main, 0.05),
+                  borderRadius: 2
+                }}
+              >
+                Booking Reference: {bookingReference}
+              </Typography>
+            )}
+
+            <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 2 }}>
+              {authService.isAuthenticated() ? 'Redirecting to your bookings page...' : 'Save your booking reference to track your reservation.'}
             </Typography>
+            {!authService.isAuthenticated() && (
+              <Button variant="outlined" onClick={() => navigate('/trips')} sx={{ mt: 1 }}>
+                Browse More Trips
+              </Button>
+            )}
           </Paper>
         </Zoom>
       </Box>
@@ -304,7 +377,13 @@ const BookTrip = () => {
                   Your Information
                 </Typography>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} noValidate>
+                  {submitError && (
+                    <Alert severity="error" sx={{ mb: 3 }} onClose={() => setSubmitError('')}>
+                      {submitError}
+                    </Alert>
+                  )}
+                  
                   <Grid container spacing={3}>
                     
                     {/* Name Field */}
@@ -448,7 +527,8 @@ const BookTrip = () => {
                         variant="contained"
                         size="large"
                         fullWidth
-                        startIcon={<CheckCircle />}
+                        disabled={submitting}
+                        startIcon={submitting ? <CircularProgress size={20} /> : <CheckCircle />}
                         sx={{
                           py: 2,
                           fontSize: '1.1rem',
@@ -461,10 +541,13 @@ const BookTrip = () => {
                             transform: 'translateY(-3px)',
                             boxShadow: `0 12px 28px ${alpha(theme.palette.primary.main, 0.5)}`
                           },
-                          transition: 'all 0.3s ease'
+                          transition: 'all 0.3s ease',
+                          '&:disabled': {
+                            background: theme.palette.grey[400]
+                          }
                         }}
                       >
-                        Confirm Booking
+                        {submitting ? 'Processing...' : 'Confirm Booking'}
                       </Button>
                     </Grid>
                   </Grid>
@@ -508,10 +591,14 @@ const BookTrip = () => {
                     Trip Summary
                   </Typography>
 
-                  {/* Trip Image */}
+                  {/* Trip Image - use main_image/primary_image from API */}
                   <Box
                     component="img"
-                    src={trip.image}
+                    src={(() => {
+                      const img = trip.main_image || trip.primary_image || trip.image;
+                      if (!img) return undefined;
+                      return img.startsWith('http') ? img : `${API_BASE}${img.startsWith('/') ? img : `/${img}`}`;
+                    })()}
                     alt={trip.title}
                     sx={{
                       width: '100%',
@@ -545,7 +632,7 @@ const BookTrip = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <AttachMoney sx={{ color: theme.palette.primary.main }} />
                       <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                        {trip.price} per person
+                        {typeof trip.price === 'number' ? `$${trip.price.toLocaleString()}` : (trip.price || '$0')} per person
                       </Typography>
                     </Box>
                   </Stack>
@@ -571,10 +658,11 @@ const BookTrip = () => {
                         mt: 1
                       }}
                     >
-                      {trip.price.includes('$') 
-                        ? `$${(parseInt(trip.price.replace(/[^0-9]/g, '')) * parseInt(formData.travelers)).toLocaleString()}`
-                        : trip.price
-                      }
+                      {(() => {
+                        const priceNum = typeof trip.price === 'number' ? trip.price : parseFloat(String(trip.price || '0').replace(/[^0-9.]/g, '')) || 0;
+                        const travelers = parseInt(formData.travelers, 10) || 1;
+                        return `$${(priceNum * travelers).toLocaleString()}`;
+                      })()}
                     </Typography>
                   </Box>
 
