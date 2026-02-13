@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
   Box, 
@@ -9,7 +9,6 @@ import {
   Paper, 
   Chip,
   Card,
-  CardContent,
   List,
   ListItem,
   ListItemIcon,
@@ -23,15 +22,20 @@ import {
   alpha,
   Accordion,
   AccordionSummary,
-  AccordionDetails
+  AccordionDetails,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Rating,
+  Avatar
 } from '@mui/material';
 import { 
   AccessTime, 
   LocationOn, 
-  AttachMoney, 
   CheckCircle,
   Cancel,
-  FlightTakeoff,
   Phone,
   Email,
   ArrowBack,
@@ -43,17 +47,108 @@ import {
   Star,
   ExpandMore
 } from '@mui/icons-material';
-import { trips } from '../urls';
+import tripsService from '../../services/tripsService';
+import favoritesService from '../../services/favoritesService';
+import authService from '../../services/authService';
 
 const DetailedTrip = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
+  const [trip, setTrip] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [itineraryExpanded, setItineraryExpanded] = useState(false);
+  const [loginPromptOpen, setLoginPromptOpen] = useState(false);
+  const [bookPromptOpen, setBookPromptOpen] = useState(false);
   
-  // Find the trip by ID
-  const trip = trips.find((trip) => trip.id === parseInt(id));
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchTrip = async () => {
+      try {
+        setLoading(true);
+        let response;
+        try {
+          response = await tripsService.getTripById(id);
+        } catch (err) {
+          // If ID lookup fails and param looks like a slug (letters/dashes), try slug endpoint
+          const looksLikeSlug = /^[a-z0-9-]+$/i.test(id) && isNaN(Number(id));
+          if (looksLikeSlug) {
+            response = await tripsService.getTripBySlug(id);
+          } else {
+            throw err;
+          }
+        }
+        if (cancelled) return;
+
+        const tripData = response?.trip ?? response?.data?.trip;
+        if (!tripData) {
+          setTrip(null);
+          return;
+        }
+        // Prepend backend URL to image paths when relative
+        const img = tripData.main_image;
+        if (img && !img.startsWith('http')) {
+          tripData.main_image = `http://localhost:4000${img.startsWith('/') ? img : `/${img}`}`;
+        }
+        setTrip(tripData);
+
+        // Check if trip is favorited
+        const tripId = tripData.id;
+        if (authService.isAuthenticated() && tripId) {
+          try {
+            const favResponse = await favoritesService.checkFavorite(tripId);
+            if (!cancelled) setIsFavorite(favResponse.isFavorited || favResponse.is_favorited || false);
+          } catch (error) {
+            console.error('Error checking favorite:', error);
+          }
+        }
+
+        // Increment view count (don't let this failure overwrite the trip we already set)
+        if (tripId) {
+          try {
+            await tripsService.incrementView(tripId);
+          } catch (error) {
+            console.error('Error incrementing view:', error);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching trip:', error);
+        if (!cancelled) setTrip(null);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchTrip();
+    return () => { cancelled = true; };
+  }, [id]);
+
+  const toggleFavorite = async () => {
+    if (!authService.isAuthenticated()) {
+      setLoginPromptOpen(true);
+      return;
+    }
+
+    const tripId = trip?.id ?? id;
+    if (!tripId) return;
+
+    try {
+      await favoritesService.toggleFavorite(tripId);
+      setIsFavorite(!isFavorite);
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '70vh' }}>
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
 
   if (!trip) {
     return (
@@ -84,7 +179,11 @@ const DetailedTrip = () => {
   }
 
   const handleBookNow = () => {
-    navigate('/book', { state: { trip } });
+    if (authService.isAuthenticated()) {
+      navigate('/book', { state: { trip } });
+    } else {
+      setBookPromptOpen(true);
+    }
   };
 
   const handleShare = () => {
@@ -113,7 +212,7 @@ const DetailedTrip = () => {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundImage: `url(${trip.image})`,
+            backgroundImage: `url(${trip.main_image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'brightness(0.6)',
@@ -296,7 +395,9 @@ const DetailedTrip = () => {
                 </Typography>
                 
                 <Grid container spacing={2}>
-                  {trip.highlights.map((highlight, index) => (
+                  {(trip.highlights || []).map((highlight, index) => {
+                    const text = typeof highlight === 'string' ? highlight : highlight.highlight;
+                    return (
                     <Grid item xs={12} sm={6} key={index}>
                       <Zoom in={true} style={{ transitionDelay: `${index * 100}ms` }}>
                         <Card
@@ -333,13 +434,13 @@ const DetailedTrip = () => {
                                 lineHeight: 1.6
                               }}
                             >
-                              {highlight}
+                              {text}
                             </Typography>
                           </Box>
                         </Card>
                       </Zoom>
                     </Grid>
-                  ))}
+                  )})}
                 </Grid>
               </Paper>
             </Fade>
@@ -426,7 +527,7 @@ const DetailedTrip = () => {
                           transition: 'color 0.3s ease'
                         }}
                       >
-                        {trip.itinerary.length} {trip.itinerary.length === 1 ? 'day' : 'days'} planned
+                        {(trip.itineraries || trip.itinerary || []).length} {(trip.itineraries || trip.itinerary || []).length === 1 ? 'day' : 'days'} planned
                       </Typography>
                     </Box>
                     <Chip
@@ -453,7 +554,7 @@ const DetailedTrip = () => {
                   }}
                 >
                   <Stack spacing={3}>
-                    {trip.itinerary.map((day, index) => (
+                    {(trip.itineraries || trip.itinerary || []).map((day, index) => (
                       <Card
                         key={index}
                         sx={{
@@ -512,6 +613,64 @@ const DetailedTrip = () => {
               </Accordion>
             </Grow>
 
+            {/* Reviews Section */}
+            {(trip.reviews?.length > 0 || (trip.rating_count > 0 && trip.rating_average)) && (
+              <Fade in={true} timeout={1700}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: { xs: 3, md: 5 },
+                    mb: 4,
+                    borderRadius: 4,
+                    border: `2px solid ${theme.palette.grey[200]}`,
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+                    <Star sx={{ color: theme.palette.warning.main, fontSize: 32 }} />
+                    <Box>
+                      <Typography variant="h4" sx={{ fontWeight: 700, color: theme.palette.primary.main, fontFamily: '"Playfair Display", serif' }}>
+                        Customer Reviews
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {trip.rating_count || trip.reviews?.length || 0} review{(trip.rating_count || trip.reviews?.length) !== 1 ? 's' : ''}
+                        {(trip.rating_average > 0) && ` · ${Number(trip.rating_average).toFixed(1)} average`}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Grid container spacing={3}>
+                    {(trip.reviews || []).map((review) => (
+                      <Grid item xs={12} key={review.id}>
+                        <Card sx={{ p: 2, border: `1px solid ${theme.palette.grey[200]}`, borderRadius: 2 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                            <Avatar sx={{ bgcolor: theme.palette.primary.main, width: 40, height: 40 }}>
+                              {(review.user_initials || review.reviewer_name || '?').toString().slice(0, 2).toUpperCase()}
+                            </Avatar>
+                            <Box sx={{ flex: 1 }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                                <Rating value={review.rating} readOnly size="small" />
+                                <Typography variant="body2" color="text.secondary">
+                                  {review.reviewer_name || 'Anonymous'}
+                                </Typography>
+                              </Box>
+                              {review.title && (
+                                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 0.5 }}>{review.title}</Typography>
+                              )}
+                              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                                {review.comment || 'No comment provided.'}
+                              </Typography>
+                              <Typography variant="caption" color="text.disabled" sx={{ mt: 1, display: 'block' }}>
+                                {review.created_at ? new Date(review.created_at).toLocaleDateString() : ''}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Paper>
+              </Fade>
+            )}
+
             {/* Includes/Excludes Section */}
             <Fade in={true} timeout={1800}>
               <Paper
@@ -558,20 +717,22 @@ const DetailedTrip = () => {
                         <CheckCircle /> Package Includes
                       </Typography>
                       <List disablePadding>
-                        {trip.packageIncludes.map((item, index) => (
+                        {(trip.inclusions?.included || trip.packageIncludes || []).map((item, index) => {
+                          const text = typeof item === 'string' ? item : item.item;
+                          return (
                           <ListItem key={index} disablePadding sx={{ mb: 1 }}>
                             <ListItemIcon sx={{ minWidth: 32 }}>
                               <CheckCircle sx={{ color: theme.palette.success.main, fontSize: 20 }} />
                             </ListItemIcon>
                             <ListItemText 
-                              primary={item} 
+                              primary={text} 
                               primaryTypographyProps={{ 
                                 fontSize: '0.95rem',
                                 lineHeight: 1.6
                               }} 
                             />
                           </ListItem>
-                        ))}
+                        )})}
                       </List>
                     </Box>
                   </Grid>
@@ -599,20 +760,22 @@ const DetailedTrip = () => {
                         <Cancel /> Package Excludes
                       </Typography>
                       <List disablePadding>
-                        {trip.packageExcludes.map((item, index) => (
+                        {(trip.inclusions?.excluded || trip.packageExcludes || []).map((item, index) => {
+                          const text = typeof item === 'string' ? item : item.item;
+                          return (
                           <ListItem key={index} disablePadding sx={{ mb: 1 }}>
                             <ListItemIcon sx={{ minWidth: 32 }}>
                               <Cancel sx={{ color: theme.palette.error.main, fontSize: 20 }} />
                             </ListItemIcon>
                             <ListItemText 
-                              primary={item} 
+                              primary={text} 
                               primaryTypographyProps={{ 
                                 fontSize: '0.95rem',
                                 lineHeight: 1.6
                               }} 
                             />
                           </ListItem>
-                        ))}
+                        )})}
                       </List>
                     </Box>
                   </Grid>
@@ -682,7 +845,7 @@ const DetailedTrip = () => {
 
                     <Stack direction="row" spacing={1}>
                       <IconButton
-                        onClick={() => setIsFavorite(!isFavorite)}
+                        onClick={toggleFavorite}
                         sx={{
                           flex: 1,
                           border: `2px solid ${theme.palette.primary.main}`,
@@ -770,6 +933,47 @@ const DetailedTrip = () => {
           </Grid>
         </Grid>
       </Container>
+
+      {/* Login prompt when favoriting while not logged in */}
+      <Dialog open={loginPromptOpen} onClose={() => setLoginPromptOpen(false)}>
+        <DialogTitle>Sign in to save favorites</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Create an account or sign in to save trips to your favorites and see them on your dashboard.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setLoginPromptOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={() => { setLoginPromptOpen(false); navigate('/login'); }}>
+            Sign In
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Booking options when not logged in */}
+      <Dialog open={bookPromptOpen} onClose={() => setBookPromptOpen(false)}>
+        <DialogTitle>How would you like to continue?</DialogTitle>
+        <DialogContent>
+          <Typography sx={{ mb: 2 }}>
+            Continue as a guest to book now, or sign in/create an account to have your details pre-filled.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ flexWrap: 'wrap', gap: 1 }}>
+          <Button onClick={() => setBookPromptOpen(false)}>Cancel</Button>
+          <Button 
+            variant="contained" 
+            onClick={() => { setBookPromptOpen(false); navigate('/book', { state: { trip } }); }}
+          >
+            Continue as Guest
+          </Button>
+          <Button variant="outlined" onClick={() => { setBookPromptOpen(false); navigate('/signup', { state: { returnTo: '/book', trip } }); }}>
+            Create Account
+          </Button>
+          <Button variant="outlined" onClick={() => { setBookPromptOpen(false); navigate('/login', { state: { returnTo: '/book', trip } }); }}>
+            Sign In
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

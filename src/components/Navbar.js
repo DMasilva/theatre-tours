@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   AppBar, 
   Toolbar, 
@@ -27,15 +27,20 @@ import {
   Menu as MenuIcon,
   Login as LoginIcon,
   PersonAdd as SignupIcon,
-  Close as CloseIcon
+  Logout as LogoutIcon,
+  Close as CloseIcon,
+  Luggage as LuggageIcon
 } from '@mui/icons-material';
 import logo from '../logos/logo-transparent.png';
 import logoIcon from '../logos/logo-transparent.png';
+import authService from '../services/authService';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(authService.isAuthenticated());
   const location = useLocation();
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -56,6 +61,20 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Sync auth state when navigating (e.g. back from dashboard)
+  useEffect(() => {
+    setIsLoggedIn(authService.isAuthenticated());
+  }, [location.pathname]);
+
+  const handleLogout = () => {
+    authService.logout();
+    setIsLoggedIn(false);
+    closeMenu();
+    navigate('/');
+  };
+
+  const dashboardPath = authService.isAdmin() ? '/admin/dashboard' : '/user/dashboard';
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -169,40 +188,63 @@ const Navbar = () => {
       </Box>
       
       <Box sx={{ p: { xs: 2, sm: 3 }, borderTop: `1px solid ${theme.palette.divider}` }}>
-        <Stack direction="row" spacing={2}>
-          <Button 
-            component={Link} 
-            to="/login" 
-            variant="outlined"
-            color="primary"
-            fullWidth
-            startIcon={<LoginIcon />}
-            onClick={closeMenu}
-            sx={{ 
-              fontWeight: 600,
-              py: { xs: 0.8, sm: 1 }
-            }}
-            size={isSmallMobile ? "small" : "medium"}
-          >
-            Login
-          </Button>
-          <Button 
-            component={Link} 
-            to="/signup" 
-            variant="contained" 
-            color="primary"
-            fullWidth
-            startIcon={<SignupIcon />}
-            onClick={closeMenu}
-            sx={{ 
-              fontWeight: 600,
-              py: { xs: 0.8, sm: 1 }
-            }}
-            size={isSmallMobile ? "small" : "medium"}
-          >
-            Signup
-          </Button>
-        </Stack>
+        {isLoggedIn ? (
+          <Stack direction="column" spacing={2}>
+            <Button
+              component={Link}
+              to={dashboardPath}
+              variant="contained"
+              color="primary"
+              fullWidth
+              startIcon={<LuggageIcon />}
+              onClick={closeMenu}
+              sx={{ fontWeight: 600, py: { xs: 0.8, sm: 1 } }}
+              size={isSmallMobile ? "small" : "medium"}
+            >
+              My Account
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              fullWidth
+              startIcon={<LogoutIcon />}
+              onClick={handleLogout}
+              sx={{ fontWeight: 600, py: { xs: 0.8, sm: 1 } }}
+              size={isSmallMobile ? "small" : "medium"}
+            >
+              Logout
+            </Button>
+          </Stack>
+        ) : (
+          <Stack direction="row" spacing={2}>
+            <Button 
+              component={Link} 
+              to="/login" 
+              variant="outlined"
+              color="primary"
+              fullWidth
+              startIcon={<LoginIcon />}
+              onClick={closeMenu}
+              sx={{ fontWeight: 600, py: { xs: 0.8, sm: 1 } }}
+              size={isSmallMobile ? "small" : "medium"}
+            >
+              Login
+            </Button>
+            <Button 
+              component={Link} 
+              to="/signup" 
+              variant="contained" 
+              color="primary"
+              fullWidth
+              startIcon={<SignupIcon />}
+              onClick={closeMenu}
+              sx={{ fontWeight: 600, py: { xs: 0.8, sm: 1 } }}
+              size={isSmallMobile ? "small" : "medium"}
+            >
+              Signup
+            </Button>
+          </Stack>
+        )}
       </Box>
     </Box>
   );
@@ -325,39 +367,57 @@ const Navbar = () => {
             </Box>
           )}
 
-          {/* Login/Signup Buttons (Desktop) */}
+          {/* Auth Buttons (Desktop) */}
           {!isMobile && (
-            <Box sx={{ flexGrow: 0, display: 'flex', gap: 2 }}>
-              <Button 
-                component={Link} 
-                to="/login" 
-                variant="outlined" 
-                color="primary"
-                size="small"
-                sx={{ 
-                  fontWeight: 600,
-                  px: { sm: 1.5, md: 2 },
-                  py: { sm: 0.5, md: 0.75 },
-                  fontSize: { sm: '0.8rem', md: '0.9rem' }
-                }}
-              >
-                Login
-              </Button>
-              <Button 
-                component={Link} 
-                to="/signup" 
-                variant="contained" 
-                color="primary"
-                size="small"
-                sx={{ 
-                  fontWeight: 600,
-                  px: { sm: 1.5, md: 2 },
-                  py: { sm: 0.5, md: 0.75 },
-                  fontSize: { sm: '0.8rem', md: '0.9rem' }
-                }}
-              >
-                Signup
-              </Button>
+            <Box sx={{ flexGrow: 0, display: 'flex', gap: 1.5, alignItems: 'center' }}>
+              {isLoggedIn ? (
+                <>
+                  <Button
+                    component={Link}
+                    to={dashboardPath}
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    startIcon={<LuggageIcon />}
+                    sx={{ fontWeight: 600, px: { sm: 1.5, md: 2 }, py: { sm: 0.5, md: 0.75 }, fontSize: { sm: '0.8rem', md: '0.9rem' } }}
+                  >
+                    My Account
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    startIcon={<LogoutIcon />}
+                    onClick={handleLogout}
+                    sx={{ fontWeight: 600, px: { sm: 1.5, md: 2 }, py: { sm: 0.5, md: 0.75 }, fontSize: { sm: '0.8rem', md: '0.9rem' } }}
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button 
+                    component={Link} 
+                    to="/login" 
+                    variant="outlined" 
+                    color="primary"
+                    size="small"
+                    sx={{ fontWeight: 600, px: { sm: 1.5, md: 2 }, py: { sm: 0.5, md: 0.75 }, fontSize: { sm: '0.8rem', md: '0.9rem' } }}
+                  >
+                    Login
+                  </Button>
+                  <Button 
+                    component={Link} 
+                    to="/signup" 
+                    variant="contained" 
+                    color="primary"
+                    size="small"
+                    sx={{ fontWeight: 600, px: { sm: 1.5, md: 2 }, py: { sm: 0.5, md: 0.75 }, fontSize: { sm: '0.8rem', md: '0.9rem' } }}
+                  >
+                    Signup
+                  </Button>
+                </>
+              )}
             </Box>
           )}
 

@@ -12,44 +12,59 @@ import {
   Zoom,
   alpha,
   Stack,
-  Alert
+  Alert,
+  CircularProgress
 } from '@mui/material';
 import { 
   Send,
   Phone,
   Email,
   LocationOn,
-  AccessTime,
-  Facebook,
-  Twitter,
-  Instagram,
-  LinkedIn
+  AccessTime
 } from '@mui/icons-material';
+import contactService from '../../services/contactService';
 
 const ContactForm = () => {
   const theme = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    if (error) setError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 3000);
+    
+    try {
+      setSubmitting(true);
+      setError('');
+      
+      await contactService.submitContact(formData);
+      
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      }, 3000);
+    } catch (err) {
+      console.error('Contact form error:', err);
+      setError(err.message || 'Failed to send message. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -57,13 +72,6 @@ const ContactForm = () => {
     { icon: <Email />, title: 'Email', value: 'info@royaldastinos.org', link: 'mailto:info@royaldastinos.org' },
     { icon: <LocationOn />, title: 'Location', value: 'Mombasa Road, Nairobi', link: null },
     { icon: <AccessTime />, title: 'Working Hours', value: 'Mon - Sat: 8AM - 6PM', link: null }
-  ];
-
-  const socialLinks = [
-    { icon: <Facebook />, name: 'Facebook', link: '#' },
-    { icon: <Twitter />, name: 'Twitter', link: '#' },
-    { icon: <Instagram />, name: 'Instagram', link: '#' },
-    { icon: <LinkedIn />, name: 'LinkedIn', link: '#' }
   ];
 
   return (
@@ -168,6 +176,18 @@ const ContactForm = () => {
                 )}
 
                 <form onSubmit={handleSubmit}>
+                  {submitted && (
+                    <Alert severity="success" sx={{ mb: 3 }}>
+                      Thank you! Your message has been sent successfully.
+                    </Alert>
+                  )}
+                  
+                  {error && (
+                    <Alert severity="error" sx={{ mb: 3 }}>
+                      {error}
+                    </Alert>
+                  )}
+                  
                   <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -201,8 +221,24 @@ const ContactForm = () => {
                         }}
                       />
                     </Grid>
+                    
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Phone Number"
+                        name="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          }
+                        }}
+                      />
+                    </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
                       <TextField
                         fullWidth
                         label="Subject"
@@ -243,7 +279,8 @@ const ContactForm = () => {
                         variant="contained"
                         size="large"
                         fullWidth
-                        endIcon={<Send />}
+                        disabled={submitting}
+                        endIcon={submitting ? <CircularProgress size={20} /> : <Send />}
                         sx={{
                           py: 2,
                           fontSize: '1.1rem',
@@ -256,10 +293,13 @@ const ContactForm = () => {
                             transform: 'translateY(-3px)',
                             boxShadow: `0 12px 28px ${alpha(theme.palette.primary.main, 0.5)}`
                           },
-                          transition: 'all 0.3s ease'
+                          transition: 'all 0.3s ease',
+                          '&:disabled': {
+                            background: theme.palette.grey[400]
+                          }
                         }}
                       >
-                        Send Message
+                        {submitting ? 'Sending...' : 'Send Message'}
                       </Button>
                     </Grid>
                   </Grid>

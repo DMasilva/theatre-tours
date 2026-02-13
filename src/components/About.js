@@ -19,7 +19,6 @@ import {
   EmojiEvents,
   Visibility,
   TrendingUp,
-  CheckCircle,
   Favorite,
   ThumbUp,
   Security
@@ -35,9 +34,8 @@ const About = () => {
     satisfaction: 0
   });
 
-  // Animated counter effect
   useEffect(() => {
-    const targets = { years: 1, destinations: 50, clients: 100, satisfaction: 98 };
+    const targets = { years: 15, destinations: 50, clients: 1000, satisfaction: 98 };
     const duration = 2000;
     const steps = 60;
     const interval = duration / steps;

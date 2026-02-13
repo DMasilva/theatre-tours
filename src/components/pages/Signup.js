@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   Box, 
   Container, 
@@ -18,7 +18,9 @@ import {
   Chip,
   Stepper,
   Step,
-  StepLabel
+  StepLabel,
+  Alert,
+  CircularProgress
 } from '@mui/material';
 import { 
   Person,
@@ -31,12 +33,17 @@ import {
   PersonAdd,
   ArrowForward
 } from '@mui/icons-material';
+import authService from '../../services/authService';
 
 const Signup = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  const [validationErrors, setValidationErrors] = useState({});
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -52,12 +59,56 @@ const Signup = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    // Clear errors on input change
+    if (error) setError('');
+    if (validationErrors[e.target.name]) {
+      setValidationErrors(prev => ({ ...prev, [e.target.name]: '' }));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add signup logic here
-    console.log('Signup submitted:', formData);
+    
+    // Validate password match
+    if (formData.password !== formData.confirmPassword) {
+      setValidationErrors({ confirmPassword: 'Passwords do not match' });
+      return;
+    }
+    
+    try {
+      setSubmitting(true);
+      setError('');
+      
+      // API expects: email, password, first_name, last_name, phone, city
+      const signupData = {
+        email: formData.email,
+        password: formData.password,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        phone: formData.phone,
+        city: formData.city
+      };
+      
+      await authService.register(signupData);
+      
+      // Registration successful - redirect to login (user must sign in)
+      const returnTo = location.state?.returnTo;
+      const trip = location.state?.trip;
+      navigate('/login', { 
+        state: { 
+          message: 'Account created successfully! Please log in.',
+          ...(returnTo && trip && { returnTo, trip })
+        } 
+      });
+    } catch (err) {
+      console.error('Signup error:', err);
+      const msg = err.error?.message || err.message || 'Registration failed. Please try again.';
+      const validationErrors = err.errors || err.error?.errors;
+      const detail = Array.isArray(validationErrors) ? validationErrors.join('. ') : '';
+      setError(detail ? `${msg} ${detail}` : msg);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -154,6 +205,12 @@ const Signup = () => {
                 }}
               >
                 <form onSubmit={handleSubmit}>
+                  {error && (
+                    <Alert severity="error" sx={{ mb: 3 }}>
+                      {error}
+                    </Alert>
+                  )}
+                  
                   <Grid container spacing={3}>
                     
                     {/* Personal Information */}
@@ -336,6 +393,8 @@ const Signup = () => {
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         required
+                        error={!!validationErrors.confirmPassword}
+                        helperText={validationErrors.confirmPassword}
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -367,7 +426,8 @@ const Signup = () => {
                         variant="contained"
                         size="large"
                         fullWidth
-                        endIcon={<ArrowForward />}
+                        disabled={submitting}
+                        endIcon={submitting ? <CircularProgress size={20} /> : <ArrowForward />}
                         sx={{
                           py: 2,
                           fontSize: '1.1rem',
@@ -380,10 +440,13 @@ const Signup = () => {
                             transform: 'translateY(-3px)',
                             boxShadow: `0 12px 28px ${alpha(theme.palette.primary.main, 0.5)}`
                           },
-                          transition: 'all 0.3s ease'
+                          transition: 'all 0.3s ease',
+                          '&:disabled': {
+                            background: theme.palette.grey[400]
+                          }
                         }}
                       >
-                        Create Account
+                        {submitting ? 'Creating Account...' : 'Create Account'}
                       </Button>
                     </Grid>
                   </Grid>
