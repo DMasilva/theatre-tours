@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Box, 
@@ -12,7 +12,8 @@ import {
   useTheme,
   Zoom,
   Chip,
-  alpha
+  alpha,
+  CircularProgress
 } from '@mui/material';
 import { 
   ArrowForward,
@@ -20,13 +21,45 @@ import {
   LocationOn,
   TrendingUp
 } from '@mui/icons-material';
-import { trips } from './urls';
+import tripsService from '../services/tripsService';
 
 const HomeTrips = () => {
   const theme = useTheme();
+  const [featuredTrips, setFeaturedTrips] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Get featured trips (first 6)
-  const featuredTrips = trips.slice(0, 3);
+  useEffect(() => {
+    const fetchFeaturedTrips = async () => {
+      try {
+        setLoading(true);
+        const response = await tripsService.getFeaturedTrips(3);
+        const trips = response.trips || [];
+        // Prepend backend URL to image paths
+        const tripsWithFullImages = trips.map(trip => ({
+          ...trip,
+          main_image: trip.main_image?.startsWith('http') 
+            ? trip.main_image 
+            : `http://localhost:4000${trip.main_image}`
+        }));
+        setFeaturedTrips(tripsWithFullImages);
+      } catch (error) {
+        console.error('Error fetching featured trips:', error);
+        setFeaturedTrips([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedTrips();
+  }, []);
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box 
@@ -140,7 +173,7 @@ const HomeTrips = () => {
                   >
                     <CardMedia
                       component="img"
-                      image={trip.image}
+                      image={trip.main_image || trip.image}
                       alt={trip.title}
                       className="trip-image"
                       sx={{ 
@@ -171,26 +204,8 @@ const HomeTrips = () => {
 
                     {/* Category Badge */}
                     <Chip
-                      label={
-                        trip.title?.toLowerCase().includes('mara') ||
-                        trip.title?.toLowerCase().includes('amboseli') ||
-                        trip.title?.toLowerCase().includes('tsavo') ||
-                        trip.title?.toLowerCase().includes('naivasha') ||
-                        trip.title?.toLowerCase().includes('nakuru') ||
-                        trip.title?.toLowerCase().includes('diani')
-                          ? "Domestic" 
-                          : "International"
-                      }
-                      icon={
-                        trip.title?.toLowerCase().includes('mara') ||
-                        trip.title?.toLowerCase().includes('amboseli') ||
-                        trip.title?.toLowerCase().includes('tsavo') ||
-                        trip.title?.toLowerCase().includes('naivasha') ||
-                        trip.title?.toLowerCase().includes('nakuru') ||
-                        trip.title?.toLowerCase().includes('diani')
-                          ? <LocationOn /> 
-                          : <Flight />
-                      }
+                      label={trip.category === 'domestic' ? "Domestic" : "International"}
+                      icon={trip.category === 'domestic' ? <LocationOn /> : <Flight />}
                       size="small"
                       sx={{
                         position: 'absolute',

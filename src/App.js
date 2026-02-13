@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Homepage from './components/Homepage';
@@ -14,6 +14,31 @@ import DetailedTrip from './components/pages/DetailedTrip';
 import About from './components/About';
 import BookTrip from './components/pages/BookTrip';
 import ScrollToTop from './components/ScrollToTop';
+
+// Admin Dashboard Components
+import AdminLayout from './components/admin/AdminLayout';
+import AdminDashboard from './components/admin/Dashboard';
+import TripsManagement from './components/admin/TripsManagement';
+import BookingsManagement from './components/admin/BookingsManagement';
+import PaymentsManagement from './components/admin/PaymentsManagement';
+import ReviewsManagement from './components/admin/ReviewsManagement';
+import ContactManagement from './components/admin/ContactManagement';
+import NewsletterManagement from './components/admin/NewsletterManagement';
+import UsersManagement from './components/admin/UsersManagement';
+import AnalyticsPage from './components/admin/AnalyticsPage';
+import BEUX from './components/admin/BE-UX';
+import AdminProfile from './components/admin/AdminProfile';
+import AdminSettings from './components/admin/AdminSettings';
+
+// User Dashboard Components
+import UserLayout from './components/user/UserLayout';
+import UserDashboard from './components/user/UserDashboard';
+import UserProfile from './components/user/UserProfile';
+import MyBookings from './components/user/MyBookings';
+import MyFavorites from './components/user/MyFavorites';
+import UserSettings from './components/user/UserSettings';
+import PrivacyPolicy from './components/pages/PrivacyPolicy';
+import TermsOfService from './components/pages/TermsOfService';
 
 // Create a custom theme for a luxury travel website
 let theme = createTheme({
@@ -632,30 +657,65 @@ let theme = createTheme({
 theme = responsiveFontSizes(theme);
 
 function App() {
+  const location = useLocation();
+  
+  // Check if current route is a dashboard route
+  const isDashboardRoute = location.pathname.startsWith('/admin') || location.pathname.startsWith('/user');
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> {/* Provides a consistent baseline CSS */}
       <div className="flex flex-col min-h-screen">
         <ScrollToTop />
-        <Navbar />
+        {!isDashboardRoute && <Navbar />}
         <div className="flex-grow" style={{ 
-          paddingTop: { xs: '56px', sm: '64px', md: '72px' },
+          paddingTop: isDashboardRoute ? '0' : { xs: '56px', sm: '64px', md: '72px' },
           minHeight: 'calc(100vh - 64px)'
         }}> 
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/trips" element={<AllTrips />} />
+            <Route path='/trips/:id' element={<DetailedTrip />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<ContactForm />} />
+            <Route path="/book" element={<BookTrip />} />
             <Route path="/construction" element={<Build />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+
+            {/* Admin Dashboard Routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="trips" element={<TripsManagement />} />
+              <Route path="bookings" element={<BookingsManagement />} />
+              <Route path="payments" element={<PaymentsManagement />} />
+              <Route path="reviews" element={<ReviewsManagement />} />
+              <Route path="contacts" element={<ContactManagement />} />
+              <Route path="newsletter" element={<NewsletterManagement />} />
+              <Route path="users" element={<UsersManagement />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
+              <Route path="be-ux" element={<BEUX />} />
+              <Route path="profile" element={<AdminProfile />} />
+              <Route path="settings" element={<AdminSettings />} />
+            </Route>
+            
+            {/* User Dashboard Routes */}
+            <Route path="/user" element={<UserLayout />}>
+              <Route index element={<UserDashboard />} />
+              <Route path="dashboard" element={<UserDashboard />} />
+              <Route path="profile" element={<UserProfile />} />
+              <Route path="bookings" element={<MyBookings />} />
+              <Route path="favorites" element={<MyFavorites />} />
+              <Route path="settings" element={<UserSettings />} />
+            </Route>
+            
             <Route path="*" element={<Homepage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<ContactForm />} />
-            <Route path='/trips/:id' element={<DetailedTrip />}></Route>
-            <Route path="/book" element={<BookTrip />} />
           </Routes>
         </div>
-        <Footer />
+        {!isDashboardRoute && <Footer />}
       </div>
     </ThemeProvider>
   );

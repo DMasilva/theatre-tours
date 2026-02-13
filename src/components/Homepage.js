@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Box, 
@@ -20,11 +20,11 @@ const Homepage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
 
-  const heroImages = urls.slice(0, 6); // Get first 6 destinations for hero carousel
+  const heroImages = urls.slice(0, 6);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-  };
+  }, [heroImages.length]);
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
@@ -38,10 +38,9 @@ const Homepage = () => {
 
   useEffect(() => {
     if (!isAutoPlay) return;
-    
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
-  }, [isAutoPlay]);
+  }, [isAutoPlay, nextSlide]);
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -133,7 +132,7 @@ const Homepage = () => {
               >
                 <FmdGoodIcon fontSize="small" />
                 <Typography variant="body1" sx={{ fontWeight: 600, letterSpacing: '1px' }}>
-                  {heroImages[currentSlide].name}
+                  {heroImages[currentSlide]?.name}
                 </Typography>
               </Box>
 

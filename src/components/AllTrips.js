@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Box, 
   Typography, 
@@ -17,7 +17,12 @@ import {
   Chip,
   IconButton,
   Pagination,
-  useMediaQuery
+  useMediaQuery,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from '@mui/material';
 import { 
   ArrowForward,
@@ -27,44 +32,88 @@ import {
   Favorite,
   FavoriteBorder
 } from '@mui/icons-material';
-import { trips } from './urls';
+import tripsService from '../services/tripsService';
+import favoritesService from '../services/favoritesService';
+import authService from '../services/authService';
 
 const AllTrips = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [favorites, setFavorites] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [trips, setTrips] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [totalTrips, setTotalTrips] = useState(0);
+  const [loginPromptOpen, setLoginPromptOpen] = useState(false);
   
   // Trips per page based on screen size
   const tripsPerPage = isMobile ? 6 : isTablet ? 9 : 12;
 
-  // Categorize trips
-  const domesticTrips = trips.filter(trip => 
-    trip.location?.toLowerCase().includes('kenya') || 
-    trip.title?.toLowerCase().includes('mara') ||
-    trip.title?.toLowerCase().includes('amboseli') ||
-    trip.title?.toLowerCase().includes('tsavo') ||
-    trip.title?.toLowerCase().includes('naivasha') ||
-    trip.title?.toLowerCase().includes('nakuru') ||
-    trip.title?.toLowerCase().includes('diani') ||
-    trip.title?.toLowerCase().includes('watamu')
-  );
+  // Fetch trips from backend
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        setLoading(true);
+        const filters = {
+          page: currentPage,
+          per_page: tripsPerPage
+        };
+        
+        if (selectedCategory !== 'all') {
+          filters.category = selectedCategory;
+        }
 
-  const internationalTrips = trips.filter(trip => !domesticTrips.includes(trip));
+        const response = await tripsService.getTrips(filters);
+        const trips = response.trips || [];
+        const total = response.pagination?.total_count || 0;
+        // Prepend backend URL to image paths
+        const tripsWithFullImages = trips.map(trip => ({
+          ...trip,
+          main_image: trip.main_image?.startsWith('http') 
+            ? trip.main_image 
+            : `http://localhost:4000${trip.main_image}`
+        }));
+        setTrips(tripsWithFullImages);
+        setTotalTrips(total);
+      } catch (error) {
+        console.error('Error fetching trips:', error);
+        setTrips([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const allFilteredTrips = 
-    selectedCategory === 'domestic' ? domesticTrips :
-    selectedCategory === 'international' ? internationalTrips :
-    trips;
+    fetchTrips();
+  }, [selectedCategory, currentPage, tripsPerPage]);
+
+  // Fetch user favorites if logged in
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (authService.isAuthenticated()) {
+        try {
+          const response = await favoritesService.getFavorites();
+          const favoriteIds = (response.favorites || []).map(fav => fav.trip?.id ?? fav.trip_id);
+          setFavorites(favoriteIds.filter(Boolean));
+        } catch (error) {
+          console.error('Error fetching favorites:', error);
+        }
+      }
+    };
+
+    fetchFavorites();
+  }, []);
+
+  // Categorize trips for counts
+  const domesticTrips = trips.filter(trip => trip.category === 'domestic');
+  const internationalTrips = trips.filter(trip => trip.category === 'international');
 
   // Pagination calculations
-  const totalPages = Math.ceil(allFilteredTrips.length / tripsPerPage);
-  const indexOfLastTrip = currentPage * tripsPerPage;
-  const indexOfFirstTrip = indexOfLastTrip - tripsPerPage;
-  const filteredTrips = allFilteredTrips.slice(indexOfFirstTrip, indexOfLastTrip);
+  const totalPages = Math.ceil(totalTrips / tripsPerPage);
+  const filteredTrips = trips;
 
   // Reset to page 1 when category changes
   useEffect(() => {
@@ -80,13 +129,31 @@ const AllTrips = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const toggleFavorite = (tripId) => {
-    setFavorites(prev => 
-      prev.includes(tripId) 
-        ? prev.filter(id => id !== tripId)
-        : [...prev, tripId]
-    );
+  const toggleFavorite = async (tripId) => {
+    if (!authService.isAuthenticated()) {
+      setLoginPromptOpen(true);
+      return;
+    }
+
+    try {
+      await favoritesService.toggleFavorite(tripId);
+      setFavorites(prev => 
+        prev.includes(tripId) 
+          ? prev.filter(id => id !== tripId)
+          : [...prev, tripId]
+      );
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    }
   };
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ bgcolor: theme.palette.background.default, minHeight: '100vh' }}>
@@ -177,7 +244,7 @@ const AllTrips = () => {
                   opacity: 0.95
                 }}
               >
-                Explore {trips.length}+ carefully curated travel experiences
+                Explore {totalTrips}+ carefully curated travel experiences
               </Typography>
             </Box>
           </Fade>
@@ -228,7 +295,7 @@ const AllTrips = () => {
             }}
           >
             <Tab 
-              label={`All (${trips.length})`} 
+              label={`All (${totalTrips})`} 
               value="all"
               icon={<LocationOn />}
               iconPosition="start"
@@ -289,7 +356,7 @@ const AllTrips = () => {
                   >
                     <CardMedia
                       component="img"
-                      image={trip.image}
+                      image={trip.main_image || trip.image}
                       alt={trip.title}
                       className="trip-image"
                       sx={{ 
@@ -320,8 +387,8 @@ const AllTrips = () => {
 
                     {/* Category Badge */}
                     <Chip
-                      label={domesticTrips.includes(trip) ? "Domestic" : "International"}
-                      icon={domesticTrips.includes(trip) ? <LocationOn /> : <Flight />}
+                      label={trip.category === 'domestic' ? "Domestic" : "International"}
+                      icon={trip.category === 'domestic' ? <LocationOn /> : <Flight />}
                       sx={{
                         position: 'absolute',
                         top: 16,
@@ -503,6 +570,22 @@ const AllTrips = () => {
         )}
 
       </Container>
+
+      {/* Login prompt when favoriting while not logged in */}
+      <Dialog open={loginPromptOpen} onClose={() => setLoginPromptOpen(false)}>
+        <DialogTitle>Sign in to save favorites</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Create an account or sign in to save trips to your favorites and see them on your dashboard.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setLoginPromptOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={() => { setLoginPromptOpen(false); navigate('/login'); }}>
+            Sign In
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
