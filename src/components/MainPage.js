@@ -1,10 +1,8 @@
 import React from 'react';
-import { Box, Typography, Container, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import HomeTrips from './HomeTrips';
 
 const MainPage = () => {
-  const theme = useTheme();
-  
   return (
     <Box sx={{ width: '100%' }}>
       {/* <Container maxWidth="lg">

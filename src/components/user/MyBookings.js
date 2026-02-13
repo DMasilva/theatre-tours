@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Box, Typography, Paper, Tabs, Tab, Grid, Card, CardContent,
   Avatar, Chip, Button, Dialog, DialogTitle, DialogContent,
@@ -12,7 +11,6 @@ import bookingsService from '../../services/bookingsService';
 import reviewsService from '../../services/reviewsService';
 
 const MyBookings = () => {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
