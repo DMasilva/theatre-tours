@@ -8,14 +8,12 @@ import {
   Button,
   FormControlLabel,
   Switch,
-  Alert,
-  useTheme
+  Alert
 } from '@mui/material';
 import { Save, Lock } from '@mui/icons-material';
 import authService from '../../services/authService';
 
 const UserSettings = () => {
-  const theme = useTheme();
   const [showSuccess, setShowSuccess] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [error, setError] = useState(null);
